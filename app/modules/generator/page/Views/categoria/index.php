@@ -1,0 +1,395 @@
+<div class="row no-gutters mb-5">
+    <div class="col-md-1"></div>
+    <div class="col-md-9">
+        <div class="banner">
+            <img src="/images/<?php echo $this->categoria->categorias_banner ?>" alt="">
+        </div>
+        <a id="a" name="a"></a>
+        <div class="container-fluid categoria">
+            <div class="row my-4">
+                <div class="offset-md-8 col-md-4 caja-buscar">
+                    <div class="form-group row no-gutters m-0 py-2">
+                        <div class="offset-sm-3 col-sm-3 d-flex align-items-center justify-content-center">
+                            <label for="exampleFormControlSelect1">Ordenar Por</label>
+                        </div>
+                        <div class="col-sm-6 d-flex align-items-center">
+                            <select class="form-control" name="ordenar" id="exampleFormControlSelect1">
+                                <option>Recientes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <?php foreach ($this->tiendas as $key => $value) { ?>
+                    <?php $cont = 0; ?>
+                    <div class="col-md-4 mt-4">
+                        <a
+                            href="/page/tienda?id=<?php echo $value->tiendas_id ?>&&categoria=<?php echo $this->categoria->categorias_id ?>">
+                            <div class="caja-tienda">
+                                <img src="/images/<?php echo $this->categoria->categorias_imagen_techo ?>" alt="">
+                                <div id="carousel<?php echo $value->tiendas_id ?>" class="carousel slide"
+                                    data-bs-interval="false" data-bs-ride="carousel">
+                                    <div class="carousel-inner prod">
+                                        <div class="carousel-item active img-productos mb-2">
+                                            <img class="" src="/images/<?php echo $value->tiendas_imagen ?>" alt="">
+                                        </div>
+                                        <?php foreach ($this->productos as $key2 => $value2) { ?>
+                                            <?php if ($value2->productos_tienda == $value->tiendas_id) { ?>
+                                                <div class="carousel-item img-productos mb-2">
+                                                    <img class="" src="/images/<?php echo $value2->productos_imagen ?>" alt="">
+                                                </div>
+
+                                                <?php $cont++; ?>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </div>
+                                    <button class="carousel-control-prev" href="#carousel<?php echo $value->tiendas_id ?>"
+                                        role="button" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                        </a>
+                        <button class="carousel-control-next" href="#carousel<?php echo $value->tiendas_id ?>"
+                            role="button" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                            </a>
+                    </div>
+                    <div class="caja-texto px-3 pb-2">
+                        <div class="titulo-tienda text-left">
+                            <h4><?php echo $value->tiendas_nombre ?></h4>
+                        </div>
+                        <div class="datos-tienda pb-3">
+                            <?php if ($value->tiendas_pagina != "") { ?>
+                                <span><a href="http://<?php echo enlacepagina($value->tiendas_pagina) ?>" target="_blank"><?php echo $value->tiendas_pagina ?></a></span>
+                            <?php } ?>
+                            <?php if ($value->tiendas_facebook != "") { ?>
+                                <span><a href="https://www.facebook.com/<?php echo enlaceredes($value->tiendas_facebook) ?>" target="_blank">facebook/<?php echo enlaceredes($value->tiendas_facebook) ?></a></span>
+                            <?php } ?>
+                            <?php if ($value->tiendas_instagram != "") { ?>
+                                <span>Instagram: <a href="https://www.instagram.com/<?php echo enlaceredes($value->tiendas_instagram) ?>" target="_blank">@<?php echo  enlaceredes($value->tiendas_instagram) ?></a></span>
+                            <?php } ?>
+                            <?php if ($value->tiendas_telefono != "") { ?>
+                                <?php $telefono = intval(preg_replace('/[^0-9]+/', '', $value->tiendas_telefono), 10);  ?>
+                                <span>Teléfono:<a href="tel:<?php echo $telefono ?>" target="_blank"> <?php echo $value->tiendas_telefono ?></a></span>
+                            <?php } ?>
+                        </div>
+
+                        <div class="whatsapp-tienda">
+                            <?php if ($value->tiendas_whatsapp != "") { ?>
+                                <?php $whatsapp = intval(preg_replace('/[^0-9]+/', '', $value->tiendas_whatsapp), 10);  ?>
+                                <a class="btn-whatsapp"
+                                    style="background-color:<?php echo $this->categoria->categorias_color ?>"
+                                    href="https://api.whatsapp.com/send?phone=57<?php echo $whatsapp; ?>"
+                                    target="_blank">
+                                    <span>Contactar via whatsapp</span>
+                                </a>
+                            <?php } else if ($value->tiendas_facebook != "") { ?>
+                                <a class="btn-whatsapp"
+                                    style="background-color:<?php echo $this->categoria->categorias_color ?>"
+                                    href="https://www.facebook.com/<?php echo enlaceredes($value->tiendas_facebook) ?>" target="_blank">
+                                    <span>Contactar via facebook</span>
+                                </a>
+                            <?php } else if ($value->tiendas_instagram != "") { ?>
+                                <a class="btn-whatsapp"
+                                    style="background-color:<?php echo $this->categoria->categorias_color ?>"
+                                    href="https://www.instagram.com/<?php echo enlaceredes($value->tiendas_instagram) ?>" target="_blank">
+                                    <span>Contactar via instagram</span>
+                                </a>
+                            <?php } else { ?>
+                                <?php $telefono = intval(preg_replace('/[^0-9]+/', '', $value->tiendas_telefono), 10);  ?>
+                                <a class="btn-whatsapp"
+                                    style="background-color:<?php echo $this->categoria->categorias_color ?>"
+                                    href="tel:<?php echo $telefono; ?>" target="_blank">
+                                    <span>Contactar por teléfono</span>
+                                </a>
+                            <?php } ?>
+
+                        </div>
+                    </div>
+            </div>
+            </a>
+        </div>
+    <?php } ?>
+
+    </div>
+</div>
+</div>
+<!-- <div class="container-fluid pestanas-cont">
+            <div class="container">
+                <div class="row pestanas">
+                    <div class="col-lg-4 align-self-center filtro">
+                        <div class="row text-center">
+                            <div class="col-lg-6 filtrar d-none">
+                                <i class="fas fa-filter"></i> Filtrar por categoría
+                            </div>
+                            <div class="col-lg-12 col-sm-12  boton-filtro">
+
+                                <div id="menu" class="btn-productos btn no_cel">
+                                    <ul>
+                                        <li><a>Ver categorías</a>
+                                            <ul>
+                                                <?php foreach ($this->categorias as $key => $categoria) { ?>
+                                                <li><a
+                                                        href="?categoria=<?php echo $categoria->categorias_id; ?>&page=1#a"><?php echo $categoria->categorias_nombre; ?></a>
+                                                    <?php if (count($categoria->hijos) > 0) { ?>
+                                                    <ul>
+                                                        <?php foreach ($categoria->hijos as $key2 => $subcategoria): ?>
+                                                        <li><a
+                                                                href="?categoria=<?php echo $categoria->categorias_id; ?>&subcategoria=<?php echo $subcategoria->categorias_id; ?>&page=1#a"><?php echo $subcategoria->categorias_nombre; ?></a>
+                                                        </li>
+                                                        <?php endforeach ?>
+                                                    </ul>
+                                                    <?php } ?>
+                                                </li>
+                                                <?php } ?>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+
+                                <div class="solo_cel">
+
+
+                                    <style type="text/css">
+                                    #select_menu {
+                                        text-align: center;
+                                        text-align-last: center;
+                                    }
+
+                                    #select_menu option {
+                                        text-align: left;
+                                    }
+                                    </style>
+
+                                    <select id="select_menu" class="form-control btn-productos btn"
+                                        onchange="filtrar_categoria();">
+                                        <option value="/page/index/" style="text-align: center;">Ver categorías</option>
+
+                                        <?php foreach ($this->categorias as $key => $categoria) { ?>
+                                        <?php if ($categoria->categorias_nombre != "") { ?>
+                                        <option
+                                            value="/page/index/?categoria=<?php echo $categoria->categorias_id; ?>&page=1#a"
+                                            <?php if ($categoria->categorias_id == $_GET['categoria']) {
+                                                    echo 'selected';
+                                                } ?>>
+                                            <?php echo $categoria->categorias_nombre; ?></option>
+                                        <?php if (count($categoria->hijos) > 0) { ?>
+                                        <?php foreach ($categoria->hijos as $key2 => $subcategoria): ?>
+                                        <?php if ($subcategoria->categorias_nombre != "") { ?>
+                                        <option class="opcion2"
+                                            value="/page/index/?categoria=<?php echo $categoria->categorias_id; ?>&subcategoria=<?php echo $subcategoria->categorias_id; ?>&page=1#a"
+                                            <?php if ($subcategoria->categorias_id == $_GET['subcategoria']) {
+                                                                echo 'selected';
+                                                            } ?>>
+                                            &nbsp;&nbsp;&nbsp;<?php echo $subcategoria->categorias_nombre; ?></option>
+                                        <?php } ?>
+                                        <?php endforeach ?>
+                                        <?php } ?>
+                                        <?php } ?>
+                                        <?php } ?>
+
+
+                                        <option></option>
+                                    </select>
+
+                                    <script type="text/javascript">
+                                    function filtrar_categoria() {
+                                        var url = $("#select_menu").val();
+                                        window.location = url;
+                                    }
+                                    </script>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 text-center ciudad d-none">
+                        Ciudad de Envío: Bogotá
+                    </div>
+                    <div class="col-lg-3 col-sm-12 buscar">
+                        <form method="post" action="/page/index/#a" class="row">
+                            <div class="col-lg-9 col-md-8 buscar-text">
+                                <input type="input" class="form-control" name="buscar" id="buscar"
+                                    value="<?php echo $_POST['buscar']; ?>" placeholder="Buscar">
+                            </div>
+                            <div class="col-lg-2 col-md-4 text-right text-end buscar-ico" onclick="$('#buscar_enviar').click();">
+                                <i class="fas fa-search" align="right"></i>
+                            </div>
+                            <div class="d-none"><button type="submit" id="buscar_enviar"></button></div>
+                        </form>
+                    </div>
+                    <div class="col-lg-5 text-center text-lg-right">
+                        <div class="nombre">
+                            <i class="fas fa-user" style="margin-right: 5px;"></i> Bienvenido,
+                            <?php echo $this->socio->socio_nombre; ?> <a href="/page/login/logout"
+                                class="btn btn-sm btn-cafe margen_salir">Salir</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div align="center" class="col-lg-12">
+                    <br>
+                    <ul class="pagination justify-content-center">
+                        <?php
+                        $url = $this->route;
+                        $max = $this->page + 6;
+                        $min = $this->page - 6;
+                        if ($this->page > 1) {
+                            $max = $this->page + 3;
+                            $min = $this->page - 3;
+                        }
+                        if ($this->page == 2) {
+                            $max = $this->page + 5;
+                        }
+                        if ($this->page == 3) {
+                            $max = $this->page + 4;
+                        }
+                        if ($this->totalpages > 1) {
+                            for ($i = 1; $i <= $this->totalpages; $i++) {
+                                if ($this->page == $i) {
+                                    echo '<li class="active page-item"><a class="page-link">' . $this->page . '</a></li>';
+                                } else {
+                                    if ($i >= $min and $i <= $max) {
+                                        echo '<li class="page-item"><a class="page-link" href="' . $url . '?page=' . $i . '&categoria=' . $_GET["categoria"] . '#a">' . $i . '</a></li>  ';
+                                    }
+                                }
+                            }
+                        }
+                        ?>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <?php echo $this->productos; ?>
+            </div>
+            <div class="row">
+                <div align="center" class="col-lg-12">
+                    <br>
+                    <ul class="pagination justify-content-center">
+                        <?php
+                        $url = $this->route;
+                        if ($this->totalpages > 1) {
+                            for ($i = 1; $i <= $this->totalpages; $i++) {
+                                if ($this->page == $i) {
+                                    echo '<li class="active page-item"><a class="page-link">' . $this->page . '</a></li>';
+                                } else {
+                                    if ($i >= $min and $i <= $max) {
+                                        echo '<li class="page-item"><a class="page-link" href="' . $url . '?page=' . $i . '&categoria=' . $_GET["categoria"] . '#a">' . $i . '</a></li>  ';
+                                    }
+                                }
+                            }
+                        }
+                        ?>
+                    </ul>
+                </div>
+            </div>
+        </div> -->
+
+<div class="col-md-2">
+    <div class="items-index">
+        <div class="row no-gutters">
+            <div class="col-12 actividades p-3 ">
+                <?php if ($this->actividadesVirtualesPadre->contenido_titulo_ver == 1) { ?>
+                    <div class="titulo-index"> <span><?php echo $this->actividadesVirtualesPadre->contenido_titulo ?>
+                            <hr>
+                        </span> </div>
+                <?php } ?>
+                <?php if ($this->actividadesVirtuales->contenido_imagen != "") { ?>
+                    <img src="/images/<?php echo $this->actividadesVirtuales->contenido_imagen ?>" alt="">
+                <?php } ?>
+                <div class="descripcion-index">
+                    <?php if ($this->actividadesVirtuales->contenido_titulo_ver == 1) { ?>
+                        <h2><?php echo $this->actividadesVirtuales->contenido_titulo; ?></h2>
+                    <?php } ?>
+                    <?php echo $this->actividadesVirtuales->contenido_descripcion ?>
+                </div>
+            </div>
+            <div class="col-12 tarima p-3">
+                <?php if ($this->enTarimaPadre->contenido_titulo_ver == 1) { ?>
+                    <div class="titulo-index"> <span><?php echo $this->enTarimaPadre->contenido_titulo ?>
+                            <hr>
+                        </span> </div>
+                <?php } ?>
+
+                <?php foreach ($this->enTarima as $key2 => $Tarima) { ?>
+
+                    <?php if ($Tarima->contenido_imagen != "") { ?>
+                        <img src="/images/<?php echo $Tarima->contenido_imagen ?>" alt="">
+                    <?php } ?>
+                    <div class="descripcion-index">
+                        <?php if ($Tarima->contenido_titulo_ver == 1) { ?>
+                            <h2><?php echo $Tarima->contenido_titulo; ?></h2>
+                        <?php } ?>
+                        <?php echo $Tarima->contenido_descripcion ?>
+                    </div>
+                <?php } ?>
+            </div>
+
+            <div class="col-12 otros p-3">
+                <?php if ($this->otrosPadre->contenido_titulo_ver == 1) { ?>
+                    <div class="titulo-index"> <span><?php echo $this->otrosPadre->contenido_titulo ?>
+                            <hr>
+                        </span> </div>
+                <?php } ?>
+
+                <?php foreach ($this->otros as $key3 => $otro) { ?>
+
+                    <?php if ($otro->contenido_imagen != "") { ?>
+                        <img src="/images/<?php echo $otro->contenido_imagen ?>" alt="">
+                    <?php } ?>
+                    <div class="descripcion-index">
+                        <?php if ($otro->contenido_titulo_ver == 1) { ?>
+                            <h2><?php echo $otro->contenido_titulo; ?></h2>
+                        <?php } ?>
+                        <?php echo $otro->contenido_descripcion ?>
+
+                    </div>
+                    <?php if ($otro->contenido_enlace) { ?>
+                        <div>
+                            <a href="<?php echo $otro->contenido_enlace ?>"
+                                <?php if ($otro->contenido_enlace_abrir == 1) { ?> target="blank" <?php } ?>
+                                class="btn btn-block btn-vermas-index">
+                                <?php if ($otro->contenido_vermas) { ?><?php echo $otro->contenido_vermas; ?><?php } else { ?>Ver
+                                Más<?php } ?></a>
+                        </div>
+                    <?php } ?>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<?php
+function enlaceredes($x)
+{
+    $x = str_replace("@", "", $x);
+    $x = str_replace("https://www.instagram.com", "", $x);
+    $x = str_replace("https://es-la.facebook.com", "", $x);
+    $x = str_replace("https://www.facebook.com", "", $x);
+
+    $x = str_replace("facebook.com", "", $x);
+    $x = str_replace("instagram.com", "", $x);
+
+    $x = str_replace("/", "", $x);
+    $x = str_replace("https:www.", "", $x);
+    $x = str_replace("https:m.", "", $x);
+    $x = str_replace(" ", "_", $x);
+    return $x;
+}
+function enlacepagina($x)
+{
+    $x = str_replace("https://", "", $x);
+    $x = str_replace("http://", "", $x);
+    return $x;
+}
+
+?>
