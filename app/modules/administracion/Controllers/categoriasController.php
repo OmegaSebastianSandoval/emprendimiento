@@ -293,7 +293,7 @@ class Administracion_categoriasController extends Administracion_mainController
     protected function getFilter()
     {
     	$filtros = " 1 = 1 ";
-
+ 
     	$padre = intval($this->_getSanitizedParamHtml("padre"))*1;
     	$filtros.=" AND categorias_padre='$padre' ";
 

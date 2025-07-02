@@ -13,7 +13,7 @@
 				<input type="hidden" name="id" id="id" value="<?= $this->content->productos_id; ?>" />
 			<?php } ?>
 			<div class="row">
-				<div class="col-12 form-group">
+				<div class="col-12 col-md-6 form-group">
 					<label for="productos_nombre" class="control-label">Nombre</label>
 					<label class="input-group">
 						<div class="input-group-prepend">
@@ -21,6 +21,17 @@
 						</div>
 						<input type="text" value="<?= $this->content->productos_nombre; ?>" name="productos_nombre"
 							id="productos_nombre" class="form-control" required>
+					</label>
+					<div class="help-block with-errors"></div>
+				</div>
+				<div class="col-12 col-md-6 form-group">
+					<label for="productos_precio" class="control-label">Precio</label>
+					<label class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text input-icono  fondo-azul-claro "><i class="fas fa-pencil-alt"></i></span>
+						</div>
+						<input type="text" value="<?= $this->content->productos_precio; ?>" name="productos_precio"
+							id="productos_precio" class="form-control" required>
 					</label>
 					<div class="help-block with-errors"></div>
 				</div>
@@ -46,17 +57,7 @@
 				} ?>	 ></input>
 				<div class="help-block with-errors"></div>
 		</div> -->
-				<div class="col-6 form-group">
-					<label for="productos_precio" class="control-label">Precio</label>
-					<label class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text input-icono  fondo-azul-claro "><i class="fas fa-pencil-alt"></i></span>
-						</div>
-						<input type="text" value="<?= $this->content->productos_precio; ?>" name="productos_precio"
-							id="productos_precio" class="form-control" required>
-					</label>
-					<div class="help-block with-errors"></div>
-				</div>
+
 				<!-- <div class="col-12 form-group">
 			<label   class="control-label">nuevo</label>
 				<input type="checkbox" name="productos_nuevo" value="1" class="form-control switch-form " <?php if ($this->getObjectVariable($this->content, 'productos_nuevo') == 1) {
@@ -64,7 +65,7 @@
 				} ?>	 ></input>
 				<div class="help-block with-errors"></div>
 		</div>  -->
-				<div class="col-6 form-group">
+				<div class="col-6 form-group d-none">
 					<label for="productos_cantidad" class="control-label">Cantidad</label>
 					<label class="input-group">
 						<div class="input-group-prepend">
@@ -93,7 +94,7 @@
 				<div class="help-block with-errors"></div>
 		</div> -->
 				<input type="hidden" name="productos_codigo" value="<?php echo $this->content->productos_codigo ?>">
-				<div class="col-6 form-group d-none>
+				<div class="col-6 form-group d-none">
 					<label for="productos_cantidad_minima" class="control-label">Cantidad mínima</label>
 					<label class="input-group">
 						<div class="input-group-prepend">
@@ -104,7 +105,7 @@
 					</label>
 					<div class="help-block with-errors"></div>
 				</div>
-				<div class="col-6 form-group">
+				<div class="col-6 form-group d-none">
 					<label for="productos_limite_pedido" class="control-label">Límite del pedido</label>
 					<label class="input-group">
 						<div class="input-group-prepend">
@@ -128,7 +129,7 @@
 				} ?>">
 			</div>
 		</div>
-		<div class="botones-acciones">
+		<div class="botones-acciones d-flex justify-content-end gap-2">
 			<button class="btn btn-guardar" type="submit">Guardar</button>
 			<a href="<?php echo $this->route; ?>?categoria=<?php if ($this->content->productos_categorias) {
 					 echo $this->content->productos_categorias;

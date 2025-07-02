@@ -22,6 +22,9 @@
 	<link rel="stylesheet" href="/components/bootstrap-5.3/css/bootstrap.min.css">
 	<!-- Bootstrap Js -->
 	<script src="/components/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
+	<link href="/components/bootstrap-toggle/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<script src="/components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+
 	<!-- metacolor -->
 	<meta name="theme-color" content="#5475a1">
 
@@ -39,11 +42,12 @@
 	<link rel="stylesheet" type="text/css" href="/components/tooltipster/dist/css/tooltipster.bundle.min.css" />
 	<!-- SweetAlert -->
 	<script src="/components/sweetalert/sweetalert.js"></script>
-	
-	  <!-- Tiny -->
-  <script src="/components/tinymce/tinymce.min.js"></script>
 
-	<script type="text/javascript" id="www-widgetapi-script" src="https://s.ytimg.com/yts/jsbin/www-widgetapi-vflS50iB-/www-widgetapi.js" async=""></script>
+	<!-- Tiny -->
+	<script src="/components/tinymce/tinymce.min.js"></script>
+
+	<script type="text/javascript" id="www-widgetapi-script"
+		src="https://s.ytimg.com/yts/jsbin/www-widgetapi-vflS50iB-/www-widgetapi.js" async=""></script>
 
 	<script type="text/javascript" src="/components/select2/dist/js/select2.min.js"></script>
 	<link rel="stylesheet" href="/components/select2-bootstrap-theme/dist/select2-bootstrap.min.css">

@@ -1,5 +1,5 @@
 <?php if ($_SESSION["asociado"]) { ?>
-	<span class="ir-arriba icon-arrow-up2">Volver Arriba</span>
+	<!-- <span class="ir-arriba icon-arrow-up2">Volver Arriba</span> -->
 <?php } ?>
 
 <div class="footer-redes">

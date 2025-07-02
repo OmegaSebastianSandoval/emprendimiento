@@ -1,6 +1,6 @@
 <div class="container py-5">
     <div class="row">
-        <h1>Buscar</h1>
+        <h1 class="titulo-buscador">Buscar</h1>
         <div class="col-md-12">
             <?php
             if (

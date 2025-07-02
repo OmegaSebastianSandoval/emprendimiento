@@ -7,6 +7,8 @@
 class Page_categoriaController extends Page_mainController
 {
 
+	public $botonpanel = 3;
+
 	/**
 	 * $pages cantidad de registros a mostrar por pagina para tiendas en categoria
 	 * @var integer
@@ -131,7 +133,7 @@ class Page_categoriaController extends Page_mainController
 		$this->_view->categoria = $categoriasModel->getById($id);
 
 		// Cargar todas las categorias para el sidebar
-		$this->_view->categorias = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' AND categorias_estado_imagen='1'", " orden_categorias ASC ");
+		$this->_view->categorias = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' ", " orden_categorias ASC ");
 
 		$this->_view->productos = $productosModel->getList("", "");
 		$this->_view->cuadros = $cuadrosModel->getList("", "");

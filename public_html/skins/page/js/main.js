@@ -381,4 +381,11 @@ $(document).ready(function () {
     });
   });
 
+    $(".switch-form").bootstrapToggle({
+    on: "Si",
+    off: "No",
+    offstyle: "danger",
+  });
+
+
 });

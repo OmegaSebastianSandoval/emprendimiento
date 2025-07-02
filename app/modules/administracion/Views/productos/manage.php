@@ -40,7 +40,7 @@
 				<div class="help-block with-errors"></div>
 		</div> -->
 				<div class="col-6 form-group">
-					<label for="productos_precio"  class="control-label">precio</label>
+					<label for="productos_precio"  class="control-label">Precio</label>
 					<label class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text input-icono  fondo-azul-claro " ><i class="fas fa-pencil-alt"></i></span>
@@ -55,7 +55,7 @@
 				<div class="help-block with-errors"></div>
 		</div>  -->
 				<div class="col-6 form-group">
-					<label for="productos_cantidad"  class="control-label">cantidad</label>
+					<label for="productos_cantidad"  class="control-label">Cantidad</label>
 					<label class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text input-icono  fondo-morado " ><i class="fas fa-pencil-alt"></i></span>

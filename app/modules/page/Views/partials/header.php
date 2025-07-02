@@ -13,7 +13,8 @@
 				<div class="d-flex justify-content-end align-items-center gap-3">
 
 					<div class="buscar d-none d-md-flex">
-						<form method="post" action="/page/buscar" class="w-100  d-flex gap-2 align-items-center m-0" id="form-buscar">
+						<form method="post" action="/page/buscar" class="w-100  d-flex gap-2 align-items-center m-0"
+							id="form-buscar">
 							<div class=" text-right text-end buscar-ico" onclick="$('#buscar_enviar').click();">
 								<i class="fa-solid fa-magnifying-glass fa-flip-horizontal" style="color: #ffffff;"></i>
 							</div>
@@ -60,7 +61,7 @@
 					<ul id="menu2" class="align-self-center">
 						<li class="parent <?= $this->botonpanel == 1 ? 'active' : '' ?>"><a href="/"><span>Inicio</span></a></li>
 						<li class="parent"><a href="/page/favoritos"><span>Favoritos</span></a></li>
-						<li class="parent"><a href="/"><span>Categorías</span></a>
+						<li class="parent  <?= $this->botonpanel == 3 ? 'active' : '' ?>"><a href="/"><span>Categorías</span></a>
 							<ul>
 								<?php foreach ($this->categorias as $key => $categoria) { ?>
 									<li><a
@@ -189,25 +190,25 @@
 			<a href="/page/login" class="btn btn-header btn-sm  text-center w-100">Ingresar</a>
 		</div>
 
-<?php } ?>
+	<?php } ?>
 
 
-<div class="redes2-responsive p-3">
-	<div class=" align-self-center ">
-		<?php if ($this->infopage->info_pagina_whatsapp) { ?>
-			<?php $whatsapp = intval(preg_replace('/[^0-9]+/', '', $this->infopage->info_pagina_whatsapp), 10); ?>
-			<a href="https://api.whatsapp.com/send?phone=<?php echo $whatsapp; ?>" target="_blank" class="red mr-4">
-				<i class="fab fa-whatsapp mr-2"></i>
-				<span><?php echo $this->infopage->info_pagina_whatsapp ?></span>
-			</a>
+	<div class="redes2-responsive p-3">
+		<div class=" align-self-center ">
+			<?php if ($this->infopage->info_pagina_whatsapp) { ?>
+				<?php $whatsapp = intval(preg_replace('/[^0-9]+/', '', $this->infopage->info_pagina_whatsapp), 10); ?>
+				<a href="https://api.whatsapp.com/send?phone=<?php echo $whatsapp; ?>" target="_blank" class="red mr-4">
+					<i class="fab fa-whatsapp mr-2"></i>
+					<span><?php echo $this->infopage->info_pagina_whatsapp ?></span>
+				</a>
+			</div>
+			<div class=" align-self-center">
+			<?php } ?>
+			<?php if ($this->infopage->info_pagina_correos_contacto) { ?>
+				<a href="mailto:<?php echo $this->infopage->info_pagina_correos_contacto; ?>" target="_blank"
+					class="text-white text-decoration-none d-flex gap-2 align-items-center"> <i
+						class="fas fa-envelope mr-2"></i><span><?php echo $this->infopage->info_pagina_correos_contacto; ?></span></a>
+			<?php } ?>
 		</div>
-		<div class=" align-self-center">
-		<?php } ?>
-		<?php if ($this->infopage->info_pagina_correos_contacto) { ?>
-			<a href="mailto:<?php echo $this->infopage->info_pagina_correos_contacto; ?>" target="_blank"
-				class="text-white text-decoration-none d-flex gap-2 align-items-center"> <i
-					class="fas fa-envelope mr-2"></i><span><?php echo $this->infopage->info_pagina_correos_contacto; ?></span></a>
-		<?php } ?>
 	</div>
-</div>
 </div>

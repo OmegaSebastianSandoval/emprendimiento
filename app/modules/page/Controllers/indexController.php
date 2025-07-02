@@ -62,9 +62,9 @@ class Page_indexController extends Page_mainController
 			}
 	 */
 		$categoriasModel = new Administracion_Model_DbTable_Categorias();
-		$this->_view->categorias = $categorias = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' AND categorias_estado_imagen='1'", " categorias_nombre ASC ");
+		$this->_view->categorias = $categorias = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' ", " categorias_nombre ASC ");
 
-		$this->_view->categorias2 = $categorias2 = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' AND categorias_estado_imagen='1'", " categorias_nombre ASC ");
+		$this->_view->categorias2 = $categorias2 = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' ", " categorias_nombre ASC ");
 
 		foreach ($categorias as $key => $value) {
 			$padre = $value->categorias_id;
@@ -151,9 +151,9 @@ class Page_indexController extends Page_mainController
 		}
 
 		$categoriasModel = new Administracion_Model_DbTable_Categorias();
-		$this->_view->categorias = $categorias = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' AND categorias_estado_imagen='1'", " orden_categorias ASC LIMIT 9 ");
+		$this->_view->categorias = $categorias = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' ", " orden_categorias ASC LIMIT 9 ");
 
-		$this->_view->categorias2 = $categorias2 = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' AND categorias_estado_imagen='1'", " categorias_nombre ASC ");
+		$this->_view->categorias2 = $categorias2 = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' ", " categorias_nombre ASC ");
 
 		foreach ($categorias as $key => $value) {
 			$padre = $value->categorias_id;

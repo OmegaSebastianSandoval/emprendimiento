@@ -1,5 +1,8 @@
-<h1 class="titulo-principal"><i class="fas fa-cogs"></i> <?php echo $this->titlesection; ?></h1>
-<div class="container-fluid">
+<div class="container  container-list-products py-3">
+
+	<h1 class="titulo-principal m-0">
+		<?php echo $this->titlesection; ?>
+	</h1>
 	<form class="text-left" enctype="multipart/form-data" method="post" action="<?php echo $this->routeform; ?>"
 		data-toggle="validator">
 		<div class="content-dashboard">
@@ -10,7 +13,7 @@
 			<?php } ?>
 			<div class="row">
 
-				<div class="col-2 form-group">
+				<div class="col-12 col-md-3 form-group">
 					<label class="control-label" for="categorias_estado">Activar Categoría</label><br>
 					<input type="checkbox" name="categorias_estado" id="categorias_estado" value="1" data-toggle="toggle"
 						class="form-control" data-onstyle="success" <?php if ($this->getObjectVariable($this->content, 'categorias_estado') == 1) {
@@ -19,7 +22,7 @@
 						data-offstyle="danger"></input>
 					<div class="help-block with-errors"></div>
 				</div>
-				<div class="col-4 form-group">
+				<!-- <div class="col-4 form-group">
 					<label for="categorias_color" class="control-label"> Color</label>
 					<label class="input-group">
 						<div class="input-group-prepend">
@@ -29,9 +32,9 @@
 							id="categorias_color" class="form-control colorpicker">
 					</label>
 					<div class="help-block with-errors"></div>
-				</div>
+				</div> -->
 
-				<div class="col-12 form-group">
+				<div class="col-12 col-md-9 form-group">
 					<label for="categorias_nombre" class="control-label">Nombre</label>
 					<label class="input-group">
 						<div class="input-group-prepend">
@@ -44,7 +47,7 @@
 				</div>
 
 
-				<div class="col-6 form-group">
+				<!-- <div class="col-6 form-group">
 					<label for="categorias_banner">Imagen banner</label>
 					<input type="file" name="categorias_banner" id="categorias_banner" class="form-control  file-image"
 						data-buttonName="btn-primary" accept="image/gif, image/jpg, image/jpeg, image/png">
@@ -58,7 +61,7 @@
 										class="glyphicon glyphicon-remove"></i> Eliminar Imagen</button></div>
 						</div>
 					<?php } ?>
-				</div>
+				</div> -->
 				<!-- <div class="col-6 form-group">
 					<label for="categorias_imagen_tienda">Imagen tienda</label>
 					<input type="file" name="categorias_imagen_tienda" id="categorias_imagen_tienda"
@@ -78,7 +81,7 @@
 
 				<div class="col-12 form-group">
 					<label for="categorias_descripcion" class="form-label">Descripcion</label>
-					<textarea name="categorias_descripcion" id="categorias_descripcion" class="form-control tinyeditor"
+					<textarea name="categorias_descripcion" id="categorias_descripcion" class="form-control tinyeditor-simple"
 						rows="10"><?= $this->content->categorias_descripcion; ?></textarea>
 					<div class="help-block with-errors"></div>
 				</div>
@@ -109,25 +112,10 @@
 				<input type="hidden" name="padre" value="<?php echo $_GET['padre']; ?>">
 			</div>
 		</div>
-		<div class="botones-acciones">
+		<div class="botones-acciones d-flex justify-content-end gap-2">
+
 			<button class="btn btn-guardar" type="submit">Guardar</button>
 			<a href="<?php echo $this->route; ?>" class="btn btn-cancelar">Cancelar</a>
 		</div>
 	</form>
 </div>
-
-
-<script type="text/javascript">
-	<?php if ($_SESSION['kt_login_level'] == "4") { ?>
-		function f1 () {
-			$(".tinyeditor").removeClass("tinyeditor");
-			$("input").prop("disabled", true);
-			$("select").prop("disabled", true);
-			$("textarea").prop("disabled", true);
-			$(".btn-guardar").hide();
-		}
-		setTimeout(f1(), 1000);
-		setTimeout(f1(), 2000);
-		setTimeout(f1(), 3000);
-	<?php } ?>
-</script>
