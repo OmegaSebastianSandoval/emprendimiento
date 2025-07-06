@@ -1,4 +1,4 @@
-<div class="container  container-list-products py-3">
+<div class="container  container-list-products py-4">
 
 	<h1 class="titulo-principal m-0">
 		<?php echo $this->titlesection; ?>
@@ -7,12 +7,28 @@
 	<form class="text-left" enctype="multipart/form-data" method="post" action="<?php echo $this->routeform; ?>"
 		data-toggle="validator">
 		<div class="content-dashboard">
+			<?php if (!$this->subcategorias || count($this->subcategorias) < 1) { ?>
+				<div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
+					<i class="fas fa-exclamation-triangle"></i> <strong>Atención:</strong> No hay subcategorías disponibles. Por
+					favor, cree una subcategoría antes de agregar un producto.
+					<a class="btn btn-orange btn-sm" href="/page/subcategorias/manage">
+						<i class="fa-solid fa-list"></i> Configurar subcategorias</a>
+				</div>
+			<?php } ?>
 			<input type="hidden" name="csrf" id="csrf" value="<?php echo $this->csrf ?>">
 			<input type="hidden" name="csrf_section" id="csrf_section" value="<?php echo $this->csrf_section ?>">
 			<?php if ($this->content->productos_id) { ?>
 				<input type="hidden" name="id" id="id" value="<?= $this->content->productos_id; ?>" />
 			<?php } ?>
 			<div class="row">
+				<div class="col-12 form-group d-grid">
+					<label class="control-label">Activo</label>
+					<input type="checkbox" name="producto_activo" value="1" data-toggle="toggle"class="form-control switch-form "  data-on="Activado" data-off="Desactivado" data-offstyle="danger"  data-onstyle="success" <?php if ($this->getObjectVariable($this->content, 'producto_activo') == 1) {
+						echo "checked";
+					} ?>></input>
+					<div class="help-block with-errors"></div>
+				</div>
+				<!-- <input type="checkbox" name="contenido_estado"  id="contenido_estado" value="1" data-toggle="toggle" class="form-control"  data-onstyle="success" <?php if ($this->getObjectVariable($this->content, 'contenido_estado') == 1) { echo "checked";} ?>  data-on="Activado" data-off="Desactivado" data-offstyle="danger"  ></input> -->
 				<div class="col-12 col-md-6 form-group">
 					<label for="productos_nombre" class="control-label">Nombre</label>
 					<label class="input-group">
@@ -35,8 +51,26 @@
 					</label>
 					<div class="help-block with-errors"></div>
 				</div>
+				<div class="col-12 col-md-6 form-group">
+					<label for="productos_subcategoria" class="control-label">Subategoría</label>
+					<label class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text input-icono  fondo-azul-claro "><i class="fas fa-pencil-alt"></i></span>
+						</div>
+						<select name="productos_subcategoria" id="productos_subcategoria" class="form-control" required>
+							<option value="">Seleccione una subcategoría</option>
+							<?php foreach ($this->subcategorias as $subcategoria) { ?>
+								<option value="<?= $subcategoria->categorias_id; ?>" <?php if ($this->content->productos_subcategoria == $subcategoria->categorias_id) {
+										echo "selected";
+									} ?>><?= $subcategoria->categorias_nombre; ?></option>
+							<?php } ?>
+						</select>
+					</label>
+					<div class="help-block with-errors"></div>
+				</div>
 
-				<div class="col-12 form-group">
+
+				<div class="col-6 form-group">
 					<label for="productos_imagen">Imagen principal</label>
 					<input type="file" name="productos_imagen" id="productos_imagen" class="form-control  file-image"
 						data-buttonName="btn-primary" accept="image/gif, image/jpg, image/jpeg, image/png">
@@ -76,23 +110,13 @@
 					</label>
 					<div class="help-block with-errors"></div>
 				</div>
-				<input type="hidden" name="productos_categorias" value="<?php if ($this->content->productos_categorias) {
-					echo $this->content->productos_categorias;
-				} else {
-					echo $this->categoria;
-				} ?>">
-				<input type="hidden" name="productos_subcategoria" value="<?php if ($this->content->productos_subcategoria) {
+				<input type="hidden" name="productos_categorias" value="<?php echo $this->categoria ?>">
+				<!-- <input type="hidden" name="productos_subcategoria" value="<?php if ($this->content->productos_subcategoria) {
 					echo $this->content->productos_subcategoria;
 				} else {
 					echo $this->subcategoria;
-				} ?>">
-				<!-- <div class="col-12 form-group">
-			<label   class="control-label">activo</label>
-				<input type="checkbox" name="producto_activo" value="1" class="form-control switch-form " <?php if ($this->getObjectVariable($this->content, 'producto_activo') == 1) {
-					echo "checked";
-				} ?>	 ></input>
-				<div class="help-block with-errors"></div>
-		</div> -->
+				} ?>"> -->
+
 				<input type="hidden" name="productos_codigo" value="<?php echo $this->content->productos_codigo ?>">
 				<div class="col-6 form-group d-none">
 					<label for="productos_cantidad_minima" class="control-label">Cantidad mínima</label>

@@ -1,4 +1,4 @@
-<div class="container  container-list-products py-3">
+<div class="container  container-list-products py-4">
 
 	<h1 class="titulo-principal m-0">
 		<?php echo $this->titlesection; ?>
@@ -169,7 +169,7 @@
 					<a class="btn btn-orange btn-sm"
 						href="<?php echo $this->route . "\manage" . "?categoria=" . $this->tiendaInfo->tiendas_categoria . "" . "&subcategoria=" . $this->subcategoria . "" . "&tienda=" . $this->tienda . ""; ?>">
 						<i class="fas fa-plus-square"></i> Crear Primer Producto</a>
-					<a class="btn btn-orange btn-sm" href="/page/subcategorias">
+					<a class="btn btn-orange btn-sm" href="/page/subcategorias/manage">
 						<i class="fa-solid fa-list"></i> Configurar subcategorias</a>
 				</div>
 			</div>

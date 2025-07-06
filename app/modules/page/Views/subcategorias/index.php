@@ -1,14 +1,14 @@
-<div class="container  container-list-products py-3">
-
+<div class="container  container-list-products py-4">
+	<a class="btn btn-outline-secondary mb-3" href="/page/listproductos">Volver a mis productos</a>
 	<h1 class="titulo-principal m-0">
 		<?php echo $this->titlesection; ?>
 	</h1>
 
 	<?php if ($this->register_number > 0): ?>
-		<form action="<?php echo $this->route; ?>" method="post">
+		<form action="<?php echo $this->route; ?>" method="post" class="py-2">
 			<div class="content-dashboard">
 				<div class="row">
-					<div class="col-3">
+					<div class="col-6">
 						<label>Nombre</label>
 						<label class="input-group">
 							<div class="input-group-prepend">
@@ -18,7 +18,7 @@
 								value="<?php echo $this->getObjectVariable($this->filters, 'categorias_nombre') ?>"></input>
 						</label>
 					</div>
-					<div class="col-3">
+					<!-- <div class="col-3">
 						<label>Descripcion</label>
 						<label class="input-group">
 							<div class="input-group-prepend">
@@ -27,7 +27,7 @@
 							<input type="text" class="form-control" name="categorias_descripcion"
 								value="<?php echo $this->getObjectVariable($this->filters, 'categorias_descripcion') ?>"></input>
 						</label>
-					</div>
+					</div> -->
 					<div class="col-3">
 						<label>&nbsp;</label>
 						<button type="submit" class="btn btn-block btn-azul"> <i class="fas fa-filter"></i> Filtrar</button>
@@ -91,12 +91,11 @@
 						</select>
 					</div>
 					<div class="col-3">
-						<?php $padre = $_GET['padre'] * 1; ?>
-						<?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3") { ?>
-							<div class="text-right text-end"><a class="btn btn-sm btn-success"
-									href="<?php echo $this->route . "\manage?padre=" . $padre; ?>"> <i class="fas fa-plus-square"></i> Crear
-									Nuevo</a></div>
-						<?php } ?>
+
+						<div class="text-right text-end"><a class="btn btn-sm btn-success"
+								href="<?php echo $this->route . "\manage"; ?>"> <i class="fas fa-plus-square"></i> Crear
+								Nuevo</a></div>
+
 					</div>
 				</div>
 			</div>
@@ -105,7 +104,7 @@
 					<thead>
 						<tr>
 							<td>Nombre</td>
-							<td>Descripcion</td>
+							<!-- <td>Descripcion</td> -->
 							<td width="100">Orden</td>
 							<td></td>
 						</tr>
@@ -115,7 +114,7 @@
 							<?php $id = $content->categorias_id; ?>
 							<tr>
 								<td><?= $content->categorias_nombre; ?></td>
-								<td><?= $content->categorias_descripcion; ?></td>
+								<!-- <td><?= $content->categorias_descripcion; ?></td> -->
 								<td>
 									<input type="hidden" id="<?= $id; ?>" value="<?= $content->orden; ?>"></input>
 									<button class="up_table btn btn-primary btn-sm"><i class="fas fa-angle-up"></i></button>
@@ -123,46 +122,35 @@
 								</td>
 								<td class="text-right text-end">
 									<div>
-										<!-- <?php if ($content->categorias_padre == 0) { ?>
-										<a class="btn btn-verde btn-sm" href="<?php echo $this->route; ?>?padre=<?= $id ?>"
-											data-toggle="tooltip" data-placement="top" title="Subcategorias"><i class="fa-solid fa-list"></i></a>
-									<?php } ?>
- -->
-										<a class="btn btn-warning btn-sm" href="/administracion/tiendas/?categoria=<?= $id ?>"
-											data-toggle="tooltip" data-placement="top" title="Tiendas"><i class="fas fa-shopping-cart"></i></a>
-										<?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3") { ?>
+
+										<?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "4" || $_SESSION['kt_login_level'] == "5") { ?>
 											<a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/manage?id=<?= $id ?>"
 												data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-pen"></i></a>
 
 											<span data-toggle="tooltip" data-placement="top" title="Eliminar"><a class="btn btn-rojo btn-sm"
 													data-bs-toggle="modal" data-bs-target="#modal<?= $id ?>"><i class="fas fa-trash-alt"></i></a></span>
 										<?php } ?>
-										<?php if ($_SESSION['kt_login_level'] == "4") { ?>
-											<a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/manage?id=<?= $id ?>"
-												data-toggle="tooltip" data-placement="top" title="Ver"><i class="fas fa-eye"></i></a>
-										<?php } ?>
 
-									</div>
-									<!-- Modal -->
-									<div class="modal fade text-left" id="modal<?= $id ?>" tabindex="-1" role="dialog"
-										aria-labelledby="myModalLabel">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h4 class="modal-title" id="myModalLabel">Eliminar Registro</h4>
-													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-												</div>
-												<div class="modal-body">
-													<div class="">¿Esta seguro de eliminar este registro?</div>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-													<a class="btn btn-danger"
-														href="<?php echo $this->route; ?>/delete?id=<?= $id ?>&csrf=<?= $this->csrf; ?><?php echo ''; ?>">Eliminar</a>
+										<!-- Modal -->
+										<div class="modal fade text-left" id="modal<?= $id ?>" tabindex="-1" role="dialog"
+											aria-labelledby="myModalLabel">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h4 class="modal-title" id="myModalLabel">Eliminar Registro</h4>
+														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+													</div>
+													<div class="modal-body">
+														<div class="">¿Esta seguro de eliminar este registro?</div>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+														<a class="btn btn-danger"
+															href="<?php echo $this->route; ?>/delete?id=<?= $id ?>&csrf=<?= $this->csrf; ?><?php echo ''; ?>">Eliminar</a>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
 								</td>
 							</tr>
 						<?php } ?>

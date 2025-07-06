@@ -116,7 +116,7 @@ class Page_subcategoriasController extends Page_mainController
 
 		// Agregar filtro para mostrar solo subcategorías del emprendimiento actual
 		// Usamos categorias_padre para almacenar el ID de la tienda (reutilizando el campo existente)
-		$filters .= " AND categorias_padre = '$tiendaId' ";
+		$filters .= " AND categoria_subcategoriatienda = '$tiendaId' ";
 
 		$list = $this->mainModel->getList($filters, $order);
 		$amount = $this->pages;
@@ -160,10 +160,6 @@ class Page_subcategoriasController extends Page_mainController
 		$tiendaId = Session::getInstance()->get('user_negocio');
 		$this->_view->tienda = $tiendaId;
 
-		// Obtener categorías principales disponibles
-		$categoriasModel = new Administracion_Model_DbTable_Categorias();
-		$this->_view->categorias_principales = $categoriasModel->getList("categorias_estado='1' AND categorias_padre='0'", "orden ASC");
-
 		$id = $this->_getSanitizedParam("id");
 		if ($id > 0) {
 			$content = $this->mainModel->getById($id);
@@ -200,7 +196,8 @@ class Page_subcategoriasController extends Page_mainController
 			$data = $this->getData();
 
 			// Asegurar que la subcategoría pertenezca al emprendimiento actual
-			$data['categorias_padre'] = Session::getInstance()->get('user_negocio');
+			$data['categorias_padre'] = Session::getInstance()->get('tiendaInfo')->tiendas_categoria;
+			$data['categoria_subcategoriatienda'] = Session::getInstance()->get('tiendaInfo')->tiendas_id;
 
 			$uploadImage = new Core_Model_Upload_Image();
 			if ($_FILES['categorias_banner']['name'] != '') {
@@ -334,7 +331,7 @@ class Page_subcategoriasController extends Page_mainController
 		}
 
 		if ($this->_getSanitizedParam("categorias_estado") == '') {
-			$data['categorias_estado'] = '1'; // Por defecto activo para subcategorías de emprendimiento
+			$data['categorias_estado'] = '0';
 		} else {
 			$data['categorias_estado'] = $this->_getSanitizedParam("categorias_estado");
 		}

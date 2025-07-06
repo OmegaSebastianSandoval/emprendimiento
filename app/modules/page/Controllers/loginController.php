@@ -320,9 +320,15 @@ class Page_loginController extends Page_mainController
         $data['kt_last_names'] = $resUser->user_lastnames;
         $data['user_phone'] = $resUser->user_phone;
         $data['user_email'] = $resUser->user_email;
-        $data['user_negocio'] = $resUser->user_negocio;
+        $data['user_negocio'] = $resUser->user_negocio;  
         $data['emprendimiento'] = 1;
         $_SESSION["asociado"] = $data;
+        $tiendasModel = new Administracion_Model_DbTable_Tiendas();
+        $tiendaInfo = $tiendasModel->getById($resUser->user_negocio);
+        if ($tiendaInfo) {
+            $_SESSION["tiendaInfo"] = $tiendaInfo;
+            Session::getInstance()->set("tiendaInfo", $tiendaInfo);
+        }
         Session::getInstance()->set("kt_login_id", $resUser->user_id);
         Session::getInstance()->set("kt_login_level", $resUser->user_level);
         Session::getInstance()->set("kt_login_user", $resUser->user_user);

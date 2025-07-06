@@ -1,4 +1,4 @@
-<div class="container  container-list-products py-3">
+<div class="container  container-list-products py-4">
 
 	<h1 class="titulo-principal m-0">
 		<?php echo $this->titlesection; ?>

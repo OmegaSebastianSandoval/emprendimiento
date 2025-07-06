@@ -216,6 +216,10 @@ class Page_listproductosController extends Page_mainController
 		$this->_view->subcategoria = $this->_getSanitizedParam("subcategoria");
 		$this->_view->tienda = $this->_getSanitizedParam("tienda");
 
+		$categoriasModel = new Administracion_Model_DbTable_Categorias();
+		$tiendaId = Session::getInstance()->get('user_negocio');
+		$subcategorias = $categoriasModel->getList("categoria_subcategoriatienda = $tiendaId", "orden ASC");
+		$this->_view->subcategorias = $subcategorias;
 		$id = $this->_getSanitizedParam("id");
 
 		if ($id > 0) {

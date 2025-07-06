@@ -138,10 +138,13 @@
 
 <style>
     .main-general {
-        min-height: calc(100dvh - 380px);
+        min-height: calc(100dvh - 305px);
         display: grid;
         place-items: center;
     }
+    body {
+    margin-top: 103px;
+}
 </style>
 <script>
     document.querySelectorAll('form').forEach(function (form) {

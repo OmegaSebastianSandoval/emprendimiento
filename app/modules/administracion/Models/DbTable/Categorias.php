@@ -1,7 +1,7 @@
-<?php 
+<?php
 /**
-* clase que genera la insercion y edicion  de Categorias en la base de datos
-*/
+ * clase que genera la insercion y edicion  de Categorias en la base de datos
+ */
 class Administracion_Model_DbTable_Categorias extends Db_Table
 {
 	/**
@@ -21,7 +21,8 @@ class Administracion_Model_DbTable_Categorias extends Db_Table
 	 * @param  array Array array con la informacion con la cual se va a realizar la insercion en la base de datos
 	 * @return integer      identificador del  registro que se inserto
 	 */
-	public function insert($data){
+	public function insert($data)
+	{
 		$categorias_nombre = $data['categorias_nombre'];
 		$categorias_descripcion = $data['categorias_descripcion'];
 		$categorias_padre = $data['categorias_padre'];
@@ -31,9 +32,10 @@ class Administracion_Model_DbTable_Categorias extends Db_Table
 		$categorias_estado = $data['categorias_estado'];
 		$categorias_estado_imagen = $data['categorias_estado_imagen'];
 		$categorias_imagen_tienda = $data['categorias_imagen_tienda'];
-		$query = "INSERT INTO categorias( categorias_nombre, categorias_descripcion, categorias_padre, categorias_banner, categorias_color,categorias_imagen_techo,categorias_estado,categorias_imagen_tienda,categorias_estado_imagen) VALUES ( '$categorias_nombre', '$categorias_descripcion', '$categorias_padre', '$categorias_banner', '$categorias_color', '$categorias_imagen_techo', '$categorias_estado', '$categorias_imagen_tienda','$categorias_estado_imagen')";
+		$categoria_subcategoriatienda = $data['categoria_subcategoriatienda'];
+		$query = "INSERT INTO categorias( categorias_nombre, categorias_descripcion, categorias_padre, categorias_banner, categorias_color,categorias_imagen_techo,categorias_estado,categorias_imagen_tienda,categorias_estado_imagen,categoria_subcategoriatienda ) VALUES ( '$categorias_nombre', '$categorias_descripcion', '$categorias_padre', '$categorias_banner', '$categorias_color', '$categorias_imagen_techo', '$categorias_estado', '$categorias_imagen_tienda','$categorias_estado_imagen', '$categoria_subcategoriatienda')";
 		$res = $this->_conn->query($query);
-        return mysqli_insert_id($this->_conn->getConnection());
+		return mysqli_insert_id($this->_conn->getConnection());
 	}
 
 	/**
@@ -42,8 +44,9 @@ class Administracion_Model_DbTable_Categorias extends Db_Table
 	 * @param  integer    identificador al cual se le va a realizar la actualizacion
 	 * @return void
 	 */
-	public function update($data,$id){
-		
+	public function update($data, $id)
+	{
+
 		$categorias_nombre = $data['categorias_nombre'];
 		$categorias_descripcion = $data['categorias_descripcion'];
 		$categorias_banner = $data['categorias_banner'];
@@ -52,7 +55,8 @@ class Administracion_Model_DbTable_Categorias extends Db_Table
 		$categorias_estado = $data['categorias_estado'];
 		$categorias_imagen_tienda = $data['categorias_imagen_tienda'];
 		$categorias_estado_imagen = $data['categorias_estado_imagen'];
-		$query = "UPDATE categorias SET  categorias_nombre = '$categorias_nombre', categorias_descripcion = '$categorias_descripcion', categorias_banner = '$categorias_banner', categorias_color = '$categorias_color', categorias_imagen_techo = '$categorias_imagen_techo', categorias_estado = '$categorias_estado', categorias_imagen_tienda = '$categorias_imagen_tienda', categorias_estado_imagen = '$categorias_estado_imagen'  WHERE categorias_id = '".$id."'";
+		$categoria_subcategoriatienda = $data['categoria_subcategoriatienda'];
+		$query = "UPDATE categorias SET  categorias_nombre = '$categorias_nombre', categorias_descripcion = '$categorias_descripcion', categorias_banner = '$categorias_banner', categorias_color = '$categorias_color', categorias_imagen_techo = '$categorias_imagen_techo', categorias_estado = '$categorias_estado', categorias_imagen_tienda = '$categorias_imagen_tienda', categorias_estado_imagen = '$categorias_estado_imagen', categoria_subcategoriatienda = '$categoria_subcategoriatienda'  WHERE categorias_id = '" . $id . "'";
 		$res = $this->_conn->query($query);
 	}
 }
