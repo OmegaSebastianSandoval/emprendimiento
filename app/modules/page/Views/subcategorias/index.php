@@ -8,7 +8,7 @@
 		<form action="<?php echo $this->route; ?>" method="post" class="py-2">
 			<div class="content-dashboard">
 				<div class="row">
-					<div class="col-6">
+					<div class="col-12 col-lg-6">
 						<label>Nombre</label>
 						<label class="input-group">
 							<div class="input-group-prepend">
@@ -28,13 +28,13 @@
 								value="<?php echo $this->getObjectVariable($this->filters, 'categorias_descripcion') ?>"></input>
 						</label>
 					</div> -->
-					<div class="col-3">
+					<div class="col-6 col-lg-3">
 						<label>&nbsp;</label>
-						<button type="submit" class="btn btn-block btn-azul"> <i class="fas fa-filter"></i> Filtrar</button>
+						<button type="submit" class="btn btn-block btn-morado"> <i class="fas fa-filter"></i> Filtrar</button>
 					</div>
-					<div class="col-3">
+					<div class="col-6 col-lg-3">
 						<label>&nbsp;</label>
-						<a class="btn btn-block btn-azul-claro " href="<?php echo $this->route; ?>?cleanfilter=1"> <i
+						<a class="btn btn-block btn-morado-claro " href="<?php echo $this->route; ?>?cleanfilter=1"> <i
 								class="fas fa-eraser"></i> Limpiar Filtro</a>
 					</div>
 				</div>
@@ -66,15 +66,15 @@
 
 	<div class="content-dashboard">
 		<?php if ($this->register_number > 0): ?>
-			<div class="franja-paginas">
-				<div class="row">
-					<div class="col-5">
+			<div class="franja-paginas mb-3 mb-lg-0">
+				<div class="row gap-3">
+					<div class="col-12 col-lg-5">
 						<div class="titulo-registro">Se encontraron <?php echo $this->register_number; ?> Registros</div>
 					</div>
-					<div class="col-3 text-right text-end">
+					<div class="col-5 col-lg-3 text-right text-end">
 						<div class="texto-paginas">Registros por pagina:</div>
 					</div>
-					<div class="col-1">
+					<div class="col-2 col-lg-1">
 						<select class="form-control form-control-sm selectpagination">
 							<option value="20" <?php if ($this->pages == 20) {
 								echo 'selected';
@@ -90,9 +90,9 @@
 							} ?>>100</option>
 						</select>
 					</div>
-					<div class="col-3">
+					<div class="col-12 col-lg-3">
 
-						<div class="text-right text-end"><a class="btn btn-sm btn-success"
+						<div class="text-start text-lg-end"><a class="btn btn-sm btn-orange"
 								href="<?php echo $this->route . "\manage"; ?>"> <i class="fas fa-plus-square"></i> Crear
 								Nuevo</a></div>
 
@@ -103,24 +103,24 @@
 				<table class=" table table-striped  table-hover table-administrator text-left">
 					<thead>
 						<tr>
-							<td>Nombre</td>
-							<!-- <td>Descripcion</td> -->
-							<td width="100">Orden</td>
-							<td></td>
+							<td  scope="col">Nombre</td>
+							<!-- <td  scope="col">Descripcion</td> -->
+							<!-- <td  scope="col" width="100">Orden</td> -->
+							<td  scope="col"></td>
 						</tr>
 					</thead>
 					<tbody>
 						<?php foreach ($this->lists as $content) { ?>
 							<?php $id = $content->categorias_id; ?>
 							<tr>
-								<td><?= $content->categorias_nombre; ?></td>
+								<td  data-label="Nombre"><?= $content->categorias_nombre; ?></td>
 								<!-- <td><?= $content->categorias_descripcion; ?></td> -->
-								<td>
+							<!-- 	<td>
 									<input type="hidden" id="<?= $id; ?>" value="<?= $content->orden; ?>"></input>
 									<button class="up_table btn btn-primary btn-sm"><i class="fas fa-angle-up"></i></button>
 									<button class="down_table btn btn-primary btn-sm"><i class="fas fa-angle-down"></i></button>
-								</td>
-								<td class="text-right text-end">
+								</td> -->
+								<td data-label="Acciones" class="text-right text-end">
 									<div>
 
 										<?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "4" || $_SESSION['kt_login_level'] == "5") { ?>
@@ -136,12 +136,12 @@
 											aria-labelledby="myModalLabel">
 											<div class="modal-dialog" role="document">
 												<div class="modal-content">
-													<div class="modal-header">
-														<h4 class="modal-title" id="myModalLabel">Eliminar Registro</h4>
+													<div class="modal-header bg-white">
+														<h4 class="modal-title text-secondary" id="myModalLabel">Eliminar categoria</h4>
 														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 													</div>
 													<div class="modal-body">
-														<div class="">¿Esta seguro de eliminar este registro?</div>
+														<div class="">¿Esta seguro de eliminar esta categoria?</div>
 													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

@@ -20,7 +20,7 @@ class Page_mainController extends Controllers_Abstract
 		$this->_view->infopage = $infopageModel->getById(1);
 
 		$categoriasModel = new Administracion_Model_DbTable_Categorias();
-		$this->_view->categorias = $categoriasModel->getList("categorias_estado='1'", "orden ASC");
+		$this->_view->categorias = $categoriasModel->getList("categorias_estado='1'AND categorias_padre = '0' ", "orden ASC");
 		$this->getLayout()->setData("metadescription", $this->_view->infopage->info_pagina_descripcion);
 		$this->getLayout()->setData("metakeywords", $this->_view->infopage->info_pagina_tags);
 		$this->getLayout()->setData("info_pagina_scripts", $this->_view->infopage->info_pagina_scripts);
@@ -80,7 +80,7 @@ class Page_mainController extends Controllers_Abstract
 			return false;
 		}
 	}
-		public function getAsociadoInfo($cedula = '')
+	public function getAsociadoInfo($cedula = '')
 	{
 		$url = "https://creditos.fendesa.com/page/sistema/getasociadofendesa";
 		$hash = md5("OMEGA_" . date("Y-m-d"));
@@ -98,7 +98,7 @@ class Page_mainController extends Controllers_Abstract
 		$response = curl_exec($ch);
 		curl_close($ch);
 		$response = json_decode($response, true);
-		if (is_countable($response) && count($response) > 0) {			
+		if (is_countable($response) && count($response) > 0) {
 			$data['user_names'] = $response['user_names'];
 			$data['user_lastnames'] = $response['user_lastnames'];
 			$data['user_email'] = $response['user_email'];
@@ -106,5 +106,25 @@ class Page_mainController extends Controllers_Abstract
 		} else {
 			return false;
 		}
+	}
+	public function deleteimageAction()
+	{
+		$this->setLayout('blanco');
+		header('Content-Type:application/json');
+		$campo = $this->_getSanitizedParam("campo");
+		$id = $this->_getSanitizedParam("id");
+		$csrf = $this->_getSanitizedParam("csrf");
+		$elimino = 0;
+		if (Session::getInstance()->get('csrf')[$this->_getSanitizedParam("csrf_section")] == $csrf) {
+			$id = $this->_getSanitizedParam("id");
+			$content = $this->mainModel->getById($id);
+			if ($content->$campo != '') {
+				$modelUploadImage = new Core_Model_Upload_Image();
+				$this->mainModel->editField($id, $campo, '');
+				$modelUploadImage->delete($content->$campo);
+				$elimino = 1;
+			}
+		}
+		echo json_encode(array('elimino' => $elimino));
 	}
 }

@@ -53,7 +53,7 @@ $(document).ready(function () {
     position: "left",
   });
   $(".file-image").fileinput({
-     maxFileSize: 2048,
+    maxFileSize: 2048,
     previewFileType: "image",
     allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
     browseClass: "btn  btn-verde",
@@ -64,7 +64,6 @@ $(document).ready(function () {
     language: "es",
     dropZoneEnabled: false,
     showCancel: false,
-
   });
   $(".ir-arriba").click(function () {
     $("body, html").animate(
@@ -93,9 +92,8 @@ $(document).ready(function () {
       500: 1,
     },
   });
-    $(".carousel").carousel({
+  $(".carousel").carousel({
     quantity: 1,
-  
   });
   $(".banner-video-youtube").each(function () {
     //console.log($(this).attr("data-video"));
@@ -373,7 +371,7 @@ $(document).ready(function () {
       });
     },
   });
- $(".selectpagination").change(function () {
+  $(".selectpagination").change(function () {
     var route = $("#page-route").val();
     var pages = $(this).val();
     $.post(route, { pages: pages }, function () {
@@ -381,11 +379,66 @@ $(document).ready(function () {
     });
   });
 
-    $(".switch-form").bootstrapToggle({
+  $(".switch-form").bootstrapToggle({
     on: "Si",
     off: "No",
     offstyle: "danger",
   });
-
-
 });
+// Al cargar el DOM
+document.addEventListener("DOMContentLoaded", () => {
+  // Selecciona todos los inputs con clase "price"
+  const priceInputs = document.querySelectorAll("input.price");
+
+  priceInputs.forEach((input) => {
+    // Al pegar o escribir en el input
+    input.addEventListener("input", (e) => {
+      // Reemplaza TODO lo que no sea dígito por cadena vacía
+      e.target.value = e.target.value.replace(/\D/g, "");
+    });
+
+    // Opcional: bloquea pulsaciones de teclas no numéricas
+    input.addEventListener("keydown", (e) => {
+      // Permite: Backspace(8), Delete(46), Tab(9), flechas, Inicio/Fin, Ctrl/Cmd+A,C,V,X
+      const allowedKeys = [
+        "Backspace",
+        "Delete",
+        "Tab",
+        "ArrowLeft",
+        "ArrowRight",
+        "Home",
+        "End",
+      ];
+      if (
+        allowedKeys.includes(e.key) ||
+        // Ctrl/Cmd + A,C,V,X
+        ((e.ctrlKey || e.metaKey) &&
+          ["a", "c", "v", "x"].includes(e.key.toLowerCase()))
+      ) {
+        return;
+      }
+      // Si no es dígito de 0 a 9, evita la acción
+      if (!/^[0-9]$/.test(e.key)) {
+        e.preventDefault();
+      }
+    });
+  });
+});
+
+function eliminarImagen(campo, ruta) {
+  var csrf = $("#csrf").val();
+  var csrf_section = $("#csrf_section").val();
+  var id = $("#id").val();
+  if (confirm("¿Esta seguro de borrar esta imagen?") == true) {
+    $.post(
+      ruta,
+      { id: id, csrf: csrf, csrf_section: csrf_section, campo: campo },
+      function (data) {
+        if (parseInt(data.elimino) == 1) {
+          $("#imagen_" + campo).hide();
+        }
+      }
+    );
+  }
+  return false;
+}

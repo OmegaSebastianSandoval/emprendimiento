@@ -13,11 +13,26 @@
                     <h4 class="interes   fw-bold pb-3 mb-0 lh-1">Categorias</h4>
                 </div>
 
-                <div class="list-group list-categorias">
+                <!-- Select para responsive (móvil) -->
+                <div class="d-block d-md-none mb-3 ">
+                    <select name="buscar_categoria_mobile" id="buscar_categoria_mobile" class="form-select" onchange="buscar_categoria_mobile()">
+                        <option value="">Selecciona una categoría</option>
+                        <?php foreach ($this->categorias as $key => $categoria) { ?>
+                            <option value="<?php echo $categoria->categorias_id ?>" 
+                                <?php echo $categoria->categorias_id == $this->categoria->categorias_id ? 'selected' : '' ?>>
+                                <?php echo $categoria->categorias_nombre ?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                </div>
+
+                <!-- Lista para desktop -->
+                <div class="list-group list-categorias d-none d-md-block">
 
                     <?php foreach ($this->categorias as $key => $categoria) { ?>
 
-                        <a type="button" href="/page/categoria?id=<?php echo $categoria->categorias_id ?>&page=1"
+                        <a type="button"
+                            href="/page/categoria?id=<?php echo $categoria->categorias_id ?>&page=1<?= $this->subtienda ? '&subtienda=' . $this->subtienda : '' ?>"
                             class="list-group-item list-group-item-action <?php echo $categoria->categorias_id == $this->categoria->categorias_id ? 'active' : '' ?>"
                             aria-current="true">
                             <?php echo $categoria->categorias_nombre ?>
@@ -29,7 +44,19 @@
             </div>
         </div>
         <div class="col-12 col-md-8 col-lg-9 d-flex flex-column gap-3 ">
-
+            <?php if ($this->subtienda) { ?>
+                <div class="border-bottom mb-2" style="padding-bottom: 15px;">
+                    <h5 class="text-info-categoria">
+                        <a
+                            href="/page/categoria?id=<?php echo $this->categoria->categorias_id ?>&page=1&ordenar=<?php echo $this->ordenar ?>&subtienda=<?php echo $this->subtienda ?>">
+                            <?php echo $this->categoria->categorias_nombre ?> <i class="fa-solid fa-angles-right"></i>
+                        </a>
+                        <span>
+                            <?php echo $this->tienda->tiendas_nombre ?>
+                        </span>
+                    </h5>
+                </div>
+            <?php } ?>
             <!-- Formulario de ordenamiento -->
             <div class="mb-3 d-none">
                 <form method="get" action="/page/categoria" id="form-order" class="row">
@@ -93,8 +120,10 @@
 
                 <?php } ?>
             <?php } else { ?>
-                <h2 class="w-100 text-center mt-5 text-muted font-weight-bold">Por el momento esta categoría no tiene
-                    negocios asociados</h2>
+                <div class="alert alert-warning text-center mt-5 w-100">
+                    Por el momento esta categoría no tiene
+                    negocios asociados
+                </div>
             <?php } ?>
 
             <!-- Paginacion de tiendas -->
@@ -109,16 +138,50 @@
                             if (isset($this->orden) && $this->orden != '') {
                                 $params .= '&ordenar=' . $this->orden;
                             }
+                            if ($this->subtienda) {
+                                $params .= '&subtienda=' . $this->subtienda;
+                            }
 
                             if ($this->totalpages > 1) {
+                                // Determinar el rango de páginas a mostrar
+                                $max_pages_normal = 10;
+                                $max_pages_responsive = 3;
+
+                                $start_page = max(1, $this->page - floor($max_pages_normal / 2));
+                                $end_page = min($this->totalpages, $start_page + $max_pages_normal - 1);
+
+                                if ($end_page - $start_page + 1 < $max_pages_normal) {
+                                    $start_page = max(1, $end_page - $max_pages_normal + 1);
+                                }
+
+                                $start_page_responsive = max(1, $this->page - floor($max_pages_responsive / 2));
+                                $end_page_responsive = min($this->totalpages, $start_page_responsive + $max_pages_responsive - 1);
+
+                                if ($end_page_responsive - $start_page_responsive + 1 < $max_pages_responsive) {
+                                    $start_page_responsive = max(1, $end_page_responsive - $max_pages_responsive + 1);
+                                }
+
+                                // Botón Anterior
                                 if ($this->page != 1)
                                     echo '<li class="page-item"><a class="page-link" href="' . $url . $params . '&page=' . ($this->page - 1) . '"> &laquo; Anterior </a></li>';
-                                for ($i = 1; $i <= $this->totalpages; $i++) {
+
+                                // Páginas para pantallas normales
+                                for ($i = $start_page; $i <= $end_page; $i++) {
                                     if ($this->page == $i)
-                                        echo '<li class="active page-item"><a class="page-link">' . $this->page . '</a></li>';
+                                        echo '<li class="active page-item d-none d-md-block"><a class="page-link">' . $this->page . '</a></li>';
                                     else
-                                        echo '<li class="page-item"><a class="page-link" href="' . $url . $params . '&page=' . $i . '">' . $i . '</a></li>  ';
+                                        echo '<li class="page-item d-none d-md-block"><a class="page-link" href="' . $url . $params . '&page=' . $i . '">' . $i . '</a></li>';
                                 }
+
+                                // Páginas para responsive
+                                for ($i = $start_page_responsive; $i <= $end_page_responsive; $i++) {
+                                    if ($this->page == $i)
+                                        echo '<li class="active page-item d-block d-md-none"><a class="page-link">' . $this->page . '</a></li>';
+                                    else
+                                        echo '<li class="page-item d-block d-md-none"><a class="page-link" href="' . $url . $params . '&page=' . $i . '">' . $i . '</a></li>';
+                                }
+
+                                // Botón Siguiente
                                 if ($this->page != $this->totalpages)
                                     echo '<li class="page-item"><a class="page-link" href="' . $url . $params . '&page=' . ($this->page + 1) . '">Siguiente &raquo;</a></li>';
                             }
@@ -165,4 +228,21 @@ function enlacepagina($x)
     $("#ordenar").on('change', function () {
         $("#form-order").submit();
     });
+    
+    function buscar_categoria_mobile() {
+        var id = $("#buscar_categoria_mobile").val();
+        if(id) {
+            var url = '/page/categoria?id=' + id + '&page=1';
+            <?php if ($this->subtienda) { ?>
+                url += '&subtienda=<?php echo $this->subtienda ?>';
+            <?php } ?>
+            window.location.href = url;
+        }
+    }
 </script>
+<style>
+    .main-general {
+        min-height: calc(100dvh - 303px);
+
+    }
+</style>

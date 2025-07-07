@@ -100,6 +100,24 @@ class Core_userController extends Controllers_Abstract
             http_response_code(200);
         }
     }
+    public function validarprecioAction()
+    {
+        $precio = $this->_getSanitizedParam("productos_precio");
+        $error_precio = '';
+        if (!is_numeric($precio)) {
+            $error_precio = "El precio debe ser un número";
+        } else if ($precio <= 0) {
+            $error_precio = "El precio debe ser mayor a 0";
+        } else if ($precio > 10000000) {
+            $error_precio = "El precio no puede ser mayor a 10.000.000";
+        }
+        if ($error_precio != '') {
+            header("HTTP/1.0 400 " . $error_precio);
+        } else {
+            http_response_code(200);
+        }
+
+    }
     public function validarusuarioAction()
     {
         $modelUser = new Core_Model_DbTable_User();

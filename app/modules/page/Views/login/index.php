@@ -1,4 +1,4 @@
-<div class="py-5">
+<div class="py-5 px-3 px-md-0">
 
     <div align="center" class="caja_registro alto-login">
         <nav>

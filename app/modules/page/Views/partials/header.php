@@ -2,9 +2,7 @@
 	<div class="container">
 		<div class="row g-0">
 			<div class="col-6 col-lg-4">
-
-
-				<a href="/" class="mt-1">
+				<a href="/" class="mt-0 mt-lg-1">
 					<img src="/skins/page/images/logofendyshop.svg" class="logo">
 				</a>
 			</div>
@@ -108,7 +106,7 @@
 
 <!--RESPONSIVE-->
 <div class="botonera-resposive">
-	<div class="row  align-items-center g-0 px-3" style="height: 5rem;">
+	<div class="row content-header-responsive align-items-center g-0 px-3" style="height: 6rem;">
 		<div class="col-8">
 			<span class="title-menu-responsive"> Menú</span>
 		</div>
@@ -174,7 +172,7 @@
 	<?php if ($this->nombre != "") { ?>
 		<div class="p-3">
 			<div class="text-start text-lg-end">
-				<div class="row  text-white cuenta-responsive">
+				<div class="row  text-morado cuenta-responsive">
 					<div class="col-12 text-start mb-2">
 						Bienvenido, <?php echo $this->nombre; ?>
 					</div>
@@ -206,7 +204,7 @@
 			<?php } ?>
 			<?php if ($this->infopage->info_pagina_correos_contacto) { ?>
 				<a href="mailto:<?php echo $this->infopage->info_pagina_correos_contacto; ?>" target="_blank"
-					class="text-white text-decoration-none d-flex gap-2 align-items-center"> <i
+					class="text-morado text-decoration-none d-flex gap-2 align-items-center"> <i
 						class="fas fa-envelope mr-2"></i><span><?php echo $this->infopage->info_pagina_correos_contacto; ?></span></a>
 			<?php } ?>
 		</div>

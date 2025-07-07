@@ -52,6 +52,11 @@ class Page_categoriaController extends Page_mainController
 
 		// $catgoria = $this->_getSanitizedParam('categoria');
 		$id = $this->_getSanitizedParam('id');
+		$categoriasModel = new Administracion_Model_DbTable_Categorias();
+		$subCategoriaInfo = $categoriasModel->getById($id);
+		if (!$subCategoriaInfo) {
+			header("Location: /");
+		}
 		// $subcategoria = $this->_getSanitizedParam('subcategoria');
 		// $buscar = $this->_getSanitizedParam('buscar');
 		// if ($catgoria != "") {
@@ -60,18 +65,11 @@ class Page_categoriaController extends Page_mainController
 		// 	$this->_view->productos = $this->template->getProductos($buscar);
 		// }
 
-		$categoriasModel = new Administracion_Model_DbTable_Categorias();
 		$productosModel = new Administracion_Model_DbTable_Productos();
 		$cuadrosModel = new Administracion_Model_DbTable_Cuadros();
 		$tiendasModel = new Administracion_Model_DbTable_Tiendas();
 		$tiendasClicksModel = new Administracion_Model_DbTable_Tiendaclicks();
-		// $this->_view->categorias = $categorias = $categoriasModel->getList(" categorias_padre='0' "," orden ASC ");
-		// foreach ($categorias as $key => $value) {
-		// 	$padre = $value->categorias_id;
-		// 	$hijos = $categoriasModel->getList(" categorias_padre='$padre' "," orden ASC ");
-		// 	$value->hijos = $hijos;
-		// }
-		// $this->_view->categorias = $categorias;
+
 		$orden = "RAND()";
 
 		if ($this->_getSanitizedParam('ordenar') == "recientes") {
@@ -106,7 +104,7 @@ class Page_categoriaController extends Page_mainController
 		}
 
 		if ($this->_getSanitizedParam('ordenar') == "visitados") {
-		
+
 			$orden = "clics DESC";
 			$this->_view->orden = "visitados";
 			$group = "id_tienda";
@@ -117,7 +115,7 @@ class Page_categoriaController extends Page_mainController
 			// Obtener tiendas paginadas para visitados (si el modelo lo soporta)
 			$this->_view->tiendas = $tiendasClicksModel->getListClicks2($filters, $orden . " LIMIT $start, $amount", $group);
 		} else {
-			
+
 
 			// Para otros ordenamientos
 			$list = $tiendasModel->getList($filters, $orden);
@@ -133,7 +131,15 @@ class Page_categoriaController extends Page_mainController
 		$this->_view->categoria = $categoriasModel->getById($id);
 
 		// Cargar todas las categorias para el sidebar
-		$this->_view->categorias = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' ", " orden_categorias ASC ");
+		$subtienda = $this->_getSanitizedParam('subtienda');
+
+		if ($subtienda && $subtienda >= 1) {
+			$this->_view->subtienda = $subtienda;
+			$this->_view->categorias = $categoriasModel->getList(" categorias_padre!='0'  AND categoria_subcategoriatienda='$subtienda' AND categorias_estado='1' ", " orden_categorias ASC ");
+			$this->_view->tienda = $tiendasModel->getById($subtienda);
+		} else {
+			$this->_view->categorias = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' ", " orden_categorias ASC ");
+		}
 
 		$this->_view->productos = $productosModel->getList("", "");
 		$this->_view->cuadros = $cuadrosModel->getList("", "");

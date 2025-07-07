@@ -23,12 +23,15 @@
 			<div class="row">
 				<div class="col-12 form-group d-grid">
 					<label class="control-label">Activo</label>
-					<input type="checkbox" name="producto_activo" value="1" data-toggle="toggle"class="form-control switch-form "  data-on="Activado" data-off="Desactivado" data-offstyle="danger"  data-onstyle="success" <?php if ($this->getObjectVariable($this->content, 'producto_activo') == 1) {
-						echo "checked";
-					} ?>></input>
+					<input type="checkbox" name="producto_activo" value="1" data-toggle="toggle" class="form-control switch-form "
+						data-on="Activado" data-off="Desactivado" data-offstyle="danger" data-onstyle="success" <?php if ($this->getObjectVariable($this->content, 'producto_activo') == 1) {
+							echo "checked";
+						} ?>></input>
 					<div class="help-block with-errors"></div>
 				</div>
-				<!-- <input type="checkbox" name="contenido_estado"  id="contenido_estado" value="1" data-toggle="toggle" class="form-control"  data-onstyle="success" <?php if ($this->getObjectVariable($this->content, 'contenido_estado') == 1) { echo "checked";} ?>  data-on="Activado" data-off="Desactivado" data-offstyle="danger"  ></input> -->
+				<!-- <input type="checkbox" name="contenido_estado"  id="contenido_estado" value="1" data-toggle="toggle" class="form-control"  data-onstyle="success" <?php if ($this->getObjectVariable($this->content, 'contenido_estado') == 1) {
+					echo "checked";
+				} ?>	data-on="Activado" data-off="Desactivado" data-offstyle="danger"  ></input> -->
 				<div class="col-12 col-md-6 form-group">
 					<label for="productos_nombre" class="control-label">Nombre</label>
 					<label class="input-group">
@@ -47,7 +50,7 @@
 							<span class="input-group-text input-icono  fondo-azul-claro "><i class="fas fa-pencil-alt"></i></span>
 						</div>
 						<input type="text" value="<?= $this->content->productos_precio; ?>" name="productos_precio"
-							id="productos_precio" class="form-control" required>
+							id="productos_precio" data-remote="/core/user/validarprecio" class="form-control price" required>
 					</label>
 					<div class="help-block with-errors"></div>
 				</div>
@@ -84,6 +87,72 @@
 						</div>
 					<?php } ?>
 				</div>
+
+				<div class="col-6 form-group">
+					<label for="productos_imagen_una">Imagen adicional 1</label>
+					<input type="file" name="productos_imagen_una" id="productos_imagen_una" class="form-control  file-image"
+						data-buttonName="btn-primary" accept="image/gif, image/jpg, image/jpeg, image/png">
+					<div class="help-block with-errors"></div>
+					<?php if ($this->content->productos_imagen_una) { ?>
+						<div id="imagen_productos_imagen_una">
+							<img src="/images/<?= $this->content->productos_imagen_una; ?>"
+								class="img-thumbnail thumbnail-administrator" />
+							<div><button class="btn btn-danger btn-sm" type="button"
+									onclick="eliminarImagen('productos_imagen_una','<?php echo $this->route . "/deleteimage"; ?>')"><i
+										class="glyphicon glyphicon-remove"></i> Eliminar Imagen</button></div>
+						</div>
+					<?php } ?>
+				</div>
+
+				<div class="col-6 form-group">
+					<label for="productos_imagen_dos">Imagen adicional 2</label>
+					<input type="file" name="productos_imagen_dos" id="productos_imagen_dos" class="form-control  file-image"
+						data-buttonName="btn-primary" accept="image/gif, image/jpg, image/jpeg, image/png">
+					<div class="help-block with-errors"></div>
+					<?php if ($this->content->productos_imagen_dos) { ?>
+						<div id="imagen_productos_imagen_dos">
+							<img src="/images/<?= $this->content->productos_imagen_dos; ?>"
+								class="img-thumbnail thumbnail-administrator" />
+							<div><button class="btn btn-danger btn-sm" type="button"
+									onclick="eliminarImagen('productos_imagen_dos','<?php echo $this->route . "/deleteimage"; ?>')"><i
+										class="glyphicon glyphicon-remove"></i> Eliminar Imagen</button></div>
+						</div>
+					<?php } ?>
+				</div>
+
+				<div class="col-6 form-group">
+					<label for="productos_imagen_tres">Imagen adicional 3</label>
+					<input type="file" name="productos_imagen_tres" id="productos_imagen_tres" class="form-control  file-image"
+						data-buttonName="btn-primary" accept="image/gif, image/jpg, image/jpeg, image/png">
+					<div class="help-block with-errors"></div>
+					<?php if ($this->content->productos_imagen_tres) { ?>
+						<div id="imagen_productos_imagen_tres">
+							<img src="/images/<?= $this->content->productos_imagen_tres; ?>"
+								class="img-thumbnail thumbnail-administrator" />
+							<div><button class="btn btn-danger btn-sm" type="button"
+									onclick="eliminarImagen('productos_imagen_tres','<?php echo $this->route . "/deleteimage"; ?>')"><i
+										class="glyphicon glyphicon-remove"></i> Eliminar Imagen</button></div>
+						</div>
+					<?php } ?>
+				</div>
+
+				<div class="col-6 form-group">
+					<label for="productos_imagen_cuatro">Imagen adicional 4</label>
+					<input type="file" name="productos_imagen_cuatro" id="productos_imagen_cuatro"
+						class="form-control  file-image" data-buttonName="btn-primary"
+						accept="image/gif, image/jpg, image/jpeg, image/png">
+					<div class="help-block with-errors"></div>
+					<?php if ($this->content->productos_imagen_cuatro) { ?>
+						<div id="imagen_productos_imagen_cuatro">
+							<img src="/images/<?= $this->content->productos_imagen_cuatro; ?>"
+								class="img-thumbnail thumbnail-administrator" />
+							<div><button class="btn btn-danger btn-sm" type="button"
+									onclick="eliminarImagen('productos_imagen_cuatro','<?php echo $this->route . "/deleteimage"; ?>')"><i
+										class="glyphicon glyphicon-remove"></i> Eliminar Imagen</button></div>
+						</div>
+					<?php } ?>
+				</div>
+
 				<!-- <div class="col-12 form-group">
 			<label   class="control-label">destacado</label>
 				<input type="checkbox" name="productos_destacado" value="1" class="form-control switch-form " <?php if ($this->getObjectVariable($this->content, 'productos_destacado') == 1) {

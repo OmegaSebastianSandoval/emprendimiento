@@ -36,7 +36,12 @@ class Administracion_Model_DbTable_Productos extends Db_Table
 		$productos_cantidad_minima = $data['productos_cantidad_minima'];
 		$productos_limite_pedido = $data['productos_limite_pedido'];
 		$productos_tienda = $data['productos_tienda'];
-		$query = "INSERT INTO productos( productos_nombre, productos_descripcion, productos_imagen, productos_destacado, productos_precio, productos_nuevo, productos_cantidad, productos_categorias, productos_subcategoria, producto_activo, productos_codigo, productos_cantidad_minima, productos_limite_pedido, productos_tienda) VALUES ( '$productos_nombre', '$productos_descripcion', '$productos_imagen', '$productos_destacado', '$productos_precio', '$productos_nuevo', '$productos_cantidad', '$productos_categorias', '$productos_subcategoria', '$producto_activo', '$productos_codigo', '$productos_cantidad_minima', '$productos_limite_pedido', '$productos_tienda')";
+		$productos_imagen_una = $data['productos_imagen_una'];
+		$productos_imagen_dos = $data['productos_imagen_dos'];
+		$productos_imagen_tres = $data['productos_imagen_tres'];
+		$productos_imagen_cuatro = $data['productos_imagen_cuatro'];
+
+		$query = "INSERT INTO productos( productos_nombre, productos_descripcion, productos_imagen, productos_destacado, productos_precio, productos_nuevo, productos_cantidad, productos_categorias, productos_subcategoria, producto_activo, productos_codigo, productos_cantidad_minima, productos_limite_pedido, productos_tienda, productos_imagen_una, productos_imagen_dos, productos_imagen_tres, productos_imagen_cuatro) VALUES ( '$productos_nombre', '$productos_descripcion', '$productos_imagen', '$productos_destacado', '$productos_precio', '$productos_nuevo', '$productos_cantidad', '$productos_categorias', '$productos_subcategoria', '$producto_activo', '$productos_codigo', '$productos_cantidad_minima', '$productos_limite_pedido', '$productos_tienda', '$productos_imagen_una', '$productos_imagen_dos', '$productos_imagen_tres', '$productos_imagen_cuatro')";
 		$res = $this->_conn->query($query);
         return mysqli_insert_id($this->_conn->getConnection());
 	}
@@ -62,8 +67,12 @@ class Administracion_Model_DbTable_Productos extends Db_Table
 		$productos_codigo = $data['productos_codigo'];
 		$productos_cantidad_minima = $data['productos_cantidad_minima'];
 		$productos_limite_pedido = $data['productos_limite_pedido'];
-		$productos_tienda = $data['productos_tienda'];
-		$query = "UPDATE productos SET  productos_nombre = '$productos_nombre', productos_descripcion = '$productos_descripcion', productos_imagen = '$productos_imagen', productos_destacado = '$productos_destacado', productos_precio = '$productos_precio', productos_nuevo = '$productos_nuevo', productos_cantidad = '$productos_cantidad', productos_categorias = '$productos_categorias', productos_subcategoria = '$productos_subcategoria', producto_activo = '$producto_activo', productos_codigo = '$productos_codigo', productos_cantidad_minima = '$productos_cantidad_minima', productos_limite_pedido = '$productos_limite_pedido', productos_tienda = '$productos_tienda' WHERE productos_id = '".$id."'";
+		$productos_tienda = $data['productos_tienda']; 
+		$productos_imagen_una = $data['productos_imagen_una'];
+		$productos_imagen_dos = $data['productos_imagen_dos'];
+		$productos_imagen_tres = $data['productos_imagen_tres'];	
+		$productos_imagen_cuatro = $data['productos_imagen_cuatro'];
+		$query = "UPDATE productos SET  productos_nombre = '$productos_nombre', productos_descripcion = '$productos_descripcion', productos_imagen = '$productos_imagen', productos_destacado = '$productos_destacado', productos_precio = '$productos_precio', productos_nuevo = '$productos_nuevo', productos_cantidad = '$productos_cantidad', productos_categorias = '$productos_categorias', productos_subcategoria = '$productos_subcategoria', producto_activo = '$producto_activo', productos_codigo = '$productos_codigo', productos_cantidad_minima = '$productos_cantidad_minima', productos_limite_pedido = '$productos_limite_pedido', productos_tienda = '$productos_tienda', productos_imagen_una = '$productos_imagen_una', productos_imagen_dos = '$productos_imagen_dos', productos_imagen_tres = '$productos_imagen_tres', productos_imagen_cuatro = '$productos_imagen_cuatro' WHERE productos_id = '".$id."'";
 		$res = $this->_conn->query($query);
 	}
 	public function getListCategorias($filters = '',$order = '')

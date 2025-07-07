@@ -8,7 +8,7 @@
 		<form action="<?php echo $this->route ?>" method="post">
 			<div class="content-dashboard my-2">
 				<div class="row">
-					<div class="col-6">
+					<div class="col-12 col-lg-6">
 						<label>Nombre</label>
 						<label class="input-group">
 							<div class="input-group-prepend">
@@ -20,11 +20,11 @@
 					</div>
 
 
-					<div class="col-3">
+					<div class="col-6 col-lg-3">
 						<label>&nbsp;</label>
 						<button type="submit" class="btn btn-block btn-morado"> <i class="fas fa-filter"></i> Filtrar</button>
 					</div>
-					<div class="col-3">
+					<div class="col-6 col-lg-3">
 						<label>&nbsp;</label>
 						<a class="btn btn-block btn-morado-claro " href="<?php echo $this->route; ?>?cleanfilter=1"> <i
 								class="fas fa-eraser"></i> Limpiar Filtro</a>
@@ -63,15 +63,15 @@
 
 	<div class="content-dashboard">
 		<?php if ($this->hasProducts): ?>
-			<div class="franja-paginas">
-				<div class="row">
-					<div class="col-5">
+			<div class="franja-paginas mb-3 mb-lg-0">
+				<div class="row gap-3">
+					<div class="col-12 col-lg-3">
 						<div class="titulo-registro">Se encontraron <?php echo $this->register_number; ?> Registros</div>
 					</div>
-					<div class="col-3 text-right text-end">
+					<div class="col-5 col-lg-3 text-right text-start text-lg-end">
 						<div class="texto-paginas">Registros por pagina:</div>
 					</div>
-					<div class="col-1">
+					<div class="col-2 col-lg-1">
 						<select class="form-control form-control-sm selectpagination">
 							<option value="20" <?php if ($this->pages == 20) {
 								echo 'selected';
@@ -87,10 +87,14 @@
 							} ?>>100</option>
 						</select>
 					</div>
-					<div class="col-3">
-						<div class="text-right text-end"><a class="btn btn-sm btn-orange"
+					<div class="col-12 col-lg-5">
+						<div class="justify-content-lg-end d-flex align-items-center gap-2">
+							<a class="btn btn-orange btn-sm " href="/page/subcategorias/">
+								<i class="fa-solid fa-list"></i> Configurar subcategorias</a>
+							<a class="btn btn-sm btn-orange"
 								href="<?php echo $this->route . "\manage" . "?categoria=" . $this->categoria . "" . "&subcategoria=" . $this->subcategoria . "" . "&tienda=" . $this->tienda . ""; ?>">
-								<i class="fas fa-plus-square"></i> Crear Nuevo</a></div>
+								<i class="fas fa-plus-square"></i> Crear Nuevo</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -99,28 +103,28 @@
 				<table class=" table table-striped  table-hover table-administrator text-left">
 					<thead>
 						<tr>
-							<td>Nombre</td>
-							<td>Descripci&oacute;n</td>
-							<td>Imagen</td>
-							<td>Precio</td>
-							<td width="100"></td>
+							<th scope="col">Nombre</th>
+							<!-- <th scope="col">Descripci&oacute;n</th> -->
+							<th scope="col">Imagen</th>
+							<th scope="col">Precio</th>
+							<th scope="col" width="100"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<?php foreach ($this->lists as $content) { ?>
 							<?php $id = $content->productos_id; ?>
 							<tr>
-								<td><?= $content->productos_nombre; ?></td>
-								<td><?= $content->productos_descripcion; ?></td>
-								<td>
+								<td data-label="Nombre"><?= $content->productos_nombre; ?></td>
+								<!-- <td><?= $content->productos_descripcion; ?></td> -->
+								<td data-label="Imagen">
 									<?php if ($content->productos_imagen) { ?>
 										<img src="/images/<?= $content->productos_imagen; ?>" class="img-thumbnail thumbnail-administrator" />
 									<?php } ?>
 									<div><?= $content->productos_imagen; ?></div>
 								</td>
-								<td><?= $content->productos_precio; ?></td>
+								<td data-label="Precio"><?= $content->productos_precio; ?></td>
 
-								<td class="text-right text-end">
+								<td data-label="Acciones" class="text-right text-end">
 									<div>
 										<a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/manage?id=<?= $id ?>"
 											data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-pen-alt"></i></a>
@@ -132,12 +136,12 @@
 										aria-labelledby="myModalLabel">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
-												<div class="modal-header">
-													<h4 class="modal-title" id="myModalLabel">Eliminar Registro</h4>
+												<div class="modal-header bg-white">
+													<h4 class="modal-title text-secondary" id="myModalLabel">Eliminar producto</h4>
 													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 												</div>
 												<div class="modal-body">
-													<div class="">¿Esta seguro de eliminar este registro?</div>
+													<div class="">¿Esta seguro de eliminar este producto?</div>
 												</div>
 												<div class="modal-footer">
 													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

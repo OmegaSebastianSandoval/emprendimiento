@@ -1083,6 +1083,11 @@ header nav ul li ul li:hover a {
 	color: #FFF;
 }
 
+.botonera-resposive i {
+	color: var(--morado);
+
+}
+
 .email {
 	padding: 5px;
 	text-align: right;
@@ -1375,7 +1380,7 @@ header nav ul li ul li:hover a {
 	}
 
 	body {
-		margin-top: 68px;
+		margin-top: 84px;
 	}
 
 	.carrito {
@@ -1466,7 +1471,7 @@ header nav ul li ul li:hover a {
 	}
 
 	header {
-		/* height: 5rem; */
+		height: 6rem;
 	}
 
 	.cant {
@@ -1985,12 +1990,6 @@ footer .derechos span {
 	font-size: 1.05rem;
 }
 
-@media (min-width: 576px) {
-	/* .modal-dialog {
-		max-width: 600px;
-		margin: 1.75rem auto;
-	} */
-}
 
 #nombremodal {}
 
@@ -3237,49 +3236,47 @@ ul#menu2 li ul li:hover .icon-menu2 {
 
 }
 
- .datos-tienda a.facebook {
+.datos-tienda a.facebook {
 	color: #0866FF;
 }
 
- .datos-tienda a.facebook:hover {
+.datos-tienda a.facebook:hover {
 
 	font-weight: 700;
 }
 
- .datos-tienda .insta,
+.datos-tienda .insta,
 .datos-tienda .insta {
 	color: #E1306C;
 }
 
- .datos-tienda .insta a, 
- .datos-tienda .insta a 
-{
+.datos-tienda .insta a,
+.datos-tienda .insta a {
 	color: #333333;
 	transition: all 0.3s ease;
 
 }
 
- .datos-tienda .insta a:hover,
-.datos-tienda .insta a:hover
- {
+.datos-tienda .insta a:hover,
+.datos-tienda .insta a:hover {
 	color: #E1306C;
 	font-weight: 700;
 }
 
- .datos-tienda a.pagina {
+.datos-tienda a.pagina {
 	color: #666666;
 	font-size: 14px;
 }
 
- .datos-tienda a.pagina:hover {
+.datos-tienda a.pagina:hover {
 	font-weight: 700;
 }
 
- .datos-tienda .tel {
+.datos-tienda .tel {
 	color: #666666;
 }
 
- .datos-tienda .tel a {
+.datos-tienda .tel a {
 	color: #3d3d3d;
 
 }
@@ -4345,6 +4342,8 @@ ul#menu2 li ul li:hover .icon-menu2 {
 .has-error .with-errors .list-unstyled {
 	margin: 0;
 	padding: 0;
+	font-weight: 400;
+	font-size: 12px;
 }
 
 
@@ -4768,10 +4767,7 @@ span.title-menu-responsive {
 	color: #fff;
 }
 
-.botonera-resposive {
-	background-color: var(--morado);
 
-}
 
 .botonera-resposive .btn-menu i {
 	font-size: 22px;
@@ -4782,7 +4778,9 @@ span.title-menu-responsive {
 }
 
 span.title-menu-responsive {
-	color: #fff;
+	color: var(--morado2);
+	font-weight: 500;
+	font-size: 25px;
 }
 
 .modal-content .close {
@@ -5719,12 +5717,13 @@ h3.login-title {
 	font-weight: bolder;
 }
 
-.caja-buscador a{
+.caja-buscador a {
 	text-decoration: none;
 	color: var(--morado2);
 	font-weight: 600;
 }
-.titulo-buscador{
+
+.titulo-buscador {
 	color: var(--morado);
 	font-weight: 900;
 }
@@ -5732,64 +5731,206 @@ h3.login-title {
 /* crear productos */
 
 .btn-guardar {
-    background: #8bc63d;
-    color: #FFFFFF;
-    font-weight: 300;
-    font-size: 16px;
-    padding-left: 30px;
-    padding-right: 30px;
-    border: 1px solid #8bc63d;
+	background: #8bc63d;
+	color: #FFFFFF;
+	font-weight: 300;
+	font-size: 16px;
+	padding-left: 30px;
+	padding-right: 30px;
+	border: 1px solid #8bc63d;
 }
 
 .btn-guardar:hover {
-    background: #FFFFFF;
-    color: #8bc63d;
+	background: #FFFFFF;
+	color: #8bc63d;
 }
 
 .btn-cancelar {
-    background: #fe1e26;
-    color: #FFFFFF;
-    font-weight: 300;
-    font-size: 16px;
-    padding-left: 30px;
-    padding-right: 30px;
-    border: 1px solid #fe1e26;
+	background: #fe1e26;
+	color: #FFFFFF;
+	font-weight: 300;
+	font-size: 16px;
+	padding-left: 30px;
+	padding-right: 30px;
+	border: 1px solid #fe1e26;
 }
 
 .btn-cancelar:hover {
-    background: #FFFFFF;
-    color: #fe1e26;
+	background: #FFFFFF;
+	color: #fe1e26;
 }
+
 .toggle-handle {
-    background: #FFFFFF;
+	background: #FFFFFF;
 }
+
 .content-dashboard .control-label,
-.content-dashboard .form-group label
-{
+.content-dashboard .form-group label {
 	font-size: 14px;
 	color: var(--gray);
 }
-.toggle-group label{
+
+.toggle-group label {
 	color: #FFFF !important;
 }
+
 .content-table .table tbody {
-    font-weight: 300;
-    font-size: 16px;
+	font-weight: 300;
+	font-size: 16px;
 }
+
 .content-table .table>tbody {
-    vertical-align: inherit;
+	vertical-align: inherit;
 }
+
 .down_table {
-    background: transparent;
-    color: #f15925;
-    display: inline-block;
-    border-color: #f15925;
+	background: transparent;
+	color: #f15925;
+	display: inline-block;
+	border-color: #f15925;
 }
+
 .up_table {
-    display: inline-block;
-    background: #f15925;
-    border-color: #f15925;
+	display: inline-block;
+	background: #f15925;
+	border-color: #f15925;
 }
-.content-table .table td{
+
+.content-table .table td {
 	text-align: start;
+}
+
+.text-morado {
+	color: var(--morado2);
+}
+
+.content-table table {
+	border: 1px solid #ccc;
+	border-collapse: collapse;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	table-layout: fixed;
+}
+
+.content-table table caption {
+	font-size: 1.5em;
+	margin: .5em 0 .75em;
+}
+
+.content-table table tr {
+	background-color: #f8f8f8;
+	border: 1px solid #ddd;
+	padding: .35em;
+}
+
+.content-table table th,
+.content-table table td {
+	padding: .625em;
+	text-align: center;
+}
+
+.content-table table th {
+	font-size: .85em;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+	.content-table table {
+		border: 0;
+	}
+
+	.content-table table caption {
+		font-size: 1.3em;
+	}
+
+	.content-table table thead {
+		border: none;
+		clip: rect(0 0 0 0);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+	}
+
+	.content-table table tr {
+		border-bottom: 3px solid #ddd;
+		display: block;
+		margin-bottom: .625em;
+	}
+
+	.content-table table td {
+		border-bottom: 1px solid #ddd;
+		display: block;
+		font-size: .8em;
+		text-align: right !important;
+	}
+
+	.content-table table td::before {
+		/*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+		content: attr(data-label);
+		float: left;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+
+	.content-table table td:last-child {
+		border-bottom: 0;
+	}
+}
+
+/*  */
+
+@media (max-width: 765px) {
+	.interes {
+		padding-left: 15px;
+	}
+
+	.imagen-tienda img {
+		height: 130px;
+	}
+
+	.categoria-tienda h5 {
+		font-size: 12px;
+	}
+
+	.titulo-tienda h4 {
+		font-size: 15px;
+	}
+
+	.descripcion-tienda * {
+		font-size: 13px;
+	}
+
+	.descripcion-tienda {
+		height: 60px;
+	}
+
+	.btn-producto {
+		padding: 2px 12px;
+		font-size: 11px;
+	}
+
+	.text-info-categoria {
+		display: grid;
+	}
+
+	.text-info-categoria a {
+		font-size: 12px;
+	}
+
+	.text-info-categoria span {
+		font-size: 17px;
+	}
+
+	.content-header-responsive {
+		border-bottom: 1px solid #c6aef7;
+	}
+
 }

@@ -265,10 +265,29 @@ class Page_listproductosController extends Page_mainController
 			// Obtener datos del formulario
 			$data = $this->getData();
 
-			// Manejo de subida de imagen
+			// Manejo de subida de imágenes
 			$uploadImage = new Core_Model_Upload_Image();
+
+			// Imagen principal
 			if ($_FILES['productos_imagen']['name'] != '') {
 				$data['productos_imagen'] = $uploadImage->upload("productos_imagen");
+			}
+
+			// Imágenes adicionales
+			if ($_FILES['productos_imagen_una']['name'] != '') {
+				$data['productos_imagen_una'] = $uploadImage->upload("productos_imagen_una");
+			}
+
+			if ($_FILES['productos_imagen_dos']['name'] != '') {
+				$data['productos_imagen_dos'] = $uploadImage->upload("productos_imagen_dos");
+			}
+
+			if ($_FILES['productos_imagen_tres']['name'] != '') {
+				$data['productos_imagen_tres'] = $uploadImage->upload("productos_imagen_tres");
+			}
+
+			if ($_FILES['productos_imagen_cuatro']['name'] != '') {
+				$data['productos_imagen_cuatro'] = $uploadImage->upload("productos_imagen_cuatro");
 			}
 
 			// Insertar producto y configurar orden
@@ -311,7 +330,7 @@ class Page_listproductosController extends Page_mainController
 				$data = $this->getData();
 				$uploadImage = new Core_Model_Upload_Image();
 
-				// Manejo de imagen: subir nueva o mantener existente
+				// Manejo de imagen principal: subir nueva o mantener existente
 				if ($_FILES['productos_imagen']['name'] != '') {
 					// Eliminar imagen anterior si existe
 					if ($content->productos_imagen) {
@@ -321,6 +340,51 @@ class Page_listproductosController extends Page_mainController
 				} else {
 					// Mantener imagen existente
 					$data['productos_imagen'] = $content->productos_imagen;
+				}
+
+				// Manejo de imágenes adicionales
+				if ($_FILES['productos_imagen_una']['name'] != '') {
+					// Eliminar imagen anterior si existe
+					if ($content->productos_imagen_una) {
+						$uploadImage->delete($content->productos_imagen_una);
+					}
+					$data['productos_imagen_una'] = $uploadImage->upload("productos_imagen_una");
+				} else {
+					// Mantener imagen existente
+					$data['productos_imagen_una'] = $content->productos_imagen_una;
+				}
+
+				if ($_FILES['productos_imagen_dos']['name'] != '') {
+					// Eliminar imagen anterior si existe
+					if ($content->productos_imagen_dos) {
+						$uploadImage->delete($content->productos_imagen_dos);
+					}
+					$data['productos_imagen_dos'] = $uploadImage->upload("productos_imagen_dos");
+				} else {
+					// Mantener imagen existente
+					$data['productos_imagen_dos'] = $content->productos_imagen_dos;
+				}
+
+				if ($_FILES['productos_imagen_tres']['name'] != '') {
+					// Eliminar imagen anterior si existe
+					if ($content->productos_imagen_tres) {
+						$uploadImage->delete($content->productos_imagen_tres);
+					}
+					$data['productos_imagen_tres'] = $uploadImage->upload("productos_imagen_tres");
+				} else {
+					// Mantener imagen existente
+					$data['productos_imagen_tres'] = $content->productos_imagen_tres;
+				}
+
+				if ($_FILES['productos_imagen_cuatro']['name'] != '') {
+					// Eliminar imagen anterior si existe
+					if ($content->productos_imagen_cuatro) {
+						$uploadImage->delete($content->productos_imagen_cuatro);
+					}
+					$data['productos_imagen_cuatro'] = $uploadImage->upload("productos_imagen_cuatro");
+				} else {
+					// Mantener imagen existente
+					$data['productos_imagen_cuatro'] = $content->productos_imagen_cuatro;
 				}
 
 				// Actualizar producto
@@ -361,10 +425,22 @@ class Page_listproductosController extends Page_mainController
 				$content = $this->mainModel->getById($id);
 
 				if (isset($content)) {
-					// Eliminar imagen asociada si existe
+					// Eliminar imágenes asociadas si existen
 					$uploadImage = new Core_Model_Upload_Image();
 					if (isset($content->productos_imagen) && $content->productos_imagen != '') {
 						$uploadImage->delete($content->productos_imagen);
+					}
+					if (isset($content->productos_imagen_una) && $content->productos_imagen_una != '') {
+						$uploadImage->delete($content->productos_imagen_una);
+					}
+					if (isset($content->productos_imagen_dos) && $content->productos_imagen_dos != '') {
+						$uploadImage->delete($content->productos_imagen_dos);
+					}
+					if (isset($content->productos_imagen_tres) && $content->productos_imagen_tres != '') {
+						$uploadImage->delete($content->productos_imagen_tres);
+					}
+					if (isset($content->productos_imagen_cuatro) && $content->productos_imagen_cuatro != '') {
+						$uploadImage->delete($content->productos_imagen_cuatro);
 					}
 
 					// Eliminar producto de la base de datos
@@ -387,6 +463,61 @@ class Page_listproductosController extends Page_mainController
 		header('Location: ' . $this->route . '?categoria=' . $categoria . '&subcategoria=' . $subcategoria . '&tienda=' . $tienda . '');
 	}
 
+	/**
+	 * Elimina una imagen específica de un producto
+	 * Maneja la eliminación individual de imágenes (principal y adicionales)
+	 * 
+	 * @return void
+	 */
+/* 	public function deleteimageAction()
+	{
+		$this->setLayout('blanco');
+		$csrf = $this->_getSanitizedParam("csrf");
+
+		// Validación CSRF
+		if (Session::getInstance()->get('csrf')[$this->_csrf_section] == $csrf) {
+			$id = $this->_getSanitizedParam("id");
+			$campo = $this->_getSanitizedParam("campo");
+
+			if (isset($id) && $id > 0 && isset($campo) && $campo != '') {
+				$content = $this->mainModel->getById($id);
+
+				if (isset($content)) {
+					$uploadImage = new Core_Model_Upload_Image();
+
+					// Validar que el campo sea uno de los campos de imagen permitidos
+					$camposPermitidos = ['productos_imagen', 'productos_imagen_una', 'productos_imagen_dos', 'productos_imagen_tres', 'productos_imagen_cuatro'];
+
+					if (in_array($campo, $camposPermitidos)) {
+						// Eliminar imagen del servidor si existe
+						if (isset($content->$campo) && $content->$campo != '') {
+							$uploadImage->delete($content->$campo);
+						}
+
+						// Actualizar campo en la base de datos
+						$data = array();
+						$data[$campo] = '';
+						$this->mainModel->update($data, $id);
+
+						// Registrar en el log del sistema
+						$data['productos_id'] = $id;
+						$data['log_log'] = "Imagen eliminada: " . $campo;
+						$data['log_tipo'] = 'ELIMINAR IMAGEN PRODUCTO';
+						$logModel = new Administracion_Model_DbTable_Log();
+						$logModel->insert($data);
+					}
+				}
+			}
+		}
+
+		// Redirección de vuelta al formulario de edición
+		$categoria = $this->_getSanitizedParam("categoria");
+		$subcategoria = $this->_getSanitizedParam("subcategoria");
+		$tienda = $this->_getSanitizedParam("tienda");
+		$id = $this->_getSanitizedParam("id");
+		header('Location: ' . $this->route . '/manage?id=' . $id . '&categoria=' . $categoria . '&subcategoria=' . $subcategoria . '&tienda=' . $tienda);
+	}
+ */
 	// ========================================
 	// MÉTODOS AUXILIARES Y UTILIDADES
 	// ========================================
@@ -403,6 +534,10 @@ class Page_listproductosController extends Page_mainController
 		$data['productos_nombre'] = $this->_getSanitizedParam("productos_nombre");
 		$data['productos_descripcion'] = $this->_getSanitizedParamHtml("productos_descripcion");
 		$data['productos_imagen'] = "";
+		$data['productos_imagen_una'] = "";
+		$data['productos_imagen_dos'] = "";
+		$data['productos_imagen_tres'] = "";
+		$data['productos_imagen_cuatro'] = "";
 		$data['productos_destacado'] = $this->_getSanitizedParam("productos_destacado");
 		$data['productos_precio'] = $this->_getSanitizedParam("productos_precio");
 		$data['productos_nuevo'] = $this->_getSanitizedParam("productos_nuevo");

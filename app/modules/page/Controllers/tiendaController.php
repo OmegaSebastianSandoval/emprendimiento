@@ -33,15 +33,16 @@ class Page_tiendaController extends Page_mainController
 		$id = $this->_getSanitizedParam('id');
 		$this->_view->ordenar = $this->_getSanitizedParam('ordenar');
 		$this->_view->page = $this->_getSanitizedParam('page');
+
 		$usuario = $_SESSION["kt_login_id"];
 		$this->_view->tienda_id = $id;
 		$favoritosModel = new Administracion_Model_DbTable_Favoritos();
 		$this->_view->favoritos = $favoritosModel->getList("favoritos_tienda='$id' AND favoritos_usuario='$usuario'", "");
 		// $subcategoria = $this->_getSanitizedParam('subcategoria');
 		// $buscar = $this->_getSanitizedParam('buscar');
-		// if ($catgoria != "") {
-		// 	$this->_view->productos = $this->template->getProductosf($catgoria,$subcategoria);
-		// }elseif ($catgoria == "") {
+		// if ($categoria != "") {
+		// 	$this->_view->productos = $this->template->getProductosf($categoria,$subcategoria);
+		// }elseif ($categoria == "") {
 		// 	$this->_view->productos = $this->template->getProductos($buscar);
 		// }
 
@@ -68,7 +69,8 @@ class Page_tiendaController extends Page_mainController
 		$tiendaclicksModel->insert($data);
 
 		$categoriasModel = new Administracion_Model_DbTable_Categorias();
-		$this->_view->categorias = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' ", " categorias_nombre ASC ");
+	
+		$this->_view->categorias = $categoriasModel->getList(" categoria_subcategoriatienda='$id' AND categorias_estado='1' ", " categorias_nombre ASC ");
 
 	}
 
