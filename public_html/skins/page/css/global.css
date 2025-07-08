@@ -4331,7 +4331,7 @@ ul#menu2 li ul li:hover .icon-menu2 {
 	border-radius: 0 0 0.5em 0.5em;
 	font-weight: 700;
 	font-size: 14px;
-	position: absolute;
+	/* position: absolute; */
 	padding: 0;
 	height: auto;
 	padding-left: 20px;
@@ -4368,9 +4368,37 @@ ul#menu2 li ul li:hover .icon-menu2 {
 	margin-bottom: 2px;
 }
 
-.registro h1 {
+.registro h3 {
 	color: var(--naranja);
 }
+
+.registro h6 {
+	color: var(--gray);
+}
+
+.registro label {
+	font-size: 13px;
+	color: #4a4a4a;
+}
+
+.registro input,
+.registro select {
+	font-size: 13px;
+
+}
+
+.file-caption-name:not(.file-caption-disabled) {
+	background-color: #fff;
+}
+
+.input-group .btn-verde {
+	padding: 6.7px 3px;
+}
+
+.input-group .btn-verde span {
+	font-size: 11px;
+}
+
 
 .modal-open #myModal {
 	display: flex !important;

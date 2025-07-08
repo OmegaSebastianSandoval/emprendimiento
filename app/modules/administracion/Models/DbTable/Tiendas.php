@@ -34,7 +34,8 @@ class Administracion_Model_DbTable_Tiendas extends Db_Table
 		$tiendas_imagen = $data['tiendas_imagen'];
 		$tiendas_categoria = $data['tiendas_categoria'];
 		$tiendas_estado = $data['tiendas_estado'];
-		$query = "INSERT INTO tiendas( tiendas_nombre, tiendas_descripcion, tiendas_pagina, tiendas_facebook, tiendas_instagram, tiendas_telefono, tiendas_telefono2, tiendas_datos, tiendas_whatsapp, tiendas_imagen, tiendas_categoria, tiendas_estado) VALUES ( '$tiendas_nombre', '$tiendas_descripcion','$tiendas_pagina', '$tiendas_facebook', '$tiendas_instagram', '$tiendas_telefono','$tiendas_telefono2',  '$tiendas_datos', '$tiendas_whatsapp', '$tiendas_imagen', '$tiendas_categoria', '$tiendas_estado')";
+		$tiendas_correo = $data['tiendas_correo'];
+		$query = "INSERT INTO tiendas( tiendas_nombre, tiendas_descripcion, tiendas_pagina, tiendas_facebook, tiendas_instagram, tiendas_telefono, tiendas_telefono2, tiendas_datos, tiendas_whatsapp, tiendas_imagen, tiendas_categoria, tiendas_estado, tiendas_correo) VALUES ( '$tiendas_nombre', '$tiendas_descripcion','$tiendas_pagina', '$tiendas_facebook', '$tiendas_instagram', '$tiendas_telefono','$tiendas_telefono2',  '$tiendas_datos', '$tiendas_whatsapp', '$tiendas_imagen', '$tiendas_categoria', '$tiendas_estado', '$tiendas_correo')";
 		$res = $this->_conn->query($query);
         return mysqli_insert_id($this->_conn->getConnection());
 	}
@@ -48,7 +49,8 @@ class Administracion_Model_DbTable_Tiendas extends Db_Table
 	public function update($data,$id){
 		
 		$tiendas_nombre = $data['tiendas_nombre'];
-		$tiendas_descripcion = $data['tiendas_descripcion'];
+		$tiendas_descripcion = $data['tiendas_descrip
+		cion'];
 		$tiendas_datos = $data['tiendas_datos'];
 		$tiendas_pagina = $data['tiendas_pagina'];
 		$tiendas_facebook = $data['tiendas_facebook'];
@@ -59,7 +61,8 @@ class Administracion_Model_DbTable_Tiendas extends Db_Table
 		$tiendas_imagen = $data['tiendas_imagen'];
 		$tiendas_categoria = $data['tiendas_categoria'];
 		$tiendas_estado = $data['tiendas_estado'];
-		$query = "UPDATE tiendas SET  tiendas_nombre = '$tiendas_nombre', tiendas_descripcion = '$tiendas_descripcion',tiendas_pagina = '$tiendas_pagina',tiendas_facebook = '$tiendas_facebook',tiendas_instagram = '$tiendas_instagram',tiendas_telefono = '$tiendas_telefono',tiendas_telefono2 = '$tiendas_telefono2', tiendas_datos = '$tiendas_datos', tiendas_whatsapp = '$tiendas_whatsapp', tiendas_imagen = '$tiendas_imagen', tiendas_categoria = '$tiendas_categoria', tiendas_estado = '$tiendas_estado' WHERE tiendas_id = '".$id."'";
+		$tiendas_correo = $data['tiendas_correo'];
+		$query = "UPDATE tiendas SET  tiendas_nombre = '$tiendas_nombre', tiendas_descripcion = '$tiendas_descripcion',tiendas_pagina = '$tiendas_pagina',tiendas_facebook = '$tiendas_facebook',tiendas_instagram = '$tiendas_instagram',tiendas_telefono = '$tiendas_telefono',tiendas_telefono2 = '$tiendas_telefono2', tiendas_datos = '$tiendas_datos', tiendas_whatsapp = '$tiendas_whatsapp', tiendas_imagen = '$tiendas_imagen', tiendas_categoria = '$tiendas_categoria', tiendas_estado = '$tiendas_estado', tiendas_correo = '$tiendas_correo' WHERE tiendas_id = '".$id."'";
 		$res = $this->_conn->query($query);
 	}
 }

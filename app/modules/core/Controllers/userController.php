@@ -157,6 +157,10 @@ class Core_userController extends Controllers_Abstract
     {
 
         $documento = $this->_getSanitizedParam("documento_asociado");
+        $pj_documento_asociado = $this->_getSanitizedParam("pj_documento_asociado");
+        if ($documento == '') {
+            $documento = $pj_documento_asociado;
+        }
         $socio = $this->getAsociado($documento);
         if (!$socio) {
             $error = utf8_decode("Número de documento no válido");
@@ -169,8 +173,8 @@ class Core_userController extends Controllers_Abstract
     {
         $tel = $this->_getSanitizedParam("telefono");
         $error_tel = '';
-        if (strlen($tel) < 7) {
-            $error_tel = "El número de telefono debe ser minimo de 7 dígitos";
+        if (strlen($tel) < 7 || strlen($tel) > 10) {
+            $error_tel = "El número de telefono debe ser minimo de 7 dígitos y máximo de 10 dígitos";
         }
         if ($error_tel != '') {
             $error_tel = utf8_decode($error_tel);

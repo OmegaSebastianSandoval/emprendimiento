@@ -65,6 +65,20 @@ $(document).ready(function () {
     dropZoneEnabled: false,
     showCancel: false,
   });
+    $(".file-document").fileinput({
+    maxFileSize: 2048,
+    previewFileType: "image",
+    browseLabel: "Archivo",
+    browseClass: "btn  btn-cafe",
+    allowedFileExtensions: ["pdf", "xlsx", "xls", "doc", "docx"],
+    showUpload: false,
+    showRemove: false,
+    browseIcon: '<i class="fas fa-folder-open"></i> ',
+    language: "es",
+    dropZoneEnabled: false,
+    showCancel: false,
+
+  });
   $(".ir-arriba").click(function () {
     $("body, html").animate(
       {
@@ -336,6 +350,17 @@ $(document).ready(function () {
     });
   });
 */
+
+  const maxChars = 700;
+  const commercialActivity = document.getElementById("descripcion");
+  const charCount = document.getElementById("char-count");
+
+  // Initial character count on page load
+  if (commercialActivity && charCount) {
+    const content = commercialActivity.value;
+    charCount.innerText = `${content.length}/${maxChars}`;
+  }
+
 
   tinymce.init({
     selector: "textarea.tinyeditor-simple",
