@@ -1,186 +1,94 @@
-<div class="row no-gutters">
-    <div class="col-md-1"></div>
-    <div class="col-md-9 my-4">
-        <div class="container-fluid favoritos">
-            <div class="row">
-                <?php foreach ($this->favoritos as $key => $favorito) { ?>
-                    <?php foreach ($this->tiendas as $key2 => $tienda) { ?>
-                        <?php if ($favorito->favoritos_tienda == $tienda->tiendas_id) { ?>
-                            <?php $cont = 0; ?>
-                            <div class="col-md-4 mt-4">
-                                <?php foreach ($this->categorias as $key3 => $categoria) { ?> <?php if ($tienda->tiendas_categoria == $categoria->categorias_id) { ?><a href="/page/tienda?id=<?php echo $tienda->tiendas_id ?>&&categoria=<?php echo $categoria->categorias_id ?>"><?php } ?> <?php } ?>
-                                    <div class="caja-tienda">
-                                        <?php foreach ($this->categorias as $key4 => $categoria) { ?> <?php if ($tienda->tiendas_categoria == $categoria->categorias_id) { ?> <img src="/images/<?php echo $categoria->categorias_imagen_techo ?>" alt=""><?php } ?> <?php } ?>
-                                        <div id="carousel<?php echo $tienda->tiendas_id ?>" class="carousel slide"
-                                            data-bs-interval="false" data-bs-ride="carousel">
-                                            <div class="carousel-inner prod">
-                                                <div class="carousel-item active img-productos mb-2">
-                                                    <img class="" src="/images/<?php echo $tienda->tiendas_imagen ?>" alt="">
-                                                </div>
-                                                <?php foreach ($this->productos as $key2 => $value2) { ?>
-                                                    <?php if ($value2->productos_tienda == $tienda->tiendas_id) { ?>
-                                                        <div class="carousel-item img-productos mb-2">
-                                                            <img class="" src="/images/<?php echo $value2->productos_imagen ?>" alt="">
-                                                        </div>
+<?php
+// Funciones helper para simplificar el código
+function obtenerCategoriaId($tienda, $categorias)
+{
+    foreach ($categorias as $categoria) {
+        if ($tienda->tiendas_categoria == $categoria->categorias_id) {
+            return $categoria->categorias_id;
+        }
+    }
+    return '';
+}
 
-                                                        <?php $cont++; ?>
-                                                    <?php } ?>
-                                                <?php } ?>
-                                            </div>
-                                            <button class="carousel-control-prev" href="#carousel<?php echo $tienda->tiendas_id ?>"
-                                                role="button" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Previous</span>
-                                        </a>
-                                        <button class="carousel-control-next" href="#carousel<?php echo $tienda->tiendas_id ?>"
-                                            role="button" data-bs-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span>
-                                            </a>
+function obtenerCategoriaNombre($tienda, $categorias)
+{
+    foreach ($categorias as $categoria) {
+        if ($tienda->tiendas_categoria == $categoria->categorias_id) {
+            return $categoria->categorias_nombre;
+        }
+    }
+    return '';
+}
+
+function obtenerCategoriaColor($tienda, $categorias)
+{
+    foreach ($categorias as $categoria) {
+        if ($tienda->tiendas_categoria == $categoria->categorias_id) {
+            return $categoria->categorias_color;
+        }
+    }
+    return '#007bff'; // Color por defecto
+}
+?>
+
+<div class="container favoritos py-4">
+    <h2 class="contact">Tiendas favoritas</h2>
+    <div class="row">
+        <?php foreach ($this->favoritos as $key => $favorito) { ?>
+            <?php foreach ($this->tiendas as $key2 => $tienda) { ?>
+                <?php if ($favorito->favoritos_tienda == $tienda->tiendas_id) { ?>
+                    <div class="col-12 col-md-6">
+
+                        <div class="mt-4 row">
+                            <div class="col-4">
+
+                                <a href="/page/tienda?id=<?php echo $tienda->tiendas_id ?>&categoria=<?php echo obtenerCategoriaId($tienda, $this->categorias) ?>"
+                                    class="enlace-tienda">
+                                    <div class="imagen-tienda">
+                                        <?php if ($tienda->tiendas_imagen && file_exists(IMAGE_PATH . $tienda->tiendas_imagen)) { ?>
+                                            <img class="shadow-sm" src="/images/<?php echo $tienda->tiendas_imagen ?>"
+                                                alt="Imagen del producto <?php echo $tienda->tiendas_nombre ?>">
+                                        <?php } else { ?>
+                                            <img class="shadow-sm" src="/corte/stock.png"
+                                                alt="Imagen del producto <?php echo $tienda->tiendas_nombre ?>">
+                                        <?php } ?>
+                                    </div>
+
+                                </a>
+
+
                             </div>
-                            <div class="caja-texto px-3 pb-2">
-                                <div class="titulo-tienda text-left">
-                                    <h4><?php echo $tienda->tiendas_nombre ?></h4>
-                                </div>
-                                <div class="datos-tienda pb-3">
-                                    <?php if ($tienda->tiendas_pagina != "") { ?>
-                                        <span><a href="http://<?php echo enlacepagina($tienda->tiendas_pagina) ?>" target="_blank"><?php echo $tienda->tiendas_pagina ?></a></span>
-                                    <?php } ?>
-                                    <?php if ($tienda->tiendas_facebook != "") { ?>
-                                        <span><a href="https://www.facebook.com/<?php echo enlaceredes($tienda->tiendas_facebook) ?>" target="_blank">facebook/<?php echo enlaceredes($tienda->tiendas_facebook) ?></a></span>
-                                    <?php } ?>
-                                    <?php if ($tienda->tiendas_instagram != "") { ?>
-                                        <span>Instagram: <a href="https://www.instagram.com/<?php echo enlaceredes($tienda->tiendas_instagram) ?>" target="_blank">@<?php echo enlaceredes($tienda->tiendas_instagram) ?></a></span>
-                                    <?php } ?>
-                                    <?php if ($tienda->tiendas_telefono != "") { ?>
-                                        <?php $telefono = intval(preg_replace('/[^0-9]+/', '', $tienda->tiendas_telefono), 10);  ?>
-                                        <span>Teléfono:<a href="tel:<?php echo $telefono ?>" target="_blank"> <?php echo $tienda->tiendas_telefono ?></a></span>
-                                    <?php } ?>
-                                    <?php if ($tienda->tiendas_telefono2 != "") { ?>
-                                        <?php $telefono2 = intval(preg_replace('/[^0-9]+/', '', $tienda->tiendas_telefono2), 10);  ?>
-                                        <span>Teléfono:<a href="tel:<?php echo $telefono2 ?>" target="_blank"> <?php echo $tienda->tiendas_telefono2 ?></a></span>
-                                    <?php } ?>
-                                </div>
+                            <div class="col-8">
 
-                                <div class="whatsapp-tienda">
-                                    <?php if ($tienda->tiendas_whatsapp != "") { ?>
-                                        <?php $whatsapp = intval(preg_replace('/[^0-9]+/', '', $tienda->tiendas_whatsapp), 10);  ?>
-                                        <a class="btn-whatsapp"
-                                            style="background-color:<?php foreach ($this->categorias as $key4 => $categoria) { ?> <?php if ($tienda->tiendas_categoria == $categoria->categorias_id) { ?><?php echo $categoria->categorias_color ?><?php } ?> <?php } ?>"
-                                            href="https://api.whatsapp.com/send?phone=57<?php echo $whatsapp; ?>"
-                                            target="_blank">
-                                            <span>Para comprar contáctese a este enlace</span>
+                                <div class="caja-texto">
+                                    <div class="categoria-tienda text-left">
+                                        <h5>
+                                            <?php echo obtenerCategoriaNombre($tienda, $this->categorias) ?>
+                                        </h5>
+                                    </div>
+                                    <div class="titulo-tienda text-left">
+                                        <h4><?php echo $tienda->tiendas_nombre ?></h4>
+                                    </div>
+                                    <div class="descripcion-tienda">
+                                        <?php echo $tienda->tiendas_descripcion ?>
+                                    </div>
+
+                                    <div class="enlace-catalogo">
+                                        <a href="/page/tienda?id=<?php echo $tienda->tiendas_id ?>&categoria=<?php echo obtenerCategoriaId($tienda, $this->categorias) ?>"
+                                            class="btn btn-producto"
+                                            style="background-color: <?php echo obtenerCategoriaColor($tienda, $this->categorias) ?>;">
+                                            ver catálogo
                                         </a>
-                                    <?php } else if ($tienda->tiendas_pagina != "") { ?>
-                                        <a class="btn-whatsapp"
-                                            style="background-color:<?php foreach ($this->categorias as $key5 => $categoria) { ?> <?php if ($tienda->tiendas_categoria == $categoria->categorias_id) { ?><?php echo $categoria->categorias_color ?><?php } ?> <?php } ?>"
-                                            href="http://<?php echo enlacepagina($tienda->tiendas_pagina) ?>" target="_blank">
-                                            <span>Para comprar contáctese a este enlace</span>
-                                        </a>
-                                    <?php } else if ($tienda->tiendas_facebook != "") { ?>
-                                        <a class="btn-whatsapp"
-                                            style="background-color:<?php foreach ($this->categorias as $key5 => $categoria) { ?> <?php if ($tienda->tiendas_categoria == $categoria->categorias_id) { ?><?php echo $categoria->categorias_color ?><?php } ?> <?php } ?>"
-                                            href="https://www.facebook.com/<?php echo enlaceredes($tienda->tiendas_facebook) ?>" target="_blank">
-                                            <span>CPara comprar contáctese a este enlace</span>
-                                        </a>
-                                    <?php } else if ($tienda->tiendas_instagram != "") { ?>
-                                        <a class="btn-whatsapp"
-                                            style="background-color:<?php foreach ($this->categorias as $key6 => $categoria) { ?> <?php if ($tienda->tiendas_categoria == $categoria->categorias_id) { ?><?php echo $categoria->categorias_color ?><?php } ?> <?php } ?>"
-                                            href="https://www.instagram.com/<?php echo enlaceredes($tienda->tiendas_instagram) ?>" target="_blank">
-                                            <span>Para comprar contáctese a este enlace</span>
-                                        </a>
-                                    <?php } else { ?>
-                                        <?php $telefono = intval(preg_replace('/[^0-9]+/', '', $tienda->tiendas_telefono), 10);  ?>
-                                        <a class="btn-whatsapp"
-                                            style="background-color:<?php foreach ($this->categorias as $key7 => $categoria) { ?> <?php if ($tienda->tiendas_categoria == $categoria->categorias_id) { ?><?php echo $categoria->categorias_color ?><?php } ?> <?php } ?>"
-                                            href="tel:<?php echo $telefono; ?>" target="_blank">
-                                            <span>Contactar por teléfono</span>
-                                        </a>
-                                    <?php } ?>
+                                    </div>
                                 </div>
                             </div>
-            </div>
-            </a>
-        </div>
-    <?php } ?>
-<?php } ?>
-<?php } ?>
-    </div>
-</div>
-</div>
-<div class="col-md-2">
-    <div class="items-index">
-        <div class="row no-gutters">
-            <div class="col-12 actividades p-3 ">
-                <?php if ($this->actividadesVirtualesPadre->contenido_titulo_ver == 1) { ?>
-                    <div class="titulo-index"> <span><?php echo $this->actividadesVirtualesPadre->contenido_titulo ?>
-                            <hr>
-                        </span> </div>
-                <?php } ?>
-                <?php if ($this->actividadesVirtuales->contenido_imagen != "") { ?>
-                    <img src="/images/<?php echo $this->actividadesVirtuales->contenido_imagen ?>" alt="">
-                <?php } ?>
-                <div class="descripcion-index">
-                    <?php if ($this->actividadesVirtuales->contenido_titulo_ver == 1) { ?>
-                        <h2><?php echo $this->actividadesVirtuales->contenido_titulo; ?></h2>
-                    <?php } ?>
-                    <?php echo $this->actividadesVirtuales->contenido_descripcion ?>
-                </div>
-            </div>
-            <div class="col-12 tarima p-3">
-                <?php if ($this->enTarimaPadre->contenido_titulo_ver == 1) { ?>
-                    <div class="titulo-index"> <span><?php echo $this->enTarimaPadre->contenido_titulo ?>
-                            <hr>
-                        </span> </div>
-                <?php } ?>
-
-                <?php foreach ($this->enTarima as $key2 => $Tarima) { ?>
-
-                    <?php if ($Tarima->contenido_imagen != "") { ?>
-                        <img src="/images/<?php echo $Tarima->contenido_imagen ?>" alt="">
-                    <?php } ?>
-                    <div class="descripcion-index">
-                        <?php if ($Tarima->contenido_titulo_ver == 1) { ?>
-                            <h2><?php echo $Tarima->contenido_titulo; ?></h2>
-                        <?php } ?>
-                        <?php echo $Tarima->contenido_descripcion ?>
-                    </div>
-                <?php } ?>
-            </div>
-
-            <div class="col-12 otros p-3">
-                <?php if ($this->otrosPadre->contenido_titulo_ver == 1) { ?>
-                    <div class="titulo-index"> <span><?php echo $this->otrosPadre->contenido_titulo ?>
-                            <hr>
-                        </span> </div>
-                <?php } ?>
-
-                <?php foreach ($this->otros as $key3 => $otro) { ?>
-
-                    <?php if ($otro->contenido_imagen != "") { ?>
-                        <img src="/images/<?php echo $otro->contenido_imagen ?>" alt="">
-                    <?php } ?>
-                    <div class="descripcion-index">
-                        <?php if ($otro->contenido_titulo_ver == 1) { ?>
-                            <h2><?php echo $otro->contenido_titulo; ?></h2>
-                        <?php } ?>
-                        <?php echo $otro->contenido_descripcion ?>
-
-                    </div>
-                    <?php if ($otro->contenido_enlace) { ?>
-                        <div>
-                            <a href="<?php echo $otro->contenido_enlace ?>"
-                                <?php if ($otro->contenido_enlace_abrir == 1) { ?> target="blank" <?php } ?>
-                                class="btn btn-block btn-vermas-index">
-                                <?php if ($otro->contenido_vermas) { ?><?php echo $otro->contenido_vermas; ?><?php } else { ?>Ver
-                                Más<?php } ?></a>
                         </div>
-                    <?php } ?>
+                    </div>
+
                 <?php } ?>
-            </div>
-        </div>
+            <?php } ?>
+        <?php } ?>
     </div>
-</div>
 </div>
 <?php
 function enlaceredes($x)
@@ -206,3 +114,187 @@ function enlacepagina($x)
 }
 
 ?>
+<style>
+    .main-general {
+        min-height: calc(100dvh - 305px);
+        display: grid;
+        place-items: center;
+    }
+
+    body {
+        margin-top: 103px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        // Color de la categoría
+        var colorCategoria = '<?php echo isset($this->categoria->categorias_color) ? $this->categoria->categorias_color : "#007bff" ?>';
+
+        // Función para destruir completamente el zoom
+        function destruirZoomCompleto (img) {
+            var parent = img.parent();
+
+            // Destruir zoom si existe
+            if (parent.hasClass('zoom')) {
+                parent.trigger('zoom.destroy');
+            }
+
+            // Remover cualquier elemento zoom residual
+            parent.find('.zoomImg').remove();
+            parent.find('.zoomLens').remove();
+
+            // Desenvolver si está envuelto
+            if (parent.is('span') && parent.css('display') === 'inline-block') {
+                img.unwrap();
+            }
+
+            // Limpiar eventos
+            img.off('zoom.destroy');
+        }
+
+        // Función para aplicar zoom a una imagen
+        function aplicarZoom (img) {
+            // Verificar que la imagen existe y está cargada
+            if (!img.length || !img[0].complete) {
+                console.log('Imagen no está lista para zoom');
+                return;
+            }
+
+            // Destruir cualquier zoom existente en esta imagen
+            destruirZoomCompleto(img);
+
+            // Crear wrapper para zoom
+            img.wrap('<span style="display:inline-block"></span>');
+
+            // Aplicar zoom después de un pequeño delay
+            setTimeout(function () {
+                try {
+                    img.css('display', 'block').parent().zoom({
+                        on: 'mouseover',
+                        magnify: 1.5
+                    });
+                    console.log('Zoom aplicado exitosamente para:', img.attr('src'));
+                } catch (error) {
+                    console.error('Error aplicando zoom:', error);
+                }
+            }, 20);
+        }
+
+        // Inicializar zoom para las imágenes principales cuando se abra el modal
+        $('.modal-prod').on('shown.bs.modal', function () {
+            var imgPrincipal = $(this).find('.img-producto');
+            setTimeout(function () {
+                aplicarZoom(imgPrincipal);
+            }, 100);
+        });
+
+        // Manejar click en las imágenes miniatura
+        $(document).on('click', '.img-miniatura', function () {
+            var productoId = $(this).data('producto');
+            var nuevaSrc = $(this).data('src');
+            var imgPrincipal = $('#img-principal-' + productoId);
+            var container = imgPrincipal.closest('.img-modal-prod');
+
+            console.log('Cambiando imagen a:', nuevaSrc);
+
+            // Actualizar los bordes de las miniaturas primero
+            $('.img-miniatura[data-producto="' + productoId + '"]').each(function () {
+                $(this).css('border', '2px solid transparent');
+            });
+
+            // Resaltar la miniatura seleccionada
+            $(this).css('border', '2px solid ' + colorCategoria);
+
+            // Destruir completamente el zoom existente
+            destruirZoomCompleto(imgPrincipal);
+
+            // Crear completamente un nuevo elemento imagen
+            var nuevaImg = $('<img>')
+                .attr('src', nuevaSrc)
+                .attr('class', 'img-producto img-principal')
+                .attr('id', 'img-principal-' + productoId)
+                .attr('alt', imgPrincipal.attr('alt'));
+
+            // Reemplazar la imagen existente
+            imgPrincipal.replaceWith(nuevaImg);
+
+            // Esperar a que la nueva imagen se cargue y aplicar zoom
+            nuevaImg.on('load', function () {
+                setTimeout(function () {
+                    aplicarZoom(nuevaImg);
+                    console.log('Zoom aplicado a nueva imagen:', nuevaSrc);
+                }, 50);
+            });
+
+            // Si la imagen ya está en caché
+            if (nuevaImg[0].complete) {
+                setTimeout(function () {
+                    aplicarZoom(nuevaImg);
+                    console.log('Zoom aplicado a imagen cacheada:', nuevaSrc);
+                }, 50);
+            }
+        });
+
+        // Limpiar zoom cuando se cierre el modal
+        $('.modal-prod').on('hidden.bs.modal', function () {
+            var imgPrincipal = $(this).find('.img-producto');
+            destruirZoomCompleto(imgPrincipal);
+        });
+    });
+</script>
+<!-- Modal -->
+<style>
+    .img-modal-prod {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 400px;
+        /* Altura fija */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+    }
+
+    .img-producto {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+    }
+
+    .img-miniatura {
+        width: 100%;
+        height: 80px;
+        object-fit: cover;
+        transition: all 0.3s ease;
+        border-radius: 4px;
+    }
+
+    .img-miniatura:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .img-miniatura.active {
+        opacity: 1;
+    }
+
+    /*  .imagenes-adicionales {
+        max-height: 100px;
+        overflow-y: auto;
+    }
+ */
+    .modal-prod .modal-xl {
+        max-width: 1200px;
+    }
+
+    /* Asegurar que el contenedor de la imagen principal no cambie de tamaño */
+    .modal-prod .col-md-6:first-child {
+        min-height: 500px;
+    }
+</style>

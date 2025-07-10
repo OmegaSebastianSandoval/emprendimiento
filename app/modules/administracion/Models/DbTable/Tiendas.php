@@ -49,8 +49,7 @@ class Administracion_Model_DbTable_Tiendas extends Db_Table
 	public function update($data,$id){
 		
 		$tiendas_nombre = $data['tiendas_nombre'];
-		$tiendas_descripcion = $data['tiendas_descrip
-		cion'];
+		$tiendas_descripcion = $data['tiendas_descripcion'];
 		$tiendas_datos = $data['tiendas_datos'];
 		$tiendas_pagina = $data['tiendas_pagina'];
 		$tiendas_facebook = $data['tiendas_facebook'];

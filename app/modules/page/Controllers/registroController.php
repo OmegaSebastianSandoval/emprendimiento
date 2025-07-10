@@ -205,6 +205,7 @@ class Page_registroController extends Page_mainController
 			$data['pj_asociado_nombres'] = $this->_getSanitizedParam("pj_asociado_nombres");
 			$data['pj_asociado_apellidos'] = $this->_getSanitizedParam("pj_asociado_apellidos");
 			$data['pj_documento_asociado'] = $this->_getSanitizedParam("pj_documento_asociado");
+			$data['user_user'] = $this->_getSanitizedParam("pj_documento_asociado");
 		}
 
 		return $data;

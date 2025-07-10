@@ -38,26 +38,49 @@ class Page_tiendaController extends Page_mainController
 		$this->_view->tienda_id = $id;
 		$favoritosModel = new Administracion_Model_DbTable_Favoritos();
 		$this->_view->favoritos = $favoritosModel->getList("favoritos_tienda='$id' AND favoritos_usuario='$usuario'", "");
-		// $subcategoria = $this->_getSanitizedParam('subcategoria');
-		// $buscar = $this->_getSanitizedParam('buscar');
-		// if ($categoria != "") {
-		// 	$this->_view->productos = $this->template->getProductosf($categoria,$subcategoria);
-		// }elseif ($categoria == "") {
-		// 	$this->_view->productos = $this->template->getProductos($buscar);
-		// }
 
 		$categoriasModel = new Administracion_Model_DbTable_Categorias();
 		$productosModel = new Administracion_Model_DbTable_Productos();
 		$tiendasModel = new Administracion_Model_DbTable_Tiendas();
-		// $this->_view->categorias = $categorias = $categoriasModel->getList(" categorias_padre='0' "," orden ASC ");
-		// foreach ($categorias as $key => $value) {
-		// 	$padre = $value->categorias_id;
-		// 	$hijos = $categoriasModel->getList(" categorias_padre='$padre' "," orden ASC ");
-		// 	$value->hijos = $hijos;
-		// }
+
 		$this->_view->categoria = $categoriasModel->getById($categoria);
 		$this->_view->tienda = $tiendasModel->getById($id);
-		$this->_view->productos = $productosModel->getList("productos_tienda='$id'", "orden ASC");
+
+		// Obtener subcategoría si existe
+		$subcategoria = $this->_getSanitizedParam('subcategoria');
+		$this->_view->subcategoria_seleccionada = $subcategoria;
+
+		// Obtener información de la categoría padre
+		$this->_view->categoria_padre = null;
+		if ($categoria && $categoria != '') {
+			$this->_view->categoria_padre = $categoriasModel->getById($categoria);
+		}
+
+		// Filtrar productos según si hay subcategoría seleccionada o no
+		if ($subcategoria && $subcategoria != '') {
+	
+			// Si hay subcategoría, mostrar solo productos de esa subcategoría
+			$this->_view->productos = $productosModel->getList("productos_tienda='$id' AND productos_categorias='$categoria' AND productos_subcategoria='$subcategoria'", "orden ASC");
+			// Obtener la subcategoría actual
+			$subcategoriaObj = $categoriasModel->getById($subcategoria);
+			if ($subcategoriaObj) {
+			
+				$this->_view->subcategoria_actual = $subcategoriaObj;
+				
+				// Si no tenemos categoría padre, la obtenemos de la subcategoría
+				if (!$this->_view->categoria_padre && $subcategoriaObj->categorias_padre) {
+					$this->_view->categoria_padre = $categoriasModel->getById($subcategoriaObj->categorias_padre);
+				}
+			}
+		} else {
+			// Si no hay subcategoría, mostrar productos de la categoría padre
+			if ($categoria && $categoria != '') {
+				$this->_view->productos = $productosModel->getList("productos_tienda='$id' AND productos_categorias='$categoria'", "orden ASC");
+			} else {
+				// Si no hay categoría específica, mostrar todos los productos de la tienda
+				$this->_view->productos = $productosModel->getList("productos_tienda='$id'", "orden ASC");
+			}
+		}
 
 
 		$tiendaclicksModel = new Administracion_Model_DbTable_Tiendaclicks();
@@ -68,10 +91,19 @@ class Page_tiendaController extends Page_mainController
 		$data['hora'] = date("h:i:s");
 		$tiendaclicksModel->insert($data);
 
-		$categoriasModel = new Administracion_Model_DbTable_Categorias();
-	
-		$this->_view->categorias = $categoriasModel->getList(" categoria_subcategoriatienda='$id' AND categorias_estado='1' ", " categorias_nombre ASC ");
+		// Obtener las subcategorías (categorías hijas) de la categoría padre
+		$subcategoria = $this->_getSanitizedParam('subcategoria');
 
+		// Obtener todas las subcategorías de esta tienda para la categoría padre
+		if ($categoria && $categoria != '') {
+			$this->_view->categorias = $categoriasModel->getList("categorias_padre='$categoria' AND categoria_subcategoriatienda='$id' AND categorias_estado='1'", "categorias_nombre ASC");
+		} else {
+			// Si no hay categoría padre, obtener las categorías principales de la tienda
+			$this->_view->categorias = $categoriasModel->getList("categoria_subcategoriatienda='$id' AND categorias_estado='1' AND (categorias_padre='' OR categorias_padre IS NULL)", "categorias_nombre ASC");
+		}
+
+		// Pasar la subcategoría seleccionada a la vista
+		$this->_view->subcategoria_seleccionada = $subcategoria;
 	}
 
 	public function seleccionarAction()
@@ -93,7 +125,6 @@ class Page_tiendaController extends Page_mainController
 		} else {
 			$favoritosModel->borrar($usuario, $tienda);
 		}
-
 	}
 	public function enlaceredes($x)
 	{

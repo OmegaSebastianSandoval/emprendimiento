@@ -13,7 +13,7 @@
 
 <?php if($_SESSION['kt_login_level']=="1"){ ?>
 	<li <?php if($this->botonpanel == 4){ ?>class="activo"<?php } ?>><a href="/administracion/usuario"><i class="fas fa-users"></i> Administrar Usuarios</a></li>
-	<li <?php if($this->botonpanel == 16){ ?>class="activo"<?php } ?>><a href="/administracion/tiendaclicks"><i class="fas fa-users"></i> Reporte tienda</a></li>
+<!-- 	<li <?php if($this->botonpanel == 16){ ?>class="activo"<?php } ?>><a href="/administracion/tiendaclicks"><i class="fas fa-users"></i> Reporte tienda</a></li> -->
 	<!-- <li <?php if($this->botonpanel == 16){ ?>class="activo"<?php } ?>><a href="/administracion/galeria"><i class="far fa-image"></i> Arte</a></li> -->
 	<!-- <li <?php if($this->botonpanel == 17){ ?>class="activo"<?php } ?>><a href="/administracion/listadoimagen"><i class="far fa-image"></i> Imagenes de tiendas mayor a 2MB</a></li>
 	<li <?php if($this->botonpanel == 18){ ?>class="activo"<?php } ?>><a href="/administracion/listadoimagenproductos"><i class="far fa-image"></i> Imagenes de productos mayor a 2MB</a></li> -->

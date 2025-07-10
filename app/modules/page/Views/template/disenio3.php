@@ -1,4 +1,4 @@
-<div class="caja-contenido-simple" style="background-color: <?php if($contenido->contenido_fondo_color){ echo  $contenido->contenido_fondo_color;  } else if($colorfondo){ echo $colorfondo; }   ?>">
+<div class="caja-contenido-simple 3 id_template-<?php echo $contenido->contenido_id; ?>" style="background-color: <?php if($contenido->contenido_fondo_color){ echo  $contenido->contenido_fondo_color;  } else if($colorfondo){ echo $colorfondo; }   ?>">
 	<?php if($contenido->contenido_titulo_ver == 1){ ?>
 		<h2><?php echo $contenido->contenido_titulo; ?></h2>
 	<?php } ?>

@@ -1,3 +1,12 @@
+<style>
+    .main-general {
+        min-height: calc(100dvh - 305px);
+        display: grid;
+    }
+    body {
+    margin-top: 103px;
+}
+</style>
 <div class="container  container-list-products py-4">
 
 	<h1 class="titulo-principal m-0">
@@ -34,7 +43,7 @@
 					<div class="help-block with-errors"></div>
 				</div> -->
 
-				<div class="col-12 col-md-9 form-group">
+				<div class="col-12 col-md-12 form-group">
 					<label for="categorias_nombre" class="control-label">Nombre</label>
 					<label class="input-group">
 						<div class="input-group-prepend">
@@ -79,12 +88,12 @@
 					<?php } ?>
 				</div> -->
 
-				<div class="col-12 form-group">
+				<!-- <div class="col-12 form-group">
 					<label for="categorias_descripcion" class="form-label">Descripcion</label>
 					<textarea name="categorias_descripcion" id="categorias_descripcion" class="form-control tinyeditor-simple"
 						rows="10"><?= $this->content->categorias_descripcion; ?></textarea>
 					<div class="help-block with-errors"></div>
-				</div>
+				</div> -->
 				<!-- <div class="col-6 form-group">
 					<label for="categorias_imagen_techo" >Imagen techo</label>
 					<input type="file" name="categorias_imagen_techo" id="categorias_imagen_techo" class="form-control  file-image" data-buttonName="btn-primary" accept="image/gif, image/jpg, image/jpeg, image/png"  >

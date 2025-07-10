@@ -135,10 +135,10 @@ class Page_categoriaController extends Page_mainController
 
 		if ($subtienda && $subtienda >= 1) {
 			$this->_view->subtienda = $subtienda;
-			$this->_view->categorias = $categoriasModel->getList(" categorias_padre!='0'  AND categoria_subcategoriatienda='$subtienda' AND categorias_estado='1' ", " orden_categorias ASC ");
+			$this->_view->categorias = $categoriasModel->getList(" categorias_padre!='0'  AND categoria_subcategoriatienda='$subtienda' AND categorias_estado='1' ", " categorias_nombre ASC ");
 			$this->_view->tienda = $tiendasModel->getById($subtienda);
 		} else {
-			$this->_view->categorias = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' ", " orden_categorias ASC ");
+			$this->_view->categorias = $categoriasModel->getList(" categorias_padre='0' AND categorias_estado='1' ", " categorias_nombre ASC ");
 		}
 
 		$this->_view->productos = $productosModel->getList("", "");

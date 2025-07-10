@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controlador de Usuario que permite la  creacion, edicion  y eliminacion de los Usuarios del Sistema
  */
@@ -116,7 +117,6 @@ class Core_userController extends Controllers_Abstract
         } else {
             http_response_code(200);
         }
-
     }
     public function validarusuarioAction()
     {
@@ -169,6 +169,42 @@ class Core_userController extends Controllers_Abstract
             http_response_code(200);
         }
     }
+
+    public function validarnitAction()
+    {
+        $nit = $this->_getSanitizedParam("pj_nit");
+        $error_nit = '';
+
+        // Validar que el NIT tenga el formato correcto: números-número
+        if (empty($nit)) {
+            $error_nit = "El NIT es obligatorio";
+        } else {
+            // Patrón para validar formato: números seguidos de guión y un dígito verificador
+            $patron = '/^\d{8,15}-\d{1}$/';
+
+            if (!preg_match($patron, $nit)) {
+                $error_nit = "El NIT debe tener el formato: 123456789-0 (números seguidos de guión y un dígito)";
+            } else {
+                // Validación adicional del dígito verificador (opcional)
+                $partes = explode('-', $nit);
+                $numero = $partes[0];
+                $digitoVerificador = $partes[1];
+
+                // Validar que el número tenga al menos 8 dígitos
+                if (strlen($numero) < 8) {
+                    $error_nit = "El número del NIT debe tener al menos 8 dígitos";
+                }
+            }
+        }
+
+        if ($error_nit != '') {
+            $error_nit = utf8_decode($error_nit);
+            header("HTTP/1.0 400 " . $error_nit);
+        } else {
+            http_response_code(200);
+        }
+    }
+
     public function validartelusuarioAction()
     {
         $tel = $this->_getSanitizedParam("telefono");
@@ -248,6 +284,106 @@ class Core_userController extends Controllers_Abstract
             http_response_code(200);
         }
     }
+    public function validarcorreonegocioAction()
+    {
+        $modelTiendas = new Administracion_Model_DbTable_Tiendas();
+        $correo = $this->_getSanitizedParam("correo_negocio");
+        $correo2 = $this->_getSanitizedParam("correo");
+
+        $res_tienda = $modelTiendas->getList("tiendas_correo = '$correo'", "");
+
+        if ($correo2 != '' && $correo2 == $correo) {
+            http_response_code(200);
+        } else {
+            if (isset($res_tienda[0])) {
+                $error = utf8_decode("El correo ya está registrado en otra tienda");
+                header("HTTP/1.0 400 " . $error);
+            } else {
+                http_response_code(200);
+            }
+        }
+    }
+
+    public function validarpnemailAction()
+    {
+        $modelUser = new Core_Model_DbTable_User();
+        $correo = $this->_getSanitizedParam("pn_email");
+        $correo2 = $this->_getSanitizedParam("email");
+
+        $res_user = $modelUser->getList("user_email = '$correo'", "");
+
+        if ($correo2 != '' && $correo2 == $correo) {
+            http_response_code(200);
+        } else {
+            if (isset($res_user[0])) {
+                $error = utf8_decode("El correo ya está registrado");
+                header("HTTP/1.0 400 " . $error);
+            } else {
+                http_response_code(200);
+            }
+        }
+    }
+
+    public function validarpndocumentoAction()
+    {
+        $modelUser = new Core_Model_DbTable_User();
+        $documento = $this->_getSanitizedParam("pn_documento");
+        $documento2 = $this->_getSanitizedParam("documento");
+
+        $res_user = $modelUser->getList("user_documento = '$documento'", "");
+
+        if ($documento2 != '' && $documento2 == $documento) {
+            http_response_code(200);
+        } else {
+            if (isset($res_user[0])) {
+                $error = utf8_decode("El documento ya está registrado");
+                header("HTTP/1.0 400 " . $error);
+            } else {
+                http_response_code(200);
+            }
+        }
+    }
+
+    public function validarpjrazonsocialAction()
+    {
+        $modelUser = new Core_Model_DbTable_User();
+        $razon_social = $this->_getSanitizedParam("pj_razon_social");
+        $razon_social2 = $this->_getSanitizedParam("razon_social");
+
+        $res_user = $modelUser->getList("user_razon_social = '$razon_social'", "");
+
+        if ($razon_social2 != '' && $razon_social2 == $razon_social) {
+            http_response_code(200);
+        } else {
+            if (isset($res_user[0])) {
+                $error = utf8_decode("La razón social ya está registrada");
+                header("HTTP/1.0 400 " . $error);
+            } else {
+                http_response_code(200);
+            }
+        }
+    }
+
+    public function validarpjemailAction()
+    {
+        $modelUser = new Core_Model_DbTable_User();
+        $correo = $this->_getSanitizedParam("pj_email_notificaciones");
+        $correo2 = $this->_getSanitizedParam("email");
+
+        $res_user = $modelUser->getList("user_email = '$correo'", "");
+
+        if ($correo2 != '' && $correo2 == $correo) {
+            http_response_code(200);
+        } else {
+            if (isset($res_user[0])) {
+                $error = utf8_decode("El correo ya está registrado");
+                header("HTTP/1.0 400 " . $error);
+            } else {
+                http_response_code(200);
+            }
+        }
+    }
+
     public function getAsociado($cedula = '')
     {
         $url = "https://creditos.fendesa.com/page/sistema/getasociadofendesa";

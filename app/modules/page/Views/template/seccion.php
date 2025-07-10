@@ -1,4 +1,4 @@
-<section class="contenedor-seccion" style="background-image:url(/images/<?php echo $contenedor->contenido_fondo_imagen; ?>); background-color:<?php echo $contenedor->contenido_fondo_color; ?>;">
+<section class="contenedor-seccion id_<?php echo $contenedor->contenido_id; ?>" style="background-image:url(/images/<?php echo $contenedor->contenido_fondo_imagen; ?>); background-color:<?php echo $contenedor->contenido_fondo_color; ?>;">
 	<div class="<?php if ($contenedor->contenido_columna_espacios == 3 || $contenedor->contenido_columna_espacios == 4) { ?> container<?php } ?>">
 		<?php if ($contenedor->contenido_titulo_ver == 1) { ?>
 			<h2 class="titulo-principal contact text-left"><?php echo $contenedor->contenido_titulo; ?></h2>

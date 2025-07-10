@@ -33,7 +33,7 @@
 								<?php if ($_SESSION["emprendimiento"] == 1) { ?>
 									<div class="vr bg-white"></div>
 									<span class="salir  w-auto">
-										<a href="/page/listproductos" class="btn btn-sm  margen_salir btn-header">Productos</a>
+										<a href="/page/mitienda" class="btn btn-sm  margen_salir btn-header">Mi tienda</a>
 									</span>
 								<?php } ?>
 								<div class="vr bg-white"></div>
@@ -58,7 +58,11 @@
 				<nav>
 					<ul id="menu2" class="align-self-center">
 						<li class="parent <?= $this->botonpanel == 1 ? 'active' : '' ?>"><a href="/"><span>Inicio</span></a></li>
-						<li class="parent"><a href="/page/favoritos"><span>Favoritos</span></a></li>
+						<?php if ($this->nombre != "" && $_SESSION["emprendimiento"] != 1) { ?>
+							<!-- <li class="parent  <?= $this->botonpanel == 2 ? 'active' : '' ?>"><a href="/page/favoritos"><span>Favoritos</span></a></li> -->
+						<?php } ?>
+
+
 						<li class="parent  <?= $this->botonpanel == 3 ? 'active' : '' ?>"><a href="/"><span>Categorías</span></a>
 							<ul>
 								<?php foreach ($this->categorias as $key => $categoria) { ?>
@@ -77,7 +81,7 @@
 								<?php } ?>
 							</ul>
 						</li>
-						<li class="parent"><a href="/page/entretenimiento"><span>Entretenimiento</span></a></li>
+						<!-- <li class="parent"><a href="/page/entretenimiento"><span>Entretenimiento</span></a></li> -->
 						<li class="parent"><a href="/page/comprar"><span>¿Cómo comprar?</span></a></li>
 						<li class="parent"><a href="/page/formulario"><span>Contacto</span></a></li>
 					</ul>
@@ -177,7 +181,10 @@
 						Bienvenido, <?php echo $this->nombre; ?>
 					</div>
 
-					<div class="col-12  text-start">
+					<div class="col-12  text-start d-flex gap-2 justify-content-start">
+						<?php if ($_SESSION["emprendimiento"] == 1) { ?>
+							<a href="/page/mitienda" class="btn btn-header btn-sm  text-start">Mi tienda</a>
+						<?php } ?>
 						<a href="/page/login/logout" class="btn btn-header btn-sm  text-start">Salir</a>
 					</div>
 				</div>
@@ -199,14 +206,14 @@
 					<i class="fab fa-whatsapp mr-2"></i>
 					<span><?php echo $this->infopage->info_pagina_whatsapp ?></span>
 				</a>
-			</div>
-			<div class=" align-self-center">
-			<?php } ?>
-			<?php if ($this->infopage->info_pagina_correos_contacto) { ?>
-				<a href="mailto:<?php echo $this->infopage->info_pagina_correos_contacto; ?>" target="_blank"
-					class="text-morado text-decoration-none d-flex gap-2 align-items-center"> <i
-						class="fas fa-envelope mr-2"></i><span><?php echo $this->infopage->info_pagina_correos_contacto; ?></span></a>
-			<?php } ?>
+		</div>
+		<div class=" align-self-center">
+		<?php } ?>
+		<?php if ($this->infopage->info_pagina_correos_contacto) { ?>
+			<a href="mailto:<?php echo $this->infopage->info_pagina_correos_contacto; ?>" target="_blank"
+				class="text-morado text-decoration-none d-flex gap-2 align-items-center"> <i
+					class="fas fa-envelope mr-2"></i><span><?php echo $this->infopage->info_pagina_correos_contacto; ?></span></a>
+		<?php } ?>
 		</div>
 	</div>
 </div>

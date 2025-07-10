@@ -629,14 +629,14 @@ header nav ul li ul li:hover a {
 	color: #000;
 }
 
-.comprar .separador {
+/* .comprar .separador {
 	background-color: #F3F3F3;
 	font-size: 26px !important;
 	height: 10rem;
 	padding-top: 3rem;
 	text-align: center;
 }
-
+ */
 .comprar .contenedor-seccion .descripcion-seccion .separador span {
 	color: var(--morado2);
 }
@@ -5961,4 +5961,45 @@ h3.login-title {
 		border-bottom: 1px solid #c6aef7;
 	}
 
+	.comprar{
+		width: 100% ;
+		overflow-x: hidden;
+	}
+}
+
+
+.contenedor-mi-tienda .titulo{
+	color: var(--morado2);
+}
+.border-orange{
+	border-color: var(--naranja);
+}
+.text-orange{
+	color: var(--naranja);
+}
+.row label{
+	font-size: 14px;
+}
+.content-dashboard label {
+    font-size: 14px;
+    font-weight: 300;
+    text-transform: capitalize;
+}
+.franja-paginas .texto-paginas {
+    padding-top: 5px;
+    font-weight: 300;
+    color: #4c4c4c;
+    font-size: 14px;
+
+}
+.franja-paginas .titulo-registro {
+    padding-top: 5px;
+    font-weight: 300;
+    color: #4c4c4c;
+    font-size: 14px;
+
+}
+
+.content-dashboard .form-control{
+	font-size: 14px	;
 }

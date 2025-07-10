@@ -1,4 +1,5 @@
 <?php
+
 /**
  * clase que genera la insercion y edicion  de Usuarios en la base de datos
  */
@@ -207,6 +208,11 @@ class Administracion_Model_DbTable_Usuario extends Db_Table
 		$user_documento_identidad = isset($data['user_documento_identidad']) ? $data['user_documento_identidad'] : '';
 		$user_certificado_bancario = isset($data['user_certificado_bancario']) ? $data['user_certificado_bancario'] : '';
 
+		// Campos adicionales para asociado jurídica
+		$pj_asociado_nombres = isset($data['pj_asociado_nombres']) ? $data['pj_asociado_nombres'] : '';
+		$pj_asociado_apellidos = isset($data['pj_asociado_apellidos']) ? $data['pj_asociado_apellidos'] : '';
+		$pj_documento_asociado = isset($data['pj_documento_asociado']) ? $data['pj_documento_asociado'] : '';
+
 		$query = "UPDATE user SET  
 			user_state = '$user_state', 
 			user_names = '$user_names', 
@@ -259,7 +265,10 @@ class Administracion_Model_DbTable_Usuario extends Db_Table
 			user_certificado_representacion = '$user_certificado_representacion',
 			user_rut = '$user_rut',
 			user_documento_identidad = '$user_documento_identidad',
-			user_certificado_bancario = '$user_certificado_bancario'
+			user_certificado_bancario = '$user_certificado_bancario',
+			pj_asociado_nombres = '$pj_asociado_nombres',
+			pj_asociado_apellidos = '$pj_asociado_apellidos',
+			pj_documento_asociado = '$pj_documento_asociado'
 			$changepasword 
 			WHERE user_id = '" . $id . "'";
 		$res = $this->_conn->query($query);
@@ -285,5 +294,4 @@ class Administracion_Model_DbTable_Usuario extends Db_Table
 		$res = $this->_conn->query($select)->fetchAsObject();
 		return $res;
 	}
-
 }

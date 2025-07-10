@@ -75,6 +75,7 @@
             <div class="border-bottom mb-2" style="padding-bottom: 7px;">
                 <h6 class="text-center  fw-semibold interes pb-3 mb-0 lh-1">Te podría interesar...</h6>
             </div>
+            <?php if (is_countable($this->tiendas) && count($this->tiendas) >=1) { ?>
 
             <?php foreach ($this->tiendas as $key => $value) { ?>
                 <div class="mt-4 row">
@@ -120,6 +121,11 @@
                     </div>
                 </div>
 
+            <?php } ?>
+            <?php } else { ?>
+                <div class="alert alert-warning text-center" role="alert">
+                    No hay tiendas disponibles en este momento.
+                </div>
             <?php } ?>
 
             <!-- Paginacion de tiendas -->

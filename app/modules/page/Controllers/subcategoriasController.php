@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controlador de Subcategorias que permite la creacion, edicion y eliminacion de subcategorias por emprendimiento
  */
@@ -163,7 +164,8 @@ class Page_subcategoriasController extends Page_mainController
 		$id = $this->_getSanitizedParam("id");
 		if ($id > 0) {
 			$content = $this->mainModel->getById($id);
-			if ($content && isset($content->categorias_id) && $content->categorias_padre == $tiendaId) {
+
+			if ($content && isset($content->categorias_id) && $content->categoria_subcategoriatienda == $tiendaId) {
 				$this->_view->content = $content;
 				$this->_view->routeform = $this->route . "/update";
 				$title = "Actualizar Subcategoría";
@@ -232,12 +234,13 @@ class Page_subcategoriasController extends Page_mainController
 		if (Session::getInstance()->get('csrf')[$this->_getSanitizedParam("csrf_section")] == $csrf) {
 			$id = $this->_getSanitizedParam("id");
 			$content = $this->mainModel->getById($id);
-			$tiendaId = Session::getInstance()->get('user_negocio');
+			$tiendaInfo = Session::getInstance()->get('tiendaInfo');
 
 			// Verificar que la subcategoría pertenece al emprendimiento
-			if ($content && isset($content->categorias_id) && $content->categorias_padre == $tiendaId) {
+			if ($content && isset($content->categorias_id) && $content->categorias_padre == $tiendaInfo->tiendas_categoria) {
 				$data = $this->getData();
-				$data['categorias_padre'] = $tiendaId; // Asegurar pertenencia
+				$data['categorias_padre'] = $tiendaInfo->tiendas_categoria;
+				$data['categoria_subcategoriatienda'] = $tiendaInfo->tiendas_id;
 
 				$uploadImage = new Core_Model_Upload_Image();
 				if ($_FILES['categorias_banner']['name'] != '') {

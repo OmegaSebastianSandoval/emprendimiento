@@ -63,8 +63,8 @@
 
 	<div class="content-dashboard">
 		<?php if ($this->hasProducts): ?>
-			<div class="franja-paginas mb-3 mb-lg-0">
-				<div class="row gap-3">
+			<div class="franja-paginas mb-3 mb-lg-3">
+				<div class="row gap-3 gap-md-0">
 					<div class="col-12 col-lg-3">
 						<div class="titulo-registro">Se encontraron <?php echo $this->register_number; ?> Registros</div>
 					</div>

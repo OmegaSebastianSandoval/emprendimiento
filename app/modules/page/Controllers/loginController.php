@@ -340,7 +340,7 @@ class Page_loginController extends Page_mainController
         Session::getInstance()->set("emprendimiento", 1);
         Session::getInstance()->set("asociado", $data);
 
-        header('Location: /page/listproductos');
+        header('Location: /page/mitienda');
         exit;
 
     }

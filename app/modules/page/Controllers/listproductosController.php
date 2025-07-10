@@ -136,9 +136,10 @@ class Page_listproductosController extends Page_mainController
 
 		// Obtener lista completa para contar registros
 		$list = $this->mainModel->getList($filterQuery, $order);
+		$listGeneral = $this->mainModel->getList("productos_tienda = '$tiendaId'", $order);
 
 		// Verificar si existen productos y configurar variables para la vista
-		$this->_view->hasProducts = count($list) > 0;
+		$this->_view->hasProducts = count($listGeneral) > 0;
 		$this->_view->categoria = $this->_getSanitizedParam("categoria");
 		$this->_view->subcategoria = $this->_getSanitizedParam("subcategoria");
 
@@ -212,13 +213,16 @@ class Page_listproductosController extends Page_mainController
 		$this->_view->csrf = Session::getInstance()->get('csrf')[$this->_csrf_section];
 
 		// Pasar parámetros de URL a la vista
-		$this->_view->categoria = $this->_getSanitizedParam("categoria");
+
+		$categoria =   Session::getInstance()->get("tiendaInfo")->tiendas_categoria;
+		$this->_view->categoria = $categoria;
 		$this->_view->subcategoria = $this->_getSanitizedParam("subcategoria");
 		$this->_view->tienda = $this->_getSanitizedParam("tienda");
 
 		$categoriasModel = new Administracion_Model_DbTable_Categorias();
 		$tiendaId = Session::getInstance()->get('user_negocio');
-		$subcategorias = $categoriasModel->getList("categoria_subcategoriatienda = $tiendaId", "orden ASC");
+
+		$subcategorias = $categoriasModel->getList("categoria_subcategoriatienda = $tiendaId AND categorias_estado ='1'", "orden ASC");
 		$this->_view->subcategorias = $subcategorias;
 		$id = $this->_getSanitizedParam("id");
 
@@ -469,7 +473,7 @@ class Page_listproductosController extends Page_mainController
 	 * 
 	 * @return void
 	 */
-/* 	public function deleteimageAction()
+	/* 	public function deleteimageAction()
 	{
 		$this->setLayout('blanco');
 		$csrf = $this->_getSanitizedParam("csrf");
@@ -578,7 +582,7 @@ class Page_listproductosController extends Page_mainController
 			if ($filters->productos_nombre != '') {
 				$filtros = $filtros . " AND productos_nombre LIKE '%" . $filters->productos_nombre . "%'";
 			}
-			if ($filters->productos_descripcion != '') {
+			/* if ($filters->productos_descripcion != '') {
 				$filtros = $filtros . " AND productos_descripcion LIKE '%" . $filters->productos_descripcion . "%'";
 			}
 			if ($filters->productos_imagen != '') {
@@ -586,7 +590,7 @@ class Page_listproductosController extends Page_mainController
 			}
 			if ($filters->productos_precio != '') {
 				$filtros = $filtros . " AND productos_precio LIKE '%" . $filters->productos_precio . "%'";
-			}
+			} */
 		}
 
 		return $filtros;
@@ -606,9 +610,9 @@ class Page_listproductosController extends Page_mainController
 
 			$parramsfilter = array();
 			$parramsfilter['productos_nombre'] = $this->_getSanitizedParam("productos_nombre");
-			$parramsfilter['productos_descripcion'] = $this->_getSanitizedParam("productos_descripcion");
+/* 			$parramsfilter['productos_descripcion'] = $this->_getSanitizedParam("productos_descripcion");
 			$parramsfilter['productos_imagen'] = $this->_getSanitizedParam("productos_imagen");
-			$parramsfilter['productos_precio'] = $this->_getSanitizedParam("productos_precio");
+			$parramsfilter['productos_precio'] = $this->_getSanitizedParam("productos_precio"); */
 
 			Session::getInstance()->set($this->namefilter, $parramsfilter);
 		}
@@ -619,5 +623,4 @@ class Page_listproductosController extends Page_mainController
 			Session::getInstance()->set($this->namepageactual, 1);
 		}
 	}
-
 }

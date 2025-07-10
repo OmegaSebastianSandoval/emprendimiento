@@ -1,4 +1,4 @@
-<div class="caja-contenido-simple" style="background-color: <?php if($contenido->contenido_fondo_color){ echo  $contenido->contenido_fondo_color;  } else if($colorfondo){ echo $colorfondo; }   ?>">
+<div class="caja-contenido-simple 4" style="background-color: <?php if($contenido->contenido_fondo_color){ echo  $contenido->contenido_fondo_color;  } else if($colorfondo){ echo $colorfondo; }   ?>">
 	<?php if($contenido->contenido_imagen){ ?>
 		<div class="imagen-contenido">
 			<div><img src="/images/<?php echo $contenido->contenido_imagen; ?>"></div>

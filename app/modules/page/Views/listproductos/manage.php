@@ -8,10 +8,12 @@
 		data-toggle="validator">
 		<div class="content-dashboard">
 			<?php if (!$this->subcategorias || count($this->subcategorias) < 1) { ?>
-				<div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
-					<i class="fas fa-exclamation-triangle"></i> <strong>Atención:</strong> No hay subcategorías disponibles. Por
-					favor, cree una subcategoría antes de agregar un producto.
-					<a class="btn btn-orange btn-sm" href="/page/subcategorias/manage">
+				<div class="alert alert-warning alert-dismissible fade show mt-4 " role="alert">
+					<div>
+						<i class="fas fa-exclamation-triangle"></i> <strong>Atención:</strong> No hay subcategorías disponibles. Por
+						favor, cree una subcategoría antes de agregar un producto.
+					</div>
+					<a class="btn btn-orange btn-sm mt-3" href="/page/subcategorias/manage">
 						<i class="fa-solid fa-list"></i> Configurar subcategorias</a>
 				</div>
 			<?php } ?>
@@ -25,14 +27,14 @@
 					<label class="control-label">Activo</label>
 					<input type="checkbox" name="producto_activo" value="1" data-toggle="toggle" class="form-control switch-form "
 						data-on="Activado" data-off="Desactivado" data-offstyle="danger" data-onstyle="success" <?php if ($this->getObjectVariable($this->content, 'producto_activo') == 1) {
-							echo "checked";
-						} ?>></input>
+																																																			echo "checked";
+																																																		} ?>></input>
 					<div class="help-block with-errors"></div>
 				</div>
 				<!-- <input type="checkbox" name="contenido_estado"  id="contenido_estado" value="1" data-toggle="toggle" class="form-control"  data-onstyle="success" <?php if ($this->getObjectVariable($this->content, 'contenido_estado') == 1) {
-					echo "checked";
-				} ?>	data-on="Activado" data-off="Desactivado" data-offstyle="danger"  ></input> -->
-				<div class="col-12 col-md-6 form-group">
+																																																																																	echo "checked";
+																																																																																} ?>	data-on="Activado" data-off="Desactivado" data-offstyle="danger"  ></input> -->
+				<div class="col-12 col-md-6 col-lg-4 col-lg-4 form-group">
 					<label for="productos_nombre" class="control-label">Nombre</label>
 					<label class="input-group">
 						<div class="input-group-prepend">
@@ -43,7 +45,7 @@
 					</label>
 					<div class="help-block with-errors"></div>
 				</div>
-				<div class="col-12 col-md-6 form-group">
+				<div class="col-12 col-md-6 col-lg-2 form-group">
 					<label for="productos_precio" class="control-label">Precio</label>
 					<label class="input-group">
 						<div class="input-group-prepend">
@@ -54,7 +56,7 @@
 					</label>
 					<div class="help-block with-errors"></div>
 				</div>
-				<div class="col-12 col-md-6 form-group">
+				<div class="col-12 col-md-6 col-lg-3 form-group">
 					<label for="productos_subcategoria" class="control-label">Subategoría</label>
 					<label class="input-group">
 						<div class="input-group-prepend">
@@ -64,8 +66,8 @@
 							<option value="">Seleccione una subcategoría</option>
 							<?php foreach ($this->subcategorias as $subcategoria) { ?>
 								<option value="<?= $subcategoria->categorias_id; ?>" <?php if ($this->content->productos_subcategoria == $subcategoria->categorias_id) {
-										echo "selected";
-									} ?>><?= $subcategoria->categorias_nombre; ?></option>
+																																				echo "selected";
+																																			} ?>><?= $subcategoria->categorias_nombre; ?></option>
 							<?php } ?>
 						</select>
 					</label>
@@ -73,7 +75,7 @@
 				</div>
 
 
-				<div class="col-6 form-group">
+				<div class="col-12 col-md-6 col-lg-3 form-group">
 					<label for="productos_imagen">Imagen principal</label>
 					<input type="file" name="productos_imagen" id="productos_imagen" class="form-control  file-image"
 						data-buttonName="btn-primary" accept="image/gif, image/jpg, image/jpeg, image/png">
@@ -88,7 +90,7 @@
 					<?php } ?>
 				</div>
 
-				<div class="col-6 form-group">
+				<div class="col-12 col-md-6 col-lg-3 form-group">
 					<label for="productos_imagen_una">Imagen adicional 1</label>
 					<input type="file" name="productos_imagen_una" id="productos_imagen_una" class="form-control  file-image"
 						data-buttonName="btn-primary" accept="image/gif, image/jpg, image/jpeg, image/png">
@@ -104,7 +106,7 @@
 					<?php } ?>
 				</div>
 
-				<div class="col-6 form-group">
+				<div class="col-12 col-md-6 col-lg-3 form-group">
 					<label for="productos_imagen_dos">Imagen adicional 2</label>
 					<input type="file" name="productos_imagen_dos" id="productos_imagen_dos" class="form-control  file-image"
 						data-buttonName="btn-primary" accept="image/gif, image/jpg, image/jpeg, image/png">
@@ -120,7 +122,7 @@
 					<?php } ?>
 				</div>
 
-				<div class="col-6 form-group">
+				<div class="col-12 col-md-6 col-lg-3 form-group">
 					<label for="productos_imagen_tres">Imagen adicional 3</label>
 					<input type="file" name="productos_imagen_tres" id="productos_imagen_tres" class="form-control  file-image"
 						data-buttonName="btn-primary" accept="image/gif, image/jpg, image/jpeg, image/png">
@@ -136,7 +138,7 @@
 					<?php } ?>
 				</div>
 
-				<div class="col-6 form-group">
+				<div class="col-12 col-md-6 col-lg-3 form-group">
 					<label for="productos_imagen_cuatro">Imagen adicional 4</label>
 					<input type="file" name="productos_imagen_cuatro" id="productos_imagen_cuatro"
 						class="form-control  file-image" data-buttonName="btn-primary"
@@ -156,16 +158,16 @@
 				<!-- <div class="col-12 form-group">
 			<label   class="control-label">destacado</label>
 				<input type="checkbox" name="productos_destacado" value="1" class="form-control switch-form " <?php if ($this->getObjectVariable($this->content, 'productos_destacado') == 1) {
-					echo "checked";
-				} ?>	 ></input>
+																																																				echo "checked";
+																																																			} ?>	 ></input>
 				<div class="help-block with-errors"></div>
 		</div> -->
 
 				<!-- <div class="col-12 form-group">
 			<label   class="control-label">nuevo</label>
 				<input type="checkbox" name="productos_nuevo" value="1" class="form-control switch-form " <?php if ($this->getObjectVariable($this->content, 'productos_nuevo') == 1) {
-					echo "checked";
-				} ?>	 ></input>
+																																																		echo "checked";
+																																																	} ?>	 ></input>
 				<div class="help-block with-errors"></div>
 		</div>  -->
 				<div class="col-6 form-group d-none">
@@ -181,10 +183,10 @@
 				</div>
 				<input type="hidden" name="productos_categorias" value="<?php echo $this->categoria ?>">
 				<!-- <input type="hidden" name="productos_subcategoria" value="<?php if ($this->content->productos_subcategoria) {
-					echo $this->content->productos_subcategoria;
-				} else {
-					echo $this->subcategoria;
-				} ?>"> -->
+																																					echo $this->content->productos_subcategoria;
+																																				} else {
+																																					echo $this->subcategoria;
+																																				} ?>"> -->
 
 				<input type="hidden" name="productos_codigo" value="<?php echo $this->content->productos_codigo ?>">
 				<div class="col-6 form-group d-none">
@@ -216,27 +218,27 @@
 					<div class="help-block with-errors"></div>
 				</div>
 				<input type="hidden" name="productos_tienda" value="<?php if ($this->content->productos_tienda) {
-					echo $this->content->productos_tienda;
-				} else {
-					echo $this->tienda;
-				} ?>">
+																															echo $this->content->productos_tienda;
+																														} else {
+																															echo $this->tienda;
+																														} ?>">
 			</div>
 		</div>
 		<div class="botones-acciones d-flex justify-content-end gap-2">
 			<button class="btn btn-guardar" type="submit">Guardar</button>
 			<a href="<?php echo $this->route; ?>?categoria=<?php if ($this->content->productos_categorias) {
-					 echo $this->content->productos_categorias;
-				 } else {
-					 echo $this->categoria;
-				 } ?>&subcategoria=<?php if ($this->content->productos_subcategoria) {
-						echo $this->content->productos_subcategoria;
-					} else {
-						echo $this->subcategoria;
-					} ?>&tienda=<?php if ($this->content->productos_tienda) {
-						 echo $this->content->productos_tienda;
-					 } else {
-						 echo $this->tienda;
-					 } ?>" class="btn btn-cancelar">Cancelar</a>
+																												echo $this->content->productos_categorias;
+																											} else {
+																												echo $this->categoria;
+																											} ?>&subcategoria=<?php if ($this->content->productos_subcategoria) {
+															echo $this->content->productos_subcategoria;
+														} else {
+															echo $this->subcategoria;
+														} ?>&tienda=<?php if ($this->content->productos_tienda) {
+												echo $this->content->productos_tienda;
+											} else {
+												echo $this->tienda;
+											} ?>" class="btn btn-cancelar">Cancelar</a>
 		</div>
 	</form>
 </div>

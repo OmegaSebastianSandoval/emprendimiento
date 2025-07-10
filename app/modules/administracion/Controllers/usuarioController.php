@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controlador de Usuario que permite la  creacion, edicion  y eliminacion de los Usuarios del Sistema
  */
@@ -120,12 +121,14 @@ class Administracion_usuarioController extends Administracion_mainController
 		$this->_view->list_user_state = $this->getUserstate();
 		$this->_view->list_user_level = $this->getUserlevel();
 		$this->_view->list_categorias = $this->getCategorias();
+		$this->_view->list_departamentos = $this->getDepartamentos();
+		$this->_view->list_municipios = $this->getMunicipios();
 		$id = $this->_getSanitizedParam("id");
 		if ($id > 0) {
 			$content = $this->mainModel->getById($id);
 			if ($content->user_id) {
 
-				if($content->user_negocio > 0){
+				if ($content->user_negocio > 0) {
 					$tiendaModel = new Administracion_Model_DbTable_Tiendas();
 					$tienda = $tiendaModel->getById($content->user_negocio);
 					$this->_view->tienda = $tienda;
@@ -136,9 +139,6 @@ class Administracion_usuarioController extends Administracion_mainController
 				$title = "Actualizar Usuario";
 				$this->getLayout()->setTitle($title);
 				$this->_view->titlesection = $title;
-
-
-
 			} else {
 				$this->_view->routeform = $this->route . "/insert";
 				$title = "Crear Usuario";
@@ -202,15 +202,12 @@ class Administracion_usuarioController extends Administracion_mainController
 				) {
 
 					$infoUsuario = $this->mainModel->getById($id);
-					if($data['user_state'] == 1){
+					if ($data['user_state'] == 1) {
 						$tiendasModel = new Administracion_Model_DbTable_Tiendas();
 						$tiendasModel->editField($infoUsuario->user_negocio, "tiendas_estado", $data['user_state']);
 					}
 					$mailModel = new Core_Model_Sendingemail($this->_view);
 					$res = $mailModel->enviarInfoRegistro($infoUsuario);
-
-
-
 				}
 
 				//LOG
@@ -267,6 +264,7 @@ class Administracion_usuarioController extends Administracion_mainController
 		}
 		$data['user_date'] = date("Y-m-d");
 		$data['user_names'] = $this->_getSanitizedParam("user_names");
+		$data['user_lastnames'] = $this->_getSanitizedParam("user_lastnames");
 		$data['user_email'] = $this->_getSanitizedParam("user_email");
 		if ($this->_getSanitizedParam("user_level") == '') {
 			$data['user_level'] = '0';
@@ -275,11 +273,70 @@ class Administracion_usuarioController extends Administracion_mainController
 		}
 		$data['user_user'] = $this->_getSanitizedParam("user_user");
 		$data['user_password'] = $this->_getSanitizedParam("user_password");
-		$data['user_delete'] = '1';
-		$data['user_current_user'] = '1';
-		$data['user_code'] = '1';
+		$data['user_delete'] = $this->_getSanitizedParam("user_delete") ?: '1';
+		$data['user_current_user'] = $this->_getSanitizedParam("user_current_user") ?: '1';
+		$data['user_code'] = $this->_getSanitizedParam("user_code") ?: '1';
 		$data['user_accion'] = $this->numeroaccion($this->_getSanitizedParam("accion"));
 		$data['user_telefono'] = $this->_getSanitizedParam("telefono");
+		$data['user_invitado_socio'] = $this->_getSanitizedParam("user_invitado_socio") ?: '0';
+
+		// Nuevos campos para tipo de persona
+		$data['persona_tipo'] = $this->_getSanitizedParam("persona_tipo");
+
+		// Campos Persona Natural
+		$data['pn_nombres'] = $this->_getSanitizedParam("pn_nombres");
+		$data['pn_apellidos'] = $this->_getSanitizedParam("pn_apellidos");
+		$data['pn_id_tipo'] = $this->_getSanitizedParam("pn_id_tipo");
+		$data['pn_documento'] = $this->_getSanitizedParam("pn_documento");
+		$data['pn_fecha_nacimiento'] = $this->_getSanitizedParam("pn_fecha_nacimiento");
+		$data['pn_telefono_contacto'] = $this->_getSanitizedParam("pn_telefono_contacto");
+		$data['pn_email'] = $this->_getSanitizedParam("pn_email");
+		$data['pn_nivel_estudio'] = $this->_getSanitizedParam("pn_nivel_estudio");
+		$data['pn_actividad'] = $this->_getSanitizedParam("pn_actividad");
+		$data['pn_departamento'] = $this->_getSanitizedParam("pn_departamento");
+		$data['pn_municipio'] = $this->_getSanitizedParam("pn_municipio");
+		$data['pn_direccion'] = $this->_getSanitizedParam("pn_direccion");
+
+		// Campos Persona Jurídica
+		$data['pj_razon_social'] = $this->_getSanitizedParam("pj_razon_social");
+		$data['pj_nit'] = $this->_getSanitizedParam("pj_nit");
+		$data['pj_email_notificaciones'] = $this->_getSanitizedParam("pj_email_notificaciones");
+		$data['pj_telefono'] = $this->_getSanitizedParam("pj_telefono");
+		$data['pj_direccion'] = $this->_getSanitizedParam("pj_direccion");
+		$data['pj_departamento'] = $this->_getSanitizedParam("pj_departamento");
+		$data['pj_municipio'] = $this->_getSanitizedParam("pj_municipio");
+		$data['pj_ciiu'] = $this->_getSanitizedParam("pj_ciiu");
+		$data['pj_tipo_empresa'] = $this->_getSanitizedParam("pj_tipo_empresa");
+		$data['pj_empleados_cargo'] = $this->_getSanitizedParam("pj_empleados_cargo");
+
+		// Campos Representante Legal
+		$data['pj_rep_apellido1'] = $this->_getSanitizedParam("pj_rep_apellido1");
+		$data['pj_rep_apellido2'] = $this->_getSanitizedParam("pj_rep_apellido2");
+		$data['pj_rep_nombres'] = $this->_getSanitizedParam("pj_rep_nombres");
+		$data['pj_rep_id_tipo'] = $this->_getSanitizedParam("pj_rep_id_tipo");
+		$data['pj_rep_id_numero'] = $this->_getSanitizedParam("pj_rep_id_numero");
+		$data['pj_rep_expedicion_lugar'] = $this->_getSanitizedParam("pj_rep_expedicion_lugar");
+		$data['pj_rep_expedicion_fecha'] = $this->_getSanitizedParam("pj_rep_expedicion_fecha");
+		$data['pj_rep_nacionalidad'] = $this->_getSanitizedParam("pj_rep_nacionalidad");
+		$data['pj_rep_fecha_nacimiento'] = $this->_getSanitizedParam("pj_rep_fecha_nacimiento");
+		$data['pj_rep_lugar_nacimiento'] = $this->_getSanitizedParam("pj_rep_lugar_nacimiento");
+
+		// Campos individuales para documentos - Persona Natural
+		$data['user_cc'] = $this->_getSanitizedParam("user_cc");
+		$data['user_certificacion'] = $this->_getSanitizedParam("user_certificacion");
+		$data['user_declaracion'] = $this->_getSanitizedParam("user_declaracion");
+
+		// Campos individuales para documentos - Persona Jurídica
+		$data['user_certificado_representacion'] = $this->_getSanitizedParam("user_certificado_representacion");
+		$data['user_rut'] = $this->_getSanitizedParam("user_rut");
+		$data['user_documento_identidad'] = $this->_getSanitizedParam("user_documento_identidad");
+		$data['user_certificado_bancario'] = $this->_getSanitizedParam("user_certificado_bancario");
+
+		// Campos adicionales para asociado jurídica
+		$data['pj_asociado_nombres'] = $this->_getSanitizedParam("pj_asociado_nombres");
+		$data['pj_asociado_apellidos'] = $this->_getSanitizedParam("pj_asociado_apellidos");
+		$data['pj_documento_asociado'] = $this->_getSanitizedParam("pj_documento_asociado");
+
 		return $data;
 	}
 
@@ -296,7 +353,8 @@ class Administracion_usuarioController extends Administracion_mainController
 		return $array;
 	}
 
-	public function getCategorias(){
+	public function getCategorias()
+	{
 		$categoriasModel = new Administracion_Model_DbTable_Categorias();
 		$categorias = $categoriasModel->getList("categorias_estado = 1", "categorias_nombre ASC");
 		$array = array();
@@ -389,9 +447,7 @@ class Administracion_usuarioController extends Administracion_mainController
 			header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
 			header("Content-type:   application/x-msexcel; charset=utf-8");
 			header("Content-Disposition: attachment; filename=usuario" . $hoy . ".xls");
-
 		}
-
 	}
 	public function numeroaccion($x)
 	{
@@ -414,10 +470,29 @@ class Administracion_usuarioController extends Administracion_mainController
 		if ($hash == $hash2) {
 			echo json_encode($array);
 		}
-
 	}
 
+	public function getDepartamentos()
+	{
+		$departamentosModel = new Administracion_Model_DbTable_Departamentos();
+		$departamentos = $departamentosModel->getList();
+		$array = array();
+		foreach ($departamentos as $departamento) {
+			$array[$departamento->id_departamento] = $departamento->departamento;
+		}
+		return $array;
+	}
 
+	public function getMunicipios()
+	{
+		$municipiosModel = new Administracion_Model_DbTable_Municipios();
+		$municipios = $municipiosModel->getList();
+		$array = array();
+		foreach ($municipios as $municipio) {
+			$array[$municipio->id_municipio] = $municipio->municipio;
+		}
+		return $array;
+	}
 
 	public function cargainvitadosAction()
 	{
@@ -479,14 +554,8 @@ class Administracion_usuarioController extends Administracion_mainController
 																$sociosModel->editField($id,"socio_estado",$socio_estado);
 															}
 															*/
-
 				}
-
 			}
-
-
 		}
-
 	}
-
 }

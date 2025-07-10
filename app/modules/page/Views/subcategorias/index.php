@@ -66,8 +66,8 @@
 
 	<div class="content-dashboard">
 		<?php if ($this->register_number > 0): ?>
-			<div class="franja-paginas mb-3 mb-lg-0">
-				<div class="row gap-3">
+			<div class="franja-paginas mb-3 mb-lg-2">
+				<div class="row gap-3 gap-md-0">
 					<div class="col-12 col-lg-5">
 						<div class="titulo-registro">Se encontraron <?php echo $this->register_number; ?> Registros</div>
 					</div>
@@ -127,8 +127,8 @@
 											<a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/manage?id=<?= $id ?>"
 												data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-pen"></i></a>
 
-											<span data-toggle="tooltip" data-placement="top" title="Eliminar"><a class="btn btn-rojo btn-sm"
-													data-bs-toggle="modal" data-bs-target="#modal<?= $id ?>"><i class="fas fa-trash-alt"></i></a></span>
+										<!-- 	<span data-toggle="tooltip" data-placement="top" title="Eliminar"><a class="btn btn-rojo btn-sm"
+													data-bs-toggle="modal" data-bs-target="#modal<?= $id ?>"><i class="fas fa-trash-alt"></i></a></span> -->
 										<?php } ?>
 
 										<!-- Modal -->

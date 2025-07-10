@@ -19,11 +19,11 @@
       <div id="form_natural" class="w-100 d-none">
         <h6>Datos Persona Natural</h6>
         <div class="row">
-          <div class="form-group mb-3 col-md-6 col-lg-3">
+          <div class="form-group mb-3 col-md-4 col-lg-3">
             <label for="pn_nombres">Nombre</label>
             <input type="text" class="form-control natural-field" name="pn_nombres" id="pn_nombres">
           </div>
-          <div class="form-group mb-3 col-md-6 col-lg-3">
+          <div class="form-group mb-3 col-md-4 col-lg-3">
             <label for="pn_apellidos">Apellidos</label>
             <input type="text" class="form-control natural-field" name="pn_apellidos" id="pn_apellidos">
           </div>
@@ -48,7 +48,7 @@
             </div>
           <?php } ?>
           <?php if ($_GET['invitado'] == "1") { ?>
-            <div class="form-group mb-4 col-md-4">
+            <div class="form-group mb-4 col-md-4 col-lg-3">
               <label for="documento_asociado">Número de documento</label>
               <input type="number" min="0" class="form-control natural-field" name="documento_asociado"
                 id="documento_asociado" placeholder="" data-error="Número de documento no válido">
@@ -67,7 +67,9 @@
           </div>
           <div class="form-group mb-3 col-md-4 col-lg-3">
             <label for="pn_email">Correo electrónico</label>
-            <input type="email" class="form-control natural-field" name="pn_email" id="pn_email">
+            <input type="email" class="form-control natural-field" name="pn_email" id="pn_email"
+              data-error="El correo ya está registrado">
+            <div class="help-block with-errors"></div>
           </div>
           <div class="form-group mb-3 col-md-6 col-lg-3">
             <label for="pn_nivel_estudio">Nivel de estudio</label>
@@ -124,16 +126,21 @@
         <div class="row">
           <div class="form-group mb-3 col-md-4  col-lg-3">
             <label for="pj_razon_social">Razón Social</label>
-            <input type="text" class="form-control juridica-field" name="pj_razon_social" id="pj_razon_social">
+            <input type="text" class="form-control juridica-field" name="pj_razon_social" id="pj_razon_social"
+              data-error="La razón social ya está registrada">
+            <div class="help-block with-errors"></div>
           </div>
           <div class="form-group mb-3 col-md-4 col-lg-3">
             <label for="pj_nit">NIT</label>
-            <input type="text" class="form-control juridica-field" name="pj_nit" id="pj_nit">
+            <input type="text" class="form-control juridica-field" name="pj_nit" id="pj_nit"
+              data-error="Formato de NIT no válido">
+            <div class="help-block with-errors"></div>
           </div>
           <div class="form-group mb-3 col-md-4 col-lg-3">
             <label for="pj_email_notificaciones">E-mail notificaciones</label>
             <input type="email" class="form-control juridica-field" name="pj_email_notificaciones"
-              id="pj_email_notificaciones">
+              id="pj_email_notificaciones" data-error="El correo ya está registrado">
+            <div class="help-block with-errors"></div>
           </div>
           <div class="form-group mb-3 col-md-4 col-lg-3">
             <label for="pj_telefono">Teléfono</label>
@@ -207,7 +214,7 @@
             <input type="text" class="form-control juridica-field" name="pj_rep_nombres" id="pj_rep_nombres">
           </div>
           <div class="form-group mb-3 col-md-4  col-lg-3">
-            <label for="pj_rep_id_tipo">Tipo de identidad</label>
+            <label for="pj_rep_id_tipo">Tipo de documento de identidad</label>
             <select class="form-control juridica-field" name="pj_rep_id_tipo" id="pj_rep_id_tipo">
               <option value="" disabled selected>Seleccione…</option>
               <option value="C.C.">C.C.</option>
@@ -217,7 +224,7 @@
             </select>
           </div>
           <div class="form-group mb-3 col-md-4 col-lg-3">
-            <label for="pj_rep_id_numero">Número identidad</label>
+            <label for="pj_rep_id_numero">Número de documento de identidad</label>
             <input type="text" class="form-control juridica-field" name="pj_rep_id_numero" id="pj_rep_id_numero">
           </div>
           <div class="form-group mb-3 col-md-4 col-lg-3">
@@ -258,15 +265,15 @@
 
             <?php if ($_GET['negocio'] == "1") { ?>
               <option value="4" <?php if ($_GET['negocio'] == "1") {
-                echo "selected";
-              } ?>>Expositor
+                                  echo "selected";
+                                } ?>>Expositor
                 asociado
               </option>
             <?php } ?>
             <?php if ($_GET['invitado'] == "1") { ?>
               <option value="5" <?php if ($_GET['invitado'] == "1") {
-                echo "selected";
-              } ?>>Expositor
+                                  echo "selected";
+                                } ?>>Expositor
                 invitado
               </option>
             <?php } ?>
@@ -310,13 +317,24 @@
                 id="pj_asociado_apellidos" placeholder="">
               <div class="help-block with-errors"></div>
             </div>
-            <div class="form-group mb-4 col-md-4 col-lg-3">
-              <label for="pj_documento_asociado">Documento del asociado</label>
-              <input type="number" min="0" class="form-control juridica-extra-field" name="pj_documento_asociado"
-                id="pj_documento_asociado" placeholder="" data-error="Número de documento no válido"
-                data-remote="/core/user/validaraccionnegocio">
-              <div class="help-block with-errors"></div>
-            </div>
+            <?php if ($_GET['negocio'] == "1") { ?>
+
+              <div class="form-group mb-4 col-md-4 col-lg-3">
+                <label for="pj_documento_asociado">Documento del asociado</label>
+                <input type="number" min="0" class="form-control juridica-extra-field" name="pj_documento_asociado"
+                  id="pj_documento_asociado" placeholder="" data-error="Número de documento no válido"
+                  data-remote="/core/user/validaraccionnegocio">
+                <div class="help-block with-errors"></div>
+              </div>
+            <?php } ?>
+            <?php if ($_GET['invitado'] == "1") { ?>
+              <div class="form-group mb-4 col-md-4 col-lg-3">
+                <label for="pj_documento_asociado">Documento del asociado</label>
+                <input type="number" min="0" class="form-control juridica-extra-field" name="pj_documento_asociado"
+                  id="pj_documento_asociado" placeholder="" data-error="Número de documento no válido">
+                <div class="help-block with-errors"></div>
+              </div>
+            <?php } ?>
           </div>
         </div>
         <div class="form-group mb-4 col-md-4 col-lg-3">
@@ -359,7 +377,8 @@
         <div class="form-group mb-4 col-md-4 col-lg-3">
           <label for="correo_negocio">Correo</label>
           <input type="email" class="form-control" name="correo_negocio" required id="correo_negocio"
-            data-error="Correo no válido" placeholder="example@hotmail.com">
+            data-error="Correo no válido" placeholder="example@hotmail.com"
+            data-remote="/core/user/validarcorreonegocio">
           <div class="help-block with-errors"></div>
         </div>
       </div>
@@ -433,8 +452,7 @@
       </div>
       <div class="form-group mb-4 mt-4">
         <label for="descripcion">Descripción del negocio</label>
-        <textarea class="form-control tinyeditor-simple" id="descripcion" name="descripcion" rows="3"
-          required></textarea>
+        <textarea class="form-control tinyeditor-simple" id="descripcion" name="descripcion" rows="3"></textarea>
         <small class="w-100 d-block text-end" id="char-count">0/700</small>
         <small class="error-msg text-danger "></small>
       </div>
@@ -473,7 +491,7 @@
   <?php } ?>
 </script>
 <script>
-  $(document).ready(function () {
+  $(document).ready(function() {
     var usuario = $("#usuario").val();
     if (usuario == 4) {
       $('#form2').removeClass("d-none");
@@ -491,7 +509,7 @@
 
   });
 
-  function cambiar_formulario () {
+  function cambiar_formulario() {
     var usuario = $("#usuario").val();
     if (usuario == 4 || usuario == 5) {
       $('#form2').removeClass("d-none");
@@ -505,7 +523,7 @@
     }
   }
 
-  function f1 () {
+  function f1() {
     cambiar_formulario();
   }
   setTimeout('f1()', 1000);
@@ -514,10 +532,10 @@
 </script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function() {
     const formulario = document.getElementById("formulario-registro");
     const buttonSend = document.getElementById("button-send");
-    formulario.addEventListener("submit", function (event) {
+    formulario.addEventListener("submit", function(event) {
       if (!formulario.checkValidity()) {
         event.preventDefault();
         event.stopPropagation();
@@ -536,7 +554,7 @@
 </script>
 <script>
   // — JS para alternar formularios y deshabilitar botón como tenías antes —
-  document.getElementById('persona_tipo').addEventListener('change', function () {
+  document.getElementById('persona_tipo').addEventListener('change', function() {
     const tipoPersona = this.value;
 
     // Mostrar/ocultar secciones
@@ -563,6 +581,23 @@
         field.removeAttribute('required');
       });
 
+      // Activar validaciones remotas para persona natural
+      const pnEmail = document.getElementById('pn_email');
+      if (pnEmail) {
+        pnEmail.setAttribute('data-remote', '/core/user/validarpnemail');
+      }
+
+      // Desactivar validaciones remotas para persona jurídica
+      const pjRazonSocial = document.getElementById('pj_razon_social');
+      if (pjRazonSocial) {
+        pjRazonSocial.removeAttribute('data-remote');
+      }
+
+      const pjEmail = document.getElementById('pj_email_notificaciones');
+      if (pjEmail) {
+        pjEmail.removeAttribute('data-remote');
+      }
+
       // Manejar validación especial para documento_asociado
       const documentoAsociado = document.getElementById('documento_asociado');
       if (documentoAsociado) {
@@ -583,6 +618,12 @@
       if (pjDocumentoAsociado) {
         pjDocumentoAsociado.removeAttribute('data-remote');
         pjDocumentoAsociado.removeAttribute('required');
+      }
+
+      // Quitar validación remota del NIT para persona natural
+      const nitField = document.getElementById('pj_nit');
+      if (nitField) {
+        nitField.removeAttribute('data-remote');
       }
 
     } else if (tipoPersona === 'J') {
@@ -608,6 +649,23 @@
         field.removeAttribute('required');
       });
 
+      // Activar validaciones remotas para persona jurídica
+      const pjRazonSocial = document.getElementById('pj_razon_social');
+      if (pjRazonSocial) {
+        pjRazonSocial.setAttribute('data-remote', '/core/user/validarpjrazonsocial');
+      }
+
+      const pjEmail = document.getElementById('pj_email_notificaciones');
+      if (pjEmail) {
+        pjEmail.setAttribute('data-remote', '/core/user/validarpjemail');
+      }
+
+      // Desactivar validaciones remotas para persona natural
+      const pnEmail = document.getElementById('pn_email');
+      if (pnEmail) {
+        pnEmail.removeAttribute('data-remote');
+      }
+
       // Para persona jurídica, quitar validación remota del documento_asociado natural
       const documentoAsociado = document.getElementById('documento_asociado');
       if (documentoAsociado) {
@@ -625,11 +683,33 @@
         pjDocumentoAsociado.setAttribute('required', 'required');
       }
 
+      // Activar validación remota del NIT para persona jurídica
+      const nitField = document.getElementById('pj_nit');
+      if (nitField) {
+        nitField.setAttribute('data-remote', '/core/user/validarnit');
+      }
+
     } else {
       // Sin selección: quitar required de todos
       naturalFields.forEach(field => field.removeAttribute('required'));
       juridicaFields.forEach(field => field.removeAttribute('required'));
       juridicaExtraFields.forEach(field => field.removeAttribute('required'));
+
+      // Quitar todas las validaciones remotas cuando no hay selección
+      const pnEmail = document.getElementById('pn_email');
+      if (pnEmail) {
+        pnEmail.removeAttribute('data-remote');
+      }
+
+      const pjRazonSocial = document.getElementById('pj_razon_social');
+      if (pjRazonSocial) {
+        pjRazonSocial.removeAttribute('data-remote');
+      }
+
+      const pjEmail = document.getElementById('pj_email_notificaciones');
+      if (pjEmail) {
+        pjEmail.removeAttribute('data-remote');
+      }
 
       // Quitar validación remota cuando no hay selección
       const documentoAsociado = document.getElementById('documento_asociado');
@@ -642,6 +722,12 @@
       if (pjDocumentoAsociado) {
         pjDocumentoAsociado.removeAttribute('data-remote');
         pjDocumentoAsociado.removeAttribute('required');
+      }
+
+      // Quitar validación remota del NIT cuando no hay selección
+      const nitField = document.getElementById('pj_nit');
+      if (nitField) {
+        nitField.removeAttribute('data-remote');
       }
     }
   });
@@ -656,10 +742,10 @@
       e.target.closest('.pj-socio-row').remove();
   });
 
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
 
     // Cargar municipios al seleccionar departamento
-    document.getElementById('pn_departamento')?.addEventListener('change', function () {
+    document.getElementById('pn_departamento')?.addEventListener('change', function() {
       const departamentoId = this.value;
       const municipioSelect = document.getElementById('pn_municipio');
       municipioSelect.innerHTML = '<option value="" disabled selected>Seleccione…</option>';
@@ -675,7 +761,7 @@
 
     });
 
-    document.getElementById('pj_departamento')?.addEventListener('change', function () {
+    document.getElementById('pj_departamento')?.addEventListener('change', function() {
       const departamentoId = this.value;
       const municipioSelect = document.getElementById('pj_municipio');
       municipioSelect.innerHTML = '<option value="" disabled selected>Seleccione…</option>';
@@ -691,7 +777,7 @@
   });
 
   // Manejar errores de validación remota para documento_asociado
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
     // No necesitamos JavaScript adicional para validación remota
     // Bootstrap Validator se encarga automáticamente usando data-remote
     // Solo necesitamos cargar municipios
