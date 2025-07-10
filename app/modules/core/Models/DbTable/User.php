@@ -21,6 +21,7 @@ class Core_Model_DbTable_User extends Db_Table
         $res = $this->_conn->query('SELECT * FROM '.$this->_name.' WHERE user_id = "'.$id.'"')->fetchAsObject();
         return $res;
     }
+    
 
 	public function searchUserByUser($user)
     {

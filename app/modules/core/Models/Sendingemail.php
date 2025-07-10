@@ -113,6 +113,31 @@ class Core_Model_Sendingemail
         }
     }
 
+    public function sendMailContact($data)
+    {
+        $this->_view->data = $data;
+        $infopageModel = new Page_Model_DbTable_Informacion();
+        $informacion = $infopageModel->getById(1);
+        $correo = $informacion->info_pagina_correos_contacto;
+        $correo2 = $informacion->info_pagina_correo_oculto;
+
+
+        // $this->email->getMail()->addAddress($correo,  "");
+        // $this->email->getMail()->addBCC($correo2,  "");
+        $this->email->getMail()->addBCC("desarrollo8@omegawebsystems.com", "Formulario de contacto Emprendimiento Fendesa");
+        $content = $this->_view->getRoutPHP('/../app/modules/core/Views/templatesemail/mailHome.php');
+        $this->email->getMail()->Subject = 'Formulario de contacto Emprendimiento Fendesa';
+        // $this->email->getMail()->setFrom($data['email'], $data['nombre']);
+        $this->email->getMail()->msgHTML($content);
+        $this->email->getMail()->AltBody = $content;
+        $this->email->getMail()->addBCC($informacion->info_pagina_correo_oculto);
+        if ($this->email->sed() == true) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
     public function enviarOTP($email, $nombreCompleto, $code)
     {
         $this->_view->email = $email;
@@ -176,11 +201,9 @@ class Core_Model_Sendingemail
         if ($infoUser->user_state == 1) {
             $asunto = "Alerta de activación de cuenta";
             $content = $this->_view->getRoutPHP('/../app/modules/core/Views/templatesemail/alertaactivacion.php');
-
         } else if ($infoUser->user_state == 2) {
             $asunto = "Alerta de inactivación de cuenta";
             $content = $this->_view->getRoutPHP('/../app/modules/core/Views/templatesemail/alertainactivacion.php');
-
         }
 
         //$this->email->getMail()->addBCC("soporteomega@omegawebsystems.com");

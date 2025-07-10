@@ -381,20 +381,21 @@ class Administracion_contenidoController extends Administracion_mainController
 	private function getContenidoseccion()
 	{
 		$array = array();
-		$array['1'] = 'Home';
+		//$array['1'] = 'Home';
 		$array['2'] = 'Como comprar';
-		$array['12'] = 'Seguridad sanitaria';
+		$array['3'] = 'Contacto';
+		$array['10'] = 'Términos y condiciones';
+		$array['11'] = 'Politica tratamiento de datos';
+		//$array['12'] = 'Seguridad sanitaria';
 		//$array['3'] = 'Domicilios';
 		//$array['4'] = 'Preguntas Frecuentes';
 		//$array['5'] = 'Acerca de Nosotros';
 		//$array['6'] = 'Dónde Ubicarnos';
-		$array['10'] = 'Términos y condiciones';
-		$array['11'] = 'Politica tratamiento de datos';
-		$array['13'] = 'Carta restaurante express';
-		$array['14'] = 'Actividades virtuales';
-		$array['15'] = 'En tarima';
-		$array['16'] = 'otros';
-		$array['17'] = 'Entretenimiento';
+		//$array['13'] = 'Carta restaurante express';
+		// $array['14'] = 'Actividades virtuales';
+		// $array['15'] = 'En tarima';
+		// $array['16'] = 'otros';
+		// $array['17'] = 'Entretenimiento';
 		return $array;
 	}
 
@@ -489,7 +490,7 @@ class Administracion_contenidoController extends Administracion_mainController
 	 */
 	protected function getFilter()
 	{
-		$filtros = " 1 = 1 ";
+		$filtros = " 1 = 1 AND contenido_seccion != 1 AND contenido_seccion != 17 AND contenido_seccion != 4 AND  contenido_seccion != 14  AND  contenido_seccion != 13 AND  contenido_seccion != 15 AND  contenido_seccion != 16";
 		$padre = $this->_getSanitizedParam('padre');
 		$filtros = $filtros . " AND contenido_padre = '$padre' ";
 		if (Session::getInstance()->get($this->namefilter) != "") {

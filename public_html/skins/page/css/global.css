@@ -6003,3 +6003,10 @@ h3.login-title {
 .content-dashboard .form-control{
 	font-size: 14px	;
 }
+
+.input-group .btn-cafe span{
+	font-size: 11px;
+}
+.input-group .btn-cafe {
+	padding: 3.7px 3px;
+}

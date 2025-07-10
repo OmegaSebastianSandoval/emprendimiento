@@ -10,11 +10,37 @@
             </div>
         </div>
     </div>
-    <br>
-    <div class="contenidocontacto" data-aos="fade-up-right">
+
+    <div class="contenidocontacto">
         <div class="container">
+            <!-- Alerta simple de Bootstrap -->
+            <?php if (isset($_GET['res'])): ?>
+                <?php
+                switch ($_GET['res']) {
+                    case '1':
+                        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>¡Éxito!</strong> Tu mensaje ha sido enviado correctamente.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                              </div>';
+                        break;
+                    case '2':
+                        echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong>Atención:</strong> Por favor completa todos los campos requeridos.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                              </div>';
+                        break;
+                    case '3':
+                        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Error:</strong> Verifica el captcha e intenta nuevamente.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                              </div>';
+                        break;
+                }
+                ?>
+            <?php endif; ?>
+
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 order-2 order-md-1">
                     <form action="/page/formulario/enviar" method="post" onsubmit="return miFuncion(this)">
                         <div class="row">
                             <div class="col-lg-11">
@@ -34,6 +60,7 @@
                                     <input name="formulario_ciudad" type="text" class="form-control"
                                         placeholder="Ciudad:" required>
                                 </div>
+                                <input type="hidden" name="formulario_correo">
                                 <div class="form-group">
                                     <textarea style="resize:none;" class="form-control" name="formulario_mensaje" id=""
                                         rows="3" placeholder="Mensaje:" required=""></textarea>
@@ -48,36 +75,74 @@
                             </label>
                         </div>
                         <script src='https://www.google.com/recaptcha/api.js'></script>
-                        <div class="g-recaptcha" data-sitekey="6LepIukUAAAAADbg9KC_Y68CZ9sOc248eGC1UMHJ"></div>
-                        <script>
-                            function miFuncion (a) {
-                                var response = grecaptcha.getResponse();
-
-                                if (response.length == 0) {
-                                    alert("Captcha no verificado");
-                                    return false;
-                                    event.preventDefault();
-                                } else {
-                                    return true;
-                                }
-                            }
-                        </script>
+                        <div class="g-recaptcha" data-sitekey="6LfFDZskAAAAAE2HmM7Z16hOOToYIWZC_31E61Sr"></div>
                         <div class=" col-md-11 text-center">
-                            <button type="submit" class="btn btn-primary enviar"
+                            <button type="submit" id="submit-btn" class="btn btn-primary enviar"
                                 style="margin-top: 10px;">Enviar</button>
                         </div>
                         <br>
+                        <script>
+                            function miFuncion(form) {
+                                var response = grecaptcha.getResponse();
+                                var submitBtn = document.getElementById('submit-btn');
+
+                                if (response.length == 0) {
+                                    alert("Por favor, completa la verificación captcha");
+                                    return false;
+                                }
+
+                                // Validar campos requeridos antes de enviar
+                                var requiredFields = ['formulario_nombre', 'formulario_email', 'formulario_telefono', 'formulario_ciudad', 'formulario_mensaje'];
+                                var isValid = true;
+
+                                requiredFields.forEach(function(fieldName) {
+                                    var field = form.querySelector('[name="' + fieldName + '"]');
+                                    if (!field.value.trim()) {
+                                        field.style.borderColor = '#dc3545';
+                                        isValid = false;
+                                    } else {
+                                        field.style.borderColor = '';
+                                    }
+                                });
+
+                                // Validar checkbox de términos
+                                var termsCheckbox = document.getElementById('gridCheck');
+                                if (!termsCheckbox.checked) {
+                                    alert("Debes aceptar la política de manejo de datos");
+                                    return false;
+                                }
+
+                                if (!isValid) {
+                                    alert("Por favor, completa todos los campos requeridos");
+                                    return false;
+                                }
+
+                                // Deshabilitar botón y cambiar texto
+                                submitBtn.disabled = true;
+                                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+                                submitBtn.style.opacity = '0.7';
+
+                                return true;
+                            }
+
+                            // Limpiar bordes rojos al escribir
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var inputs = document.querySelectorAll('input[required], textarea[required]');
+                                inputs.forEach(function(input) {
+                                    input.addEventListener('input', function() {
+                                        if (this.value.trim()) {
+                                            this.style.borderColor = '';
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
                     </form>
                 </div>
 
-                <div class="col-lg-6">
+                <div class="col-lg-6 order-1 order-md-2">
                     <div class="cont-info">
-                        <?php foreach ($this->informaciones as $key => $informacion) { ?>
-                            <div>
-                                <h3 class="informacion-contacto">Información de contacto</h3>
-                                <div class="pro"><?php echo $informacion->info_pagina_informacion_contacto; ?></div>
-                            </div>
-                        <?php } ?>
+                        <?= $this->contenido ?>
                         <!-- INSTANCIAMOS SIN FOREACH -->
                         <div class=" margenredes">
                             <?php if ($this->infopage->info_pagina_facebook) { ?>
@@ -135,21 +200,20 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 
 
 
 <div class="modal fade" id="ventana">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" align="center"><?php echo $this->terminos->contenido_titulo; ?></h4>
+                <h4 class="modal-title" align="center"></h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     style="filter:invert(1);"></button>
-
             </div>
             <div class="modal-body">
-                <p><?php echo $this->terminos->contenido_descripcion; ?> </p>
+                <p><?php echo $this->terminos; ?> </p>
             </div>
         </div>
     </div>
